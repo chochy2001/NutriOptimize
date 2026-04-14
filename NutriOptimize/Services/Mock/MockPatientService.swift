@@ -16,7 +16,8 @@ final class MockPatientService: PatientServiceProtocol {
             dietaryPreferences: ["Comida mexicana", "Ensaladas"],
             clinicalGoals: "Pérdida de peso gradual y mejora de energía",
             availableCookingTime: 30,
-            activityLevel: .lightlyActive
+            activityLevel: .lightlyActive,
+            monthlyFoodBudget: 4500
         ),
         Patient(
             id: UUID(uuidString: "B2C3D4E5-F6A7-8901-BCDE-F12345678901")!,
@@ -31,7 +32,8 @@ final class MockPatientService: PatientServiceProtocol {
             dietaryPreferences: ["Pollo", "Arroz", "Verduras al vapor"],
             clinicalGoals: "Control de glucosa y reducción de peso",
             availableCookingTime: 45,
-            activityLevel: .sedentary
+            activityLevel: .sedentary,
+            monthlyFoodBudget: 6000
         ),
         Patient(
             id: UUID(uuidString: "C3D4E5F6-A7B8-9012-CDEF-123456789012")!,

@@ -1,8 +1,13 @@
 import SwiftUI
+import SwiftData
 
 struct OptimizationDashboardView: View {
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel = OptimizationDashboardViewModel()
     @State private var searchText = ""
+    @State private var showAddPatient = false
+    @State private var editingPatient: Patient?
+    @State private var showSettings = false
 
     private var filteredPatients: [Patient] {
         if searchText.isEmpty { return viewModel.patients }
@@ -25,11 +30,41 @@ struct OptimizationDashboardView: View {
             .background(AppTheme.surfaceWhite.ignoresSafeArea())
             .navigationTitle("NutriOptimize")
             .searchable(text: $searchText, prompt: "Buscar paciente")
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showSettings = true
+                    } label: {
+                        Image(systemName: "gearshape")
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showAddPatient = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
             .refreshable {
                 await viewModel.loadDashboard()
             }
             .task {
+                viewModel.configure(modelContext: modelContext)
                 await viewModel.loadDashboard()
+            }
+            .sheet(isPresented: $showAddPatient) {
+                AddEditPatientView { newPatient in
+                    viewModel.addPatient(newPatient)
+                }
+            }
+            .sheet(item: $editingPatient) { patient in
+                AddEditPatientView(patient: patient) { updated in
+                    viewModel.updatePatient(updated)
+                }
+            }
+            .sheet(isPresented: $showSettings) {
+                SettingsView()
             }
         }
         .tint(AppTheme.deepOrange)
@@ -72,11 +107,13 @@ struct OptimizationDashboardView: View {
             .padding(.top, 8)
         }
         .navigationDestination(for: PlanOptimizationDraft.self) { draft in
+            let matchedPatient = viewModel.patients.first(where: { $0.id == draft.patientId })
             DraftEditorView(
                 viewModel: DraftEditorViewModel(
                     draft: draft,
                     patientName: viewModel.patientName(for: draft)
-                )
+                ),
+                patient: matchedPatient
             )
         }
         .navigationDestination(for: Patient.self) { patient in
@@ -91,7 +128,7 @@ struct OptimizationDashboardView: View {
             HStack(spacing: 8) {
                 Image(systemName: "clock.badge.exclamationmark")
                     .foregroundStyle(AppTheme.deepOrange)
-                Text("Pendientes de revisión")
+                Text("Pendientes de revisi\u{00F3}n")
                     .font(AppTheme.subheadFont)
 
                 Spacer()
@@ -130,7 +167,7 @@ struct OptimizationDashboardView: View {
                     .font(.system(.subheadline, design: .rounded, weight: .semibold))
                 HStack(spacing: 8) {
                     Label("\(draft.meals.count) comidas", systemImage: "fork.knife")
-                    Text("·")
+                    Text("\u{00B7}")
                     Text("\(Int(draft.totalCalories)) kcal")
                 }
                 .font(AppTheme.captionFont)
@@ -175,6 +212,35 @@ struct OptimizationDashboardView: View {
                 }
                 .buttonStyle(.plain)
                 .simultaneousGesture(TapGesture().onEnded { HapticManager.selection() })
+                .contextMenu {
+                    Button {
+                        editingPatient = patient
+                    } label: {
+                        Label("Editar", systemImage: "pencil")
+                    }
+                    Button(role: .destructive) {
+                        HapticManager.impact(.medium)
+                        viewModel.deletePatient(patient)
+                    } label: {
+                        Label("Eliminar", systemImage: "trash")
+                    }
+                }
+                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                    Button(role: .destructive) {
+                        HapticManager.impact(.medium)
+                        viewModel.deletePatient(patient)
+                    } label: {
+                        Label("Eliminar", systemImage: "trash")
+                    }
+                }
+                .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                    Button {
+                        editingPatient = patient
+                    } label: {
+                        Label("Editar", systemImage: "pencil")
+                    }
+                    .tint(AppTheme.deepOrange)
+                }
             }
         }
     }
@@ -217,4 +283,5 @@ struct OptimizationDashboardView: View {
 
 #Preview {
     OptimizationDashboardView()
+        .modelContainer(for: PatientRecord.self, inMemory: true)
 }

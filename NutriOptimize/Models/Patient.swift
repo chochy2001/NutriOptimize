@@ -17,6 +17,13 @@ struct Patient: Identifiable, Codable, Hashable {
     var clinicalGoals: String
     var availableCookingTime: Int
     var activityLevel: ActivityLevel
+    var monthlyFoodBudget: Double? = nil
+
+    /// Weekly budget derived from the monthly allocation, used for per-week plan costing.
+    var weeklyFoodBudget: Double? {
+        guard let monthly = monthlyFoodBudget else { return nil }
+        return monthly / 4.0
+    }
 
     enum BiologicalSex: String, Codable, CaseIterable {
         case female = "Femenino"

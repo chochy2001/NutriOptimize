@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 @main
 struct NutriOptimizeApp: App {
@@ -6,5 +7,6 @@ struct NutriOptimizeApp: App {
         WindowGroup {
             OptimizationDashboardView()
         }
+        .modelContainer(for: PatientRecord.self)
     }
 }
