@@ -9,6 +9,7 @@ enum DemoDataSeeder {
     static func seedIfNeeded(context: ModelContext) {
         seedConsultationHistory(context: context)
         seedLabResults(context: context)
+        seedPatientFeedback(context: context)
     }
 
     // MARK: - Consultation History
@@ -100,6 +101,129 @@ enum DemoDataSeeder {
             let date = calendar.date(byAdding: .day, value: c.dayOffset, to: now) ?? now
             let record = ConsultationRecord(
                 patientId: p2, date: date, weight: c.weight,
+                bodyFatPercentage: c.bf, waistCircumference: c.waist,
+                hipCircumference: c.hip, armCircumference: c.arm,
+                totalCaloriesPrescribed: c.cal, totalProtein: c.pro,
+                totalCarbs: c.carb, totalFat: c.fat,
+                planSummary: c.summary, clinicalNotes: c.notes)
+            context.insert(record)
+        }
+
+        // Patient 3: Ana Martínez - athlete seeking muscle gain
+        guard patients.count >= 5 else {
+            try? context.save()
+            return
+        }
+
+        let p3 = patients[2].id
+        let p3Consultations: [(dayOffset: Int, weight: Double, bf: Double, waist: Double, hip: Double, arm: Double,
+                                cal: Double, pro: Double, carb: Double, fat: Double, summary: String, notes: String)] = [
+            (-82, 55.0, 18.0, 66.0, 90.0, 25.0,
+             2400, 140, 310, 65,
+             "Plan hipercalórico con prioridad en proteína para ganancia muscular",
+             "Primera consulta. Paciente deportista de alto rendimiento, entrena 6 días/semana. Composición corporal saludable. Objetivo: ganancia de 3-4 kg de masa magra en 3 meses. Se establece superávit de 300 kcal."),
+            (-68, 55.4, 17.8, 66.0, 90.2, 25.3,
+             2450, 145, 315, 66,
+             "Ajuste de proteína post-entrenamiento y carbohidratos periféricos",
+             "Ganancia de 400g. Se aumenta proteína en ventana anabólica post-entrenamiento. Paciente tolera bien las porciones. Se agregan carbohidratos de rápida absorción pre-entreno."),
+            (-52, 56.1, 17.5, 66.2, 90.5, 25.8,
+             2500, 150, 320, 68,
+             "Incorporación de suplementación con proteína de suero y creatina",
+             "Progreso constante en masa muscular. Se incorpora batido post-entreno. Medidas de brazo aumentaron 0.8cm. Sin aumento significativo de grasa corporal."),
+            (-35, 56.8, 17.2, 66.5, 91.0, 26.2,
+             2520, 155, 318, 70,
+             "Periodización nutricional según tipo de entrenamiento",
+             "1.8 kg ganados. Se implementa ciclado de carbohidratos: más altos en días de fuerza, moderados en días de cardio. Paciente refiere mejor rendimiento."),
+            (-14, 57.5, 16.8, 66.8, 91.5, 26.8,
+             2550, 158, 322, 72,
+             "Fase de consolidación con énfasis en recuperación y sueño",
+             "Excelente progreso: 2.5 kg de ganancia total, grasa corporal disminuyó. Se optimiza última comida del día para mejorar recuperación nocturna.")
+        ]
+
+        for c in p3Consultations {
+            let date = calendar.date(byAdding: .day, value: c.dayOffset, to: now) ?? now
+            let record = ConsultationRecord(
+                patientId: p3, date: date, weight: c.weight,
+                bodyFatPercentage: c.bf, waistCircumference: c.waist,
+                hipCircumference: c.hip, armCircumference: c.arm,
+                totalCaloriesPrescribed: c.cal, totalProtein: c.pro,
+                totalCarbs: c.carb, totalFat: c.fat,
+                planSummary: c.summary, clinicalNotes: c.notes)
+            context.insert(record)
+        }
+
+        // Patient 4: Roberto Hernández - fatty liver, weight loss
+        let p4 = patients[3].id
+        let p4Consultations: [(dayOffset: Int, weight: Double, bf: Double, waist: Double, hip: Double, arm: Double,
+                                cal: Double, pro: Double, carb: Double, fat: Double, summary: String, notes: String)] = [
+            (-85, 105.3, 35.0, 112.0, 110.0, 34.0,
+             1800, 110, 190, 60,
+             "Plan de reducción calórica moderada para hígado graso",
+             "Primera consulta. Paciente con esteatosis hepática grado II. IMC 34.4. Se inicia déficit de 500 kcal con restricción de grasas saturadas y fructosa. Meta: perder 15 kg en 6 meses."),
+            (-72, 104.0, 34.5, 111.0, 109.5, 33.8,
+             1780, 115, 182, 58,
+             "Eliminación de bebidas azucaradas y reducción de fructosa",
+             "Pérdida de 1.3 kg. Paciente reporta que eliminó refrescos y jugos. Se enfatiza el consumo de verduras crucíferas para apoyo hepático. Enzimas hepáticas pendientes."),
+            (-56, 102.5, 33.8, 109.5, 108.5, 33.5,
+             1750, 118, 175, 57,
+             "Incremento de fibra y verduras crucíferas para apoyo hepático",
+             "Buena tendencia de peso. ALT bajó de 68 a 52 U/L. Se incluyen brócoli, col rizada y alcachofa como fuentes de fibra y antioxidantes hepáticos."),
+            (-40, 101.0, 33.0, 108.0, 107.5, 33.2,
+             1720, 120, 168, 56,
+             "Ajuste de grasas: omega-3 y eliminación de aceites refinados",
+             "4.3 kg perdidos acumulados. Se priorizan grasas antiinflamatorias: pescados grasos, aguacate, aceite de oliva. Se eliminan aceites de maíz y canola refinados."),
+            (-22, 99.5, 32.0, 106.0, 106.5, 33.0,
+             1700, 122, 162, 55,
+             "Protocolo de ayuno intermitente 16:8 opcional",
+             "Paciente interesado en ayuno intermitente. Se implementa ventana de alimentación de 8 horas. GGT normalizada. Ultrasonido de control muestra mejoría en esteatosis."),
+            (-8, 98.0, 31.2, 104.5, 106.0, 32.8,
+             1680, 125, 158, 54,
+             "Consolidación del plan con evaluación de hígado graso",
+             "7.3 kg perdidos en 3 meses. Enzimas hepáticas normalizadas. Ultrasonido muestra esteatosis grado I, mejoría notable. Paciente motivado para continuar.")
+        ]
+
+        for c in p4Consultations {
+            let date = calendar.date(byAdding: .day, value: c.dayOffset, to: now) ?? now
+            let record = ConsultationRecord(
+                patientId: p4, date: date, weight: c.weight,
+                bodyFatPercentage: c.bf, waistCircumference: c.waist,
+                hipCircumference: c.hip, armCircumference: c.arm,
+                totalCaloriesPrescribed: c.cal, totalProtein: c.pro,
+                totalCarbs: c.carb, totalFat: c.fat,
+                planSummary: c.summary, clinicalNotes: c.notes)
+            context.insert(record)
+        }
+
+        // Patient 5: Laura Sánchez - IBS, stable weight
+        let p5 = patients[4].id
+        let p5Consultations: [(dayOffset: Int, weight: Double, bf: Double, waist: Double, hip: Double, arm: Double,
+                                cal: Double, pro: Double, carb: Double, fat: Double, summary: String, notes: String)] = [
+            (-78, 62.0, 25.0, 72.0, 94.0, 26.0,
+             1850, 85, 240, 58,
+             "Plan bajo en FODMAPs para manejo de síntomas digestivos",
+             "Primera consulta. Paciente con SII diagnosticado hace 2 años. Síntomas frecuentes: distensión, dolor abdominal, alternancia diarrea/estreñimiento. Se inicia dieta baja en FODMAPs con reintroducción gradual."),
+            (-63, 61.8, 24.8, 71.8, 93.8, 26.0,
+             1860, 88, 238, 59,
+             "Eliminación de lácteos y trigo durante fase de eliminación",
+             "Paciente reporta 50% menos episodios de distensión. Se confirma sensibilidad a lactosa y fructanos del trigo. Se sustituyen con alternativas toleradas: arroz, avena sin gluten."),
+            (-48, 62.2, 25.0, 72.0, 94.0, 26.0,
+             1870, 90, 235, 61,
+             "Reintroducción controlada: sorbitol y fructosa aislada",
+             "Peso estable como se desea. Se inicia fase de reintroducción. Sorbitol en manzanas tolerado en porciones pequeñas. Fructosa aislada en miel genera síntomas, se mantiene excluida."),
+            (-30, 62.0, 24.8, 71.5, 93.8, 26.0,
+             1880, 92, 232, 63,
+             "Incorporación de probióticos y fibra soluble progresiva",
+             "Buena tolerancia a la fibra soluble de avena y plátano verde. Se agrega probiótico con cepas Bifidobacterium. Paciente refiere mejor regularidad intestinal."),
+            (-12, 62.3, 25.0, 72.0, 94.2, 26.2,
+             1880, 90, 235, 62,
+             "Plan de mantenimiento con FODMAPs tolerados identificados",
+             "Síntomas controlados al 80%. Se establece lista definitiva de alimentos tolerados y no tolerados. Plan de mantenimiento a largo plazo con revisión trimestral.")
+        ]
+
+        for c in p5Consultations {
+            let date = calendar.date(byAdding: .day, value: c.dayOffset, to: now) ?? now
+            let record = ConsultationRecord(
+                patientId: p5, date: date, weight: c.weight,
                 bodyFatPercentage: c.bf, waistCircumference: c.waist,
                 hipCircumference: c.hip, armCircumference: c.arm,
                 totalCaloriesPrescribed: c.cal, totalProtein: c.pro,
@@ -214,6 +338,156 @@ enum DemoDataSeeder {
                     referenceRange: test.range, isOutOfRange: test.outOfRange)
                 context.insert(record)
             }
+        }
+
+        // Patient 3: Ana Martínez - athlete, performance panel
+        guard patients.count >= 5 else {
+            try? context.save()
+            return
+        }
+
+        let p3l = patients[2].id
+        let p3Labs: [(dayOffset: Int, tests: [(name: String, value: Double, unit: String, range: String, outOfRange: Bool)])] = [
+            (-82, [
+                ("Hemoglobina", 13.8, "g/dL", "12.0-16.0", false),
+                ("Ferritina", 28, "ng/mL", "20-200", false),
+                ("Glucosa en ayunas", 78, "mg/dL", "70-100", false),
+                ("Creatinina", 0.8, "mg/dL", "0.5-1.1", false),
+                ("Colesterol total", 175, "mg/dL", "< 200", false),
+                ("Triglicéridos", 68, "mg/dL", "< 150", false),
+                ("Vitamina D", 22, "ng/mL", "30-100", true),
+            ]),
+            (-35, [
+                ("Hemoglobina", 14.2, "g/dL", "12.0-16.0", false),
+                ("Ferritina", 35, "ng/mL", "20-200", false),
+                ("Glucosa en ayunas", 76, "mg/dL", "70-100", false),
+                ("Creatinina", 0.9, "mg/dL", "0.5-1.1", false),
+                ("Colesterol total", 172, "mg/dL", "< 200", false),
+                ("Triglicéridos", 62, "mg/dL", "< 150", false),
+                ("Vitamina D", 38, "ng/mL", "30-100", false),
+            ]),
+        ]
+
+        for labDate in p3Labs {
+            let date = calendar.date(byAdding: .day, value: labDate.dayOffset, to: now) ?? now
+            for test in labDate.tests {
+                let record = LabResultRecord(
+                    patientId: p3l, testDate: date, testName: test.name,
+                    value: test.value, unit: test.unit,
+                    referenceRange: test.range, isOutOfRange: test.outOfRange)
+                context.insert(record)
+            }
+        }
+
+        // Patient 4: Roberto Hernández - liver function and metabolic panel
+        let p4l = patients[3].id
+        let p4Labs: [(dayOffset: Int, tests: [(name: String, value: Double, unit: String, range: String, outOfRange: Bool)])] = [
+            (-85, [
+                ("ALT (TGP)", 68, "U/L", "7-56", true),
+                ("AST (TGO)", 52, "U/L", "10-40", true),
+                ("GGT", 78, "U/L", "9-48", true),
+                ("Glucosa en ayunas", 112, "mg/dL", "70-100", true),
+                ("Colesterol total", 248, "mg/dL", "< 200", true),
+                ("Triglicéridos", 225, "mg/dL", "< 150", true),
+                ("HDL", 35, "mg/dL", "> 40", true),
+                ("LDL", 152, "mg/dL", "< 100", true),
+            ]),
+            (-40, [
+                ("ALT (TGP)", 52, "U/L", "7-56", false),
+                ("AST (TGO)", 38, "U/L", "10-40", false),
+                ("GGT", 55, "U/L", "9-48", true),
+                ("Glucosa en ayunas", 102, "mg/dL", "70-100", true),
+                ("Colesterol total", 218, "mg/dL", "< 200", true),
+                ("Triglicéridos", 185, "mg/dL", "< 150", true),
+                ("HDL", 40, "mg/dL", "> 40", false),
+                ("LDL", 132, "mg/dL", "< 100", true),
+            ]),
+            (-8, [
+                ("ALT (TGP)", 42, "U/L", "7-56", false),
+                ("AST (TGO)", 32, "U/L", "10-40", false),
+                ("GGT", 45, "U/L", "9-48", false),
+                ("Glucosa en ayunas", 95, "mg/dL", "70-100", false),
+                ("Colesterol total", 198, "mg/dL", "< 200", false),
+                ("Triglicéridos", 155, "mg/dL", "< 150", true),
+                ("HDL", 44, "mg/dL", "> 40", false),
+                ("LDL", 118, "mg/dL", "< 100", true),
+            ]),
+        ]
+
+        for labDate in p4Labs {
+            let date = calendar.date(byAdding: .day, value: labDate.dayOffset, to: now) ?? now
+            for test in labDate.tests {
+                let record = LabResultRecord(
+                    patientId: p4l, testDate: date, testName: test.name,
+                    value: test.value, unit: test.unit,
+                    referenceRange: test.range, isOutOfRange: test.outOfRange)
+                context.insert(record)
+            }
+        }
+
+        // Patient 5: Laura Sánchez - digestive markers and nutritional status
+        let p5l = patients[4].id
+        let p5Labs: [(dayOffset: Int, tests: [(name: String, value: Double, unit: String, range: String, outOfRange: Bool)])] = [
+            (-78, [
+                ("Hemoglobina", 12.2, "g/dL", "12.0-16.0", false),
+                ("Ferritina", 18, "ng/mL", "20-200", true),
+                ("Vitamina B12", 280, "pg/mL", "200-900", false),
+                ("Albúmina", 4.0, "g/dL", "3.5-5.5", false),
+                ("PCR", 3.8, "mg/L", "< 3.0", true),
+                ("Glucosa en ayunas", 82, "mg/dL", "70-100", false),
+                ("Colesterol total", 185, "mg/dL", "< 200", false),
+            ]),
+            (-30, [
+                ("Hemoglobina", 12.8, "g/dL", "12.0-16.0", false),
+                ("Ferritina", 24, "ng/mL", "20-200", false),
+                ("Vitamina B12", 310, "pg/mL", "200-900", false),
+                ("Albúmina", 4.2, "g/dL", "3.5-5.5", false),
+                ("PCR", 2.1, "mg/L", "< 3.0", false),
+                ("Glucosa en ayunas", 80, "mg/dL", "70-100", false),
+                ("Colesterol total", 182, "mg/dL", "< 200", false),
+            ]),
+        ]
+
+        for labDate in p5Labs {
+            let date = calendar.date(byAdding: .day, value: labDate.dayOffset, to: now) ?? now
+            for test in labDate.tests {
+                let record = LabResultRecord(
+                    patientId: p5l, testDate: date, testName: test.name,
+                    value: test.value, unit: test.unit,
+                    referenceRange: test.range, isOutOfRange: test.outOfRange)
+                context.insert(record)
+            }
+        }
+
+        try? context.save()
+    }
+
+    // MARK: - Patient Feedback
+
+    static func seedPatientFeedback(context: ModelContext) {
+        let descriptor = FetchDescriptor<PatientFeedbackRecord>()
+        let count = (try? context.fetchCount(descriptor)) ?? 0
+        guard count == 0 else { return }
+
+        let patients = MockPatientService.samplePatients
+        guard patients.count >= 5 else { return }
+
+        let feedbackData: [(index: Int, liked: [String], disliked: [String], banned: [String])] = [
+            (0, ["Ensaladas", "Frutas"], ["Comida frita"], ["Gluten", "Mariscos"]),
+            (1, ["Pollo", "Verduras al vapor"], ["Pan blanco"], ["Lactosa"]),
+            (2, ["Salmón", "Quinoa", "Proteína de suero"], ["Alimentos procesados"], []),
+            (3, ["Ensaladas", "Carnes magras"], ["Bebidas azucaradas"], ["Nueces", "Soya"]),
+            (4, ["Sopas", "Caldos"], ["Picante", "Alimentos grasos"], ["Huevo"]),
+        ]
+
+        for data in feedbackData {
+            let record = PatientFeedbackRecord(
+                patientId: patients[data.index].id,
+                likedFoods: data.liked,
+                dislikedFoods: data.disliked,
+                bannedFoods: data.banned
+            )
+            context.insert(record)
         }
 
         try? context.save()

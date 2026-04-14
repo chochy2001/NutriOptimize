@@ -71,6 +71,7 @@ struct MealRowView: View {
         }
         .cardStyle()
         .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
     }
 }
 

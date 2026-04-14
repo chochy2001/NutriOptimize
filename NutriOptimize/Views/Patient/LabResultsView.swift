@@ -64,16 +64,24 @@ struct LabResultsView: View {
     // MARK: - Empty State
 
     private var emptyState: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "cross.vial")
-                .font(.system(size: 48))
-                .foregroundStyle(AppTheme.deepOrange.opacity(0.4))
+        VStack(spacing: 20) {
+            ZStack {
+                Circle()
+                    .fill(AppTheme.deepOrange.opacity(0.08))
+                    .frame(width: 100, height: 100)
+                Image(systemName: "cross.vial")
+                    .font(.system(size: 44))
+                    .foregroundStyle(AppTheme.deepOrange.opacity(0.5))
+            }
+
             Text("Sin estudios registrados")
                 .font(AppTheme.subheadFont)
-            Text("Agrega resultados de laboratorio para dar seguimiento a los indicadores del paciente.")
+
+            Text("Registra resultados de laboratorio como glucosa, perfil lipídico, pruebas hepáticas y más. Podrás ver tendencias y valores fuera de rango.")
                 .font(AppTheme.captionFont)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
+                .padding(.horizontal, 24)
 
             Button {
                 showAddSheet = true

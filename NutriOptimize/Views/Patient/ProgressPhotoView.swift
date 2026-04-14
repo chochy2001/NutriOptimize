@@ -72,16 +72,24 @@ struct ProgressPhotoView: View {
     // MARK: - Empty State
 
     private var emptyState: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "camera.viewfinder")
-                .font(.system(size: 48))
-                .foregroundStyle(AppTheme.deepOrange.opacity(0.4))
+        VStack(spacing: 20) {
+            ZStack {
+                Circle()
+                    .fill(AppTheme.deepOrange.opacity(0.08))
+                    .frame(width: 100, height: 100)
+                Image(systemName: "camera.viewfinder")
+                    .font(.system(size: 44))
+                    .foregroundStyle(AppTheme.deepOrange.opacity(0.5))
+            }
+
             Text("Sin fotos de progreso")
                 .font(AppTheme.subheadFont)
-            Text("Toma o selecciona fotos para documentar el progreso del paciente.")
+
+            Text("Documenta visualmente la evolución del paciente con fotos periódicas. Podrás compararlas en una galería organizada por fecha.")
                 .font(AppTheme.captionFont)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
+                .padding(.horizontal, 24)
 
             Button {
                 showSourcePicker = true

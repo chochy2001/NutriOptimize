@@ -13,10 +13,14 @@ struct MacrosBadgeView: View {
         HStack(spacing: 14) {
             if showCalories {
                 macroItem(label: "kcal", value: macros.totalCalories, color: AppTheme.calorieColor, icon: "flame.fill")
+                    .accessibilityLabel("\(Int(macros.totalCalories)) kilocalorías")
             }
-            macroItem(label: "Prot", value: macros.protein, color: AppTheme.proteinColor, icon: "p.circle.fill", unit: "g")
-            macroItem(label: "Carbs", value: macros.carbohydrates, color: AppTheme.carbColor, icon: "c.circle.fill", unit: "g")
-            macroItem(label: "Grasa", value: macros.fat, color: AppTheme.fatColor, icon: "f.circle.fill", unit: "g")
+            macroItem(label: "Prot", value: macros.protein, color: AppTheme.proteinColor, icon: "bolt.fill", unit: "g")
+                .accessibilityLabel("\(Int(macros.protein)) gramos de proteína")
+            macroItem(label: "Carbs", value: macros.carbohydrates, color: AppTheme.carbColor, icon: "leaf.fill", unit: "g")
+                .accessibilityLabel("\(Int(macros.carbohydrates)) gramos de carbohidratos")
+            macroItem(label: "Grasa", value: macros.fat, color: AppTheme.fatColor, icon: "drop.fill", unit: "g")
+                .accessibilityLabel("\(Int(macros.fat)) gramos de grasa")
         }
     }
 

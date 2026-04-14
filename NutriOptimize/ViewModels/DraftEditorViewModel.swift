@@ -1,4 +1,5 @@
 import Foundation
+import SwiftData
 
 @MainActor
 final class DraftEditorViewModel: ObservableObject {
@@ -10,6 +11,9 @@ final class DraftEditorViewModel: ObservableObject {
 
     let patientName: String
     let patientId: UUID
+
+    /// Injected from the view to persist consultation records on approval.
+    var modelContext: ModelContext?
 
     private let optimizationService: OptimizationServiceProtocol
     private let pdfService = PDFExportService()
@@ -42,7 +46,7 @@ final class DraftEditorViewModel: ObservableObject {
 
     // MARK: - Draft Lifecycle
 
-    func approveDraft() async {
+    func approveDraft(patientWeight: Double? = nil) async {
         isProcessing = true
         errorMessage = nil
 
@@ -50,6 +54,29 @@ final class DraftEditorViewModel: ObservableObject {
             let approved = try await optimizationService.approveDraft(draft)
             draft = approved
             wasApproved = true
+
+            // Persist a consultation record from the approved draft
+            if let context = modelContext {
+                let weight = patientWeight ?? 0
+                let sortedMealNames = draft.meals
+                    .sorted { $0.type.sortOrder < $1.type.sortOrder }
+                    .map(\.name)
+                    .joined(separator: ", ")
+
+                let record = ConsultationRecord(
+                    patientId: patientId,
+                    date: .now,
+                    weight: weight,
+                    totalCaloriesPrescribed: draft.totalCalories,
+                    totalProtein: draft.totalProtein,
+                    totalCarbs: draft.totalCarbs,
+                    totalFat: draft.totalFat,
+                    planSummary: sortedMealNames,
+                    clinicalNotes: draft.calculatedRationale
+                )
+                context.insert(record)
+                try? context.save()
+            }
         } catch {
             errorMessage = error.localizedDescription
         }

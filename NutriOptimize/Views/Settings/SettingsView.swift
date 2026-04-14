@@ -9,6 +9,15 @@ struct SettingsView: View {
     @State private var customPrompt: String = OpenRouterService.customPrompt
     @State private var showDebugView: Bool = UserDefaults.standard.bool(forKey: "show_engine_debug")
     @State private var showSaveConfirmation = false
+    @State private var connectionStatus: ConnectionTestStatus = .idle
+    @State private var isTestingConnection = false
+
+    enum ConnectionTestStatus: Equatable {
+        case idle
+        case testing
+        case success
+        case failure(String)
+    }
 
     var body: some View {
         NavigationStack {
@@ -45,10 +54,87 @@ struct SettingsView: View {
                 .textContentType(.password)
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
+
+            Button {
+                Task { await testConnection() }
+            } label: {
+                HStack(spacing: 8) {
+                    if connectionStatus == .testing {
+                        ProgressView()
+                            .controlSize(.small)
+                    } else {
+                        Image(systemName: connectionStatusIcon)
+                            .foregroundStyle(connectionStatusColor)
+                    }
+                    Text("Verificar conexi\u{00F3}n")
+                        .font(.system(.subheadline, design: .rounded, weight: .medium))
+                    Spacer()
+                    if case .success = connectionStatus {
+                        Text("Conectado")
+                            .font(AppTheme.captionFont)
+                            .foregroundStyle(AppTheme.success)
+                    } else if case .failure(let msg) = connectionStatus {
+                        Text(msg)
+                            .font(AppTheme.captionFont)
+                            .foregroundStyle(AppTheme.danger)
+                            .lineLimit(1)
+                    }
+                }
+            }
+            .disabled(apiKey.trimmingCharacters(in: .whitespaces).isEmpty || connectionStatus == .testing)
         } header: {
             Text("Motor de Optimizaci\u{00F3}n")
         } footer: {
             Text("Obt\u{00E9}n tu clave en openrouter.ai/keys. Se almacena localmente en el dispositivo.")
+        }
+    }
+
+    private var connectionStatusIcon: String {
+        switch connectionStatus {
+        case .idle: return "antenna.radiowaves.left.and.right"
+        case .testing: return "antenna.radiowaves.left.and.right"
+        case .success: return "checkmark.circle.fill"
+        case .failure: return "xmark.circle.fill"
+        }
+    }
+
+    private var connectionStatusColor: Color {
+        switch connectionStatus {
+        case .idle: return .secondary
+        case .testing: return .secondary
+        case .success: return AppTheme.success
+        case .failure: return AppTheme.danger
+        }
+    }
+
+    private func testConnection() async {
+        connectionStatus = .testing
+
+        guard let url = URL(string: "https://openrouter.ai/api/v1/models") else {
+            connectionStatus = .failure("URL inv\u{00E1}lida")
+            HapticManager.notification(.error)
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(apiKey.trimmingCharacters(in: .whitespaces))", forHTTPHeaderField: "Authorization")
+        request.timeoutInterval = 15
+
+        do {
+            let (_, response) = try await URLSession.shared.data(for: request)
+            if let httpResponse = response as? HTTPURLResponse,
+               (200...299).contains(httpResponse.statusCode) {
+                connectionStatus = .success
+                HapticManager.notification(.success)
+            } else {
+                let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
+                connectionStatus = .failure("Error \(statusCode)")
+                HapticManager.notification(.error)
+            }
+        } catch {
+            connectionStatus = .failure("Sin conexi\u{00F3}n")
+            HapticManager.notification(.error)
         }
     }
 

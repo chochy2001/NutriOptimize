@@ -47,16 +47,30 @@ struct PatientHistoryView: View {
     // MARK: - Empty State
 
     private var emptyState: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "chart.line.uptrend.xyaxis")
-                .font(.system(size: 48))
-                .foregroundStyle(AppTheme.deepOrange.opacity(0.4))
+        VStack(spacing: 20) {
+            ZStack {
+                Circle()
+                    .fill(AppTheme.deepOrange.opacity(0.08))
+                    .frame(width: 100, height: 100)
+                Image(systemName: "chart.line.uptrend.xyaxis")
+                    .font(.system(size: 44))
+                    .foregroundStyle(AppTheme.deepOrange.opacity(0.5))
+            }
+
             Text("Sin consultas registradas")
                 .font(AppTheme.subheadFont)
-            Text("Las consultas aparecerán aquí conforme se registren.")
+
+            Text("Aquí se mostrará el historial de consultas, gráficas de progreso de peso, composición corporal y evolución de macronutrientes a lo largo del tiempo.")
                 .font(AppTheme.captionFont)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
+                .padding(.horizontal, 24)
+
+            Text("Aprueba un plan nutricional desde el editor para crear la primera consulta.")
+                .font(.system(.caption, design: .rounded, weight: .medium))
+                .foregroundStyle(AppTheme.deepOrange)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 24)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 60)

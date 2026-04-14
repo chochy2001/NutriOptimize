@@ -84,7 +84,8 @@ struct DraftEditorView: View {
             Button("Cancelar", role: .cancel) {}
             Button("Aprobar") {
                 Task {
-                    await viewModel.approveDraft()
+                    viewModel.modelContext = modelContext
+                    await viewModel.approveDraft(patientWeight: patient?.weight)
                     if viewModel.wasApproved {
                         HapticManager.notification(.success)
                     }
@@ -222,7 +223,7 @@ struct DraftEditorView: View {
                 }
             }
 
-            ForEach(viewModel.draft.meals) { meal in
+            ForEach(viewModel.draft.meals.sorted { $0.type.sortOrder < $1.type.sortOrder }) { meal in
                 MealRowView(
                     meal: meal,
                     onEdit: { editingMeal = meal },
