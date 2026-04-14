@@ -13,6 +13,7 @@ struct PatientDetailView: View {
                 profileHeader
                 metricsGrid
                 clinicalInfo
+                patientActionsSection
                 feedbackButton
                 generateButton
             }
@@ -162,6 +163,68 @@ struct PatientDetailView: View {
                         .foregroundStyle(color)
                 }
             }
+        }
+        .cardStyle()
+    }
+
+    // MARK: - Patient Actions (History, Photos, Lab Results)
+
+    private var patientActionsSection: some View {
+        VStack(spacing: 10) {
+            NavigationLink {
+                PatientHistoryView(patientId: viewModel.patient.id, patientName: viewModel.patient.fullName)
+            } label: {
+                actionRow(
+                    icon: "chart.line.uptrend.xyaxis",
+                    title: "Historial de consultas",
+                    subtitle: "Gráficas de progreso y línea de tiempo"
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink {
+                ProgressPhotoView(patientId: viewModel.patient.id, patientName: viewModel.patient.fullName)
+            } label: {
+                actionRow(
+                    icon: "camera.viewfinder",
+                    title: "Fotos de progreso",
+                    subtitle: "Registro fotográfico del avance"
+                )
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink {
+                LabResultsView(patientId: viewModel.patient.id, patientName: viewModel.patient.fullName)
+            } label: {
+                actionRow(
+                    icon: "cross.vial",
+                    title: "Estudios de laboratorio",
+                    subtitle: "Resultados y tendencias de análisis clínicos"
+                )
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    private func actionRow(icon: String, title: String, subtitle: String) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .font(.title3)
+                .foregroundStyle(AppTheme.deepOrange)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(AppTheme.subheadFont)
+                Text(subtitle)
+                    .font(AppTheme.captionFont)
+                    .foregroundStyle(.secondary)
+            }
+
+            Spacer()
+
+            Image(systemName: "chevron.right")
+                .font(.caption)
+                .foregroundStyle(.tertiary)
         }
         .cardStyle()
     }
