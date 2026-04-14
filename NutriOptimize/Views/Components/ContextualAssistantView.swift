@@ -193,9 +193,9 @@ enum InsightGenerator {
         let sorted = consultations.sorted { $0.date < $1.date }
 
         // Weight trend analysis
-        if sorted.count >= 2 {
-            let first = sorted.first!.weight
-            let last = sorted.last!.weight
+        if sorted.count >= 2, let firstRecord = sorted.first, let lastRecord = sorted.last {
+            let first = firstRecord.weight
+            let last = lastRecord.weight
             let diff = last - first
             let isLoss = patientGoals.localizedCaseInsensitiveContains("pérdida")
                 || patientGoals.localizedCaseInsensitiveContains("reducción")
@@ -221,7 +221,8 @@ enum InsightGenerator {
         if sorted.count >= 3 {
             let calories = sorted.map { $0.totalCaloriesPrescribed }
             let avg = calories.reduce(0, +) / Double(calories.count)
-            let lastCal = sorted.last!.totalCaloriesPrescribed
+            guard let lastConsult = sorted.last else { return insights }
+            let lastCal = lastConsult.totalCaloriesPrescribed
             if abs(lastCal - avg) > 200 {
                 insights.append(AssistantInsight(.question,
                     message: "La última prescripción calórica (\(Int(lastCal)) kcal) difiere significativamente del promedio (\(Int(avg)) kcal). ¿Fue un ajuste intencional?"))
@@ -264,7 +265,8 @@ enum InsightGenerator {
         let glucoseResults = results.filter { $0.testName.contains("Glucosa") }
             .sorted { $0.testDate < $1.testDate }
         if glucoseResults.count >= 2 {
-            let trend = glucoseResults.last!.value - glucoseResults.first!.value
+            guard let lastGlucose = glucoseResults.last, let firstGlucose = glucoseResults.first else { return insights }
+            let trend = lastGlucose.value - firstGlucose.value
             if trend > 10 {
                 insights.append(AssistantInsight(.warning,
                     message: "La glucosa en ayunas ha aumentado \(Int(trend)) mg/dL entre mediciones. ¿El paciente está controlando sus carbohidratos?"))
