@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A3DFB61F05FCB3AE7C1E004 /* OptimizationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D277DB36B7E8F1B944F3451 /* OptimizationServiceProtocol.swift */; };
+		0F011908C5AF05B1F28C2C54 /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA4BB47E437856074EB9C30 /* Patient.swift */; };
+		157D8334B4234BBE9C431FBB /* MacrosBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC80E41F7611CADE593AE9C /* MacrosBadgeView.swift */; };
+		15A891BEA07B48C7357011BD /* PatientDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F6CB0C92C7A95B4EE6F364 /* PatientDetailViewModel.swift */; };
+		1C23FA42DD0691D508867271 /* MealRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DC692955D3FADEF2727738 /* MealRowView.swift */; };
+		1CE9322BEADF504D3B74C74D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AF078C9F46592C44F3E995 /* AppTheme.swift */; };
+		1D5DD551CB857EADF844E4B7 /* MockOptimizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA494FA2341C4F18BC576DC /* MockOptimizationService.swift */; };
+		1E9A44AAF3C27D9EE8996A1F /* DraftEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28BD3DB3B95E2843718541A /* DraftEditorViewModel.swift */; };
+		2C961B97CB0CD5F9610A89FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 022B118448A5F21AFC5077C0 /* Assets.xcassets */; };
+		2E0F03BD62F7A6F15DFBDBEB /* Professional.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD05BBD34816D3804AE5744 /* Professional.swift */; };
+		2F2F44C6C7FC1D2EECBEE1BC /* ProcessingStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9CF0B40A4774FE7067CEB /* ProcessingStateView.swift */; };
+		3C33865974D22BB1D0054909 /* OptimizationDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EBE73E75F60D3660C9B090 /* OptimizationDashboardViewModel.swift */; };
+		4E20C2070C82038322B4B2E1 /* NutriOptimizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */; };
+		71A1A5C9C5FD0E72CB3954B8 /* DraftEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3637EA2BBE27AD5D6E51E49 /* DraftEditorView.swift */; };
+		85BBA955F459B0DD7F2E7B27 /* MockPatientService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C3E6C263E175CE0DF2105A /* MockPatientService.swift */; };
+		99617DCB15E810A556AC5D42 /* OptimizationDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B7A5DE9153D162E4C9F660 /* OptimizationDashboardView.swift */; };
+		9A657349A4DB539B06AF3754 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F985C8464519385895968E3A /* Meal.swift */; };
+		9C25989DFB3A03333B113A94 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9CEE7389210D658925059 /* ServiceError.swift */; };
+		B5C5CE988D9B9D5906CA1095 /* EditMealSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C215AC29F093FD14CA5FDEB /* EditMealSheet.swift */; };
+		BFF9B9E2C6B629AB4D290B87 /* PatientDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E8E3306F12044ABE944871 /* PatientDetailView.swift */; };
+		CB88814A6493E81E89513061 /* PatientServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4845A9ECB57442F50A1090 /* PatientServiceProtocol.swift */; };
+		F8B2D77162E99FB6A6C8BD97 /* PlanOptimizationDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2303941614F220B6DFC7B984 /* PlanOptimizationDraft.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		022B118448A5F21AFC5077C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		03DC692955D3FADEF2727738 /* MealRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRowView.swift; sourceTree = "<group>"; };
+		10C3E6C263E175CE0DF2105A /* MockPatientService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPatientService.swift; sourceTree = "<group>"; };
+		11D9CEE7389210D658925059 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
+		19F6CB0C92C7A95B4EE6F364 /* PatientDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailViewModel.swift; sourceTree = "<group>"; };
+		20AF078C9F46592C44F3E995 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		2303941614F220B6DFC7B984 /* PlanOptimizationDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanOptimizationDraft.swift; sourceTree = "<group>"; };
+		41E8E3306F12044ABE944871 /* PatientDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailView.swift; sourceTree = "<group>"; };
+		4DE69CBE8B3BAAE73476AE51 /* NutriOptimize.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NutriOptimize.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C4845A9ECB57442F50A1090 /* PatientServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientServiceProtocol.swift; sourceTree = "<group>"; };
+		6D277DB36B7E8F1B944F3451 /* OptimizationServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationServiceProtocol.swift; sourceTree = "<group>"; };
+		7EA494FA2341C4F18BC576DC /* MockOptimizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOptimizationService.swift; sourceTree = "<group>"; };
+		88B7A5DE9153D162E4C9F660 /* OptimizationDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationDashboardView.swift; sourceTree = "<group>"; };
+		8C215AC29F093FD14CA5FDEB /* EditMealSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMealSheet.swift; sourceTree = "<group>"; };
+		9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutriOptimizeApp.swift; sourceTree = "<group>"; };
+		B28BD3DB3B95E2843718541A /* DraftEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftEditorViewModel.swift; sourceTree = "<group>"; };
+		B4EBE73E75F60D3660C9B090 /* OptimizationDashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationDashboardViewModel.swift; sourceTree = "<group>"; };
+		BCC80E41F7611CADE593AE9C /* MacrosBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacrosBadgeView.swift; sourceTree = "<group>"; };
+		C3637EA2BBE27AD5D6E51E49 /* DraftEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftEditorView.swift; sourceTree = "<group>"; };
+		CAA4BB47E437856074EB9C30 /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
+		CDE9CF0B40A4774FE7067CEB /* ProcessingStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingStateView.swift; sourceTree = "<group>"; };
+		EAD05BBD34816D3804AE5744 /* Professional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Professional.swift; sourceTree = "<group>"; };
+		F985C8464519385895968E3A /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1D78746E69FD4286A0F9ABE2 /* NutriOptimize */ = {
+			isa = PBXGroup;
+			children = (
+				022B118448A5F21AFC5077C0 /* Assets.xcassets */,
+				9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */,
+				EC2C1408379E428186FBDAFA /* Models */,
+				C974A439EEF0B89CA79F8443 /* Services */,
+				FD0B9660BF2F1177133529CF /* Theme */,
+				4EA6351799C035A40DE4584E /* ViewModels */,
+				5CBB842EE730D63694199A2A /* Views */,
+			);
+			path = NutriOptimize;
+			sourceTree = "<group>";
+		};
+		3C532F3FB8568F91430CD763 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				8C215AC29F093FD14CA5FDEB /* EditMealSheet.swift */,
+				BCC80E41F7611CADE593AE9C /* MacrosBadgeView.swift */,
+				03DC692955D3FADEF2727738 /* MealRowView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		4EA6351799C035A40DE4584E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B28BD3DB3B95E2843718541A /* DraftEditorViewModel.swift */,
+				B4EBE73E75F60D3660C9B090 /* OptimizationDashboardViewModel.swift */,
+				19F6CB0C92C7A95B4EE6F364 /* PatientDetailViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5CBB842EE730D63694199A2A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3C532F3FB8568F91430CD763 /* Components */,
+				BA1A5E64EE02EE83129B019B /* Dashboard */,
+				B66DBFE9014E986775AC4273 /* Draft */,
+				E387845BE1839156C427FAB0 /* Patient */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		73980FDB39C23EA59BEAB5FE /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				6D277DB36B7E8F1B944F3451 /* OptimizationServiceProtocol.swift */,
+				5C4845A9ECB57442F50A1090 /* PatientServiceProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		73CBC403E4820BAF21318DCF /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				7EA494FA2341C4F18BC576DC /* MockOptimizationService.swift */,
+				10C3E6C263E175CE0DF2105A /* MockPatientService.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		A222BDAAA24CA6FA8BE5A41C = {
+			isa = PBXGroup;
+			children = (
+				1D78746E69FD4286A0F9ABE2 /* NutriOptimize */,
+				D88D98D12E6DD25B9BF3DC42 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B66DBFE9014E986775AC4273 /* Draft */ = {
+			isa = PBXGroup;
+			children = (
+				C3637EA2BBE27AD5D6E51E49 /* DraftEditorView.swift */,
+				CDE9CF0B40A4774FE7067CEB /* ProcessingStateView.swift */,
+			);
+			path = Draft;
+			sourceTree = "<group>";
+		};
+		BA1A5E64EE02EE83129B019B /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				88B7A5DE9153D162E4C9F660 /* OptimizationDashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		C974A439EEF0B89CA79F8443 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				73CBC403E4820BAF21318DCF /* Mock */,
+				73980FDB39C23EA59BEAB5FE /* Protocols */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D88D98D12E6DD25B9BF3DC42 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4DE69CBE8B3BAAE73476AE51 /* NutriOptimize.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E387845BE1839156C427FAB0 /* Patient */ = {
+			isa = PBXGroup;
+			children = (
+				41E8E3306F12044ABE944871 /* PatientDetailView.swift */,
+			);
+			path = Patient;
+			sourceTree = "<group>";
+		};
+		EC2C1408379E428186FBDAFA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F985C8464519385895968E3A /* Meal.swift */,
+				CAA4BB47E437856074EB9C30 /* Patient.swift */,
+				2303941614F220B6DFC7B984 /* PlanOptimizationDraft.swift */,
+				EAD05BBD34816D3804AE5744 /* Professional.swift */,
+				11D9CEE7389210D658925059 /* ServiceError.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FD0B9660BF2F1177133529CF /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				20AF078C9F46592C44F3E995 /* AppTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		24E0CE2B721F416A732D15F9 /* NutriOptimize */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 628C794864F514318A966B27 /* Build configuration list for PBXNativeTarget "NutriOptimize" */;
+			buildPhases = (
+				31A00A98906FF2A3DB00ED31 /* Sources */,
+				582DACC441C06C9C14729922 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NutriOptimize;
+			packageProductDependencies = (
+			);
+			productName = NutriOptimize;
+			productReference = 4DE69CBE8B3BAAE73476AE51 /* NutriOptimize.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3A39577DB88105311DE37F31 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 54D952A391FCA35E40A60ADF /* Build configuration list for PBXProject "NutriOptimize" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = A222BDAAA24CA6FA8BE5A41C;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D88D98D12E6DD25B9BF3DC42 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				24E0CE2B721F416A732D15F9 /* NutriOptimize */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		582DACC441C06C9C14729922 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C961B97CB0CD5F9610A89FF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		31A00A98906FF2A3DB00ED31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CE9322BEADF504D3B74C74D /* AppTheme.swift in Sources */,
+				71A1A5C9C5FD0E72CB3954B8 /* DraftEditorView.swift in Sources */,
+				1E9A44AAF3C27D9EE8996A1F /* DraftEditorViewModel.swift in Sources */,
+				B5C5CE988D9B9D5906CA1095 /* EditMealSheet.swift in Sources */,
+				157D8334B4234BBE9C431FBB /* MacrosBadgeView.swift in Sources */,
+				9A657349A4DB539B06AF3754 /* Meal.swift in Sources */,
+				1C23FA42DD0691D508867271 /* MealRowView.swift in Sources */,
+				1D5DD551CB857EADF844E4B7 /* MockOptimizationService.swift in Sources */,
+				85BBA955F459B0DD7F2E7B27 /* MockPatientService.swift in Sources */,
+				4E20C2070C82038322B4B2E1 /* NutriOptimizeApp.swift in Sources */,
+				99617DCB15E810A556AC5D42 /* OptimizationDashboardView.swift in Sources */,
+				3C33865974D22BB1D0054909 /* OptimizationDashboardViewModel.swift in Sources */,
+				0A3DFB61F05FCB3AE7C1E004 /* OptimizationServiceProtocol.swift in Sources */,
+				0F011908C5AF05B1F28C2C54 /* Patient.swift in Sources */,
+				BFF9B9E2C6B629AB4D290B87 /* PatientDetailView.swift in Sources */,
+				15A891BEA07B48C7357011BD /* PatientDetailViewModel.swift in Sources */,
+				CB88814A6493E81E89513061 /* PatientServiceProtocol.swift in Sources */,
+				F8B2D77162E99FB6A6C8BD97 /* PlanOptimizationDraft.swift in Sources */,
+				2F2F44C6C7FC1D2EECBEE1BC /* ProcessingStateView.swift in Sources */,
+				2E0F03BD62F7A6F15DFBDBEB /* Professional.swift in Sources */,
+				9C25989DFB3A03333B113A94 /* ServiceError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		298522B3429ED27938ED92FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nutrioptimize.NutriOptimize;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9A74D7D95EFA10E1A0E9392A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nutrioptimize.NutriOptimize;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CAA1F61782320F5FD36EE445 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D5F396BFFEEA6FA131F78692 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		54D952A391FCA35E40A60ADF /* Build configuration list for PBXProject "NutriOptimize" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CAA1F61782320F5FD36EE445 /* Debug */,
+				D5F396BFFEEA6FA131F78692 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		628C794864F514318A966B27 /* Build configuration list for PBXNativeTarget "NutriOptimize" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A74D7D95EFA10E1A0E9392A /* Debug */,
+				298522B3429ED27938ED92FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3A39577DB88105311DE37F31 /* Project object */;
+}
