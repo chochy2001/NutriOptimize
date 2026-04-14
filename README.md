@@ -65,6 +65,12 @@ La interfaz fue diseñada para el flujo de trabajo real de un nutriólogo: regis
 - **Vista de depuración del motor de optimización** — Inspección del prompt enviado y la respuesta cruda del motor para verificación profesional.
 - **Configuración de clave API y personalización del prompt** — El nutriólogo configura su conexión al motor y personaliza el comportamiento según su estilo de prescripción.
 - **Consideración de presupuesto alimentario del paciente** — El motor prioriza ingredientes costo-efectivos cuando se especifica un presupuesto mensual en MXN.
+- **Sistema de feedback sobre recomendaciones** — El nutriólogo marca alimentos como "preferido", "evitar" o "nunca más", y el motor los considera en futuras propuestas.
+- **Historial de consultas con gráficas (Swift Charts)** — Seguimiento longitudinal de peso, composición corporal, calorías prescritas y distribución de macros con gráficas interactivas.
+- **Fotos de progreso del paciente** — Captura desde cámara o galería para documentar visualmente el avance entre consultas.
+- **Estudios de laboratorio con tendencias** — Registro de glucosa, colesterol, triglicéridos, TSH y más, con código de colores y flechas de tendencia.
+- **Datos demo realistas precargados** — 5 pacientes con 6 consultas de historial, resultados de laboratorio y mediciones corporales para demo presencial.
+- **Perfil de paciente rediseñado** — Layout centrado con avatar, pills informativos, grid 2x2 de herramientas clínicas y secciones editables.
 
 ---
 

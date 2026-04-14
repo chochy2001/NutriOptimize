@@ -343,23 +343,45 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 ## Funcionalidades Planificadas
 
 ### 15. Historial de Consultas y Progreso con Gráficas
-**Estado:** 📋 Planificado (Fase 2)
+**Estado:** ✅ Implementado
 
-Registro longitudinal de cada consulta del paciente con visualización de tendencias de peso, IMC y adherencia calórica a lo largo del tiempo.
+Registro longitudinal de cada consulta con visualización de tendencias mediante Swift Charts:
+- Gráfica de peso con relleno gradiente y marcadores de datos
+- Gráfica de composición corporal (cintura, cadera, brazo)
+- Gráfica de calorías prescritas por consulta (barras)
+- Gráfica de distribución de macros (proteína, carbohidratos, grasa)
+- Línea de tiempo vertical con notas clínicas expandibles
+- Datos demo realistas: 6 consultas con progreso de peso
+
+**Archivos:** `ConsultationRecord.swift`, `PatientHistoryView.swift`, `DemoDataSeeder.swift`
 
 ---
 
 ### 16. Fotos de Progreso del Paciente
-**Estado:** 📋 Planificado (Fase 2)
+**Estado:** ✅ Implementado
 
-Captura fotográfica desde la cámara del dispositivo para documentar visualmente el progreso del paciente entre consultas.
+Captura fotográfica desde la cámara o galería del dispositivo:
+- Grid de fotos por paciente ordenadas por fecha
+- Vista de pantalla completa al tocar
+- Soporte de cámara (UIImagePickerController) y galería (PHPicker)
+- Fotos guardadas en directorio Documents de la app
+- Vinculación con registros de consulta
+
+**Archivos:** `ProgressPhotoView.swift`, `PhotoCaptureView.swift`
 
 ---
 
 ### 17. Integración de Estudios de Laboratorio
-**Estado:** 📋 Planificado (Fase 2)
+**Estado:** ✅ Implementado
 
-Registro de resultados de laboratorio (perfil lipídico, glucosa, hemoglobina, etc.) para que el motor los considere en la generación de planes.
+Registro de resultados de laboratorio con análisis de tendencias:
+- 12 plantillas de estudios comunes (Glucosa, HbA1c, Colesterol, Triglicéridos, HDL, LDL, TSH, T3, T4, Hemoglobina, Albúmina, Creatinina)
+- Agrupación por fecha con código de colores (verde normal, rojo fuera de rango)
+- Flechas de tendencia comparando con resultado anterior
+- Formulario para agregar nuevos resultados
+- Datos demo realistas para 2 pacientes
+
+**Archivos:** `LabResult.swift`, `LabResultsView.swift`, `DemoDataSeeder.swift`
 
 ---
 
