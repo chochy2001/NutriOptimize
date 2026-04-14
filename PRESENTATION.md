@@ -42,6 +42,7 @@ Principios HCAI que guían NutriOptimize:
 3. **Control total** — El profesional puede editar, agregar, eliminar o sobreescribir cualquier comida o ingrediente.
 4. **Sin decisiones automatizadas** — Ningún plan llega al paciente sin revisión humana explícita.
 5. **Verificabilidad** — Vista de depuración que muestra exactamente qué datos se enviaron y qué respondió el motor.
+6. **Asistente contextual HCAI** — El asistente observa, pregunta y sugiere — pero NUNCA decide. Genera observaciones clínicas y formula preguntas al nutriólogo para guiar su razonamiento, sin emitir diagnósticos ni instrucciones.
 
 **Flujo HCAI:**
 
@@ -114,15 +115,22 @@ Datos del Paciente → Motor de Optimización → Borrador
 - Prompt personalizable por el nutriólogo según su estilo de prescripción
 - Alimentos y porciones en español mexicano
 
+**Asistente Clínico Contextual**
+- Asistente integrado que analiza datos del paciente y formula preguntas al nutriólogo
+- Disponible en perfil, historial, laboratorios y retroalimentación
+- Importación de estudios de laboratorio desde PDF para análisis inmediato
+
 **Editor de Planes**
 - Edición granular: nombre, ingredientes, macros, porciones, tipo de comida
 - Agregar/eliminar comidas libremente
+- Plantillas rápidas para comidas frecuentes
 - Totales recalculados en tiempo real
 - Aprobar o descartar el borrador
 
-**Exportación**
+**Productividad**
 - PDF profesional con branding, datos del paciente, resumen nutricional y análisis del motor
 - Listo para compartir por WhatsApp
+- Centro de ayuda integrado con guías paso a paso y preguntas frecuentes
 
 ---
 
@@ -147,9 +155,10 @@ Datos del Paciente → Motor de Optimización → Borrador
 
 | Fase | Funcionalidades | Estado |
 |------|----------------|--------|
-| **Fase 1 — MVP** | CRUD de pacientes, motor de optimización, editor de borradores, exportación PDF, dashboard, cálculos clínicos | ✅ Actual |
-| **Fase 2 — Seguimiento** | Historial de consultas, gráficas de progreso, fotos del paciente, estudios de laboratorio | 📋 Siguiente |
-| **Fase 3 — Productividad** | Agenda y citas, asistente contextual por sección, personalización del motor por paciente | 📋 Planificado |
+| **Fase 1 — MVP** | CRUD de pacientes, motor de optimización, editor de borradores, exportación PDF, dashboard, cálculos clínicos | ✅ Completado |
+| **Fase 2 — Seguimiento** | Historial de consultas, gráficas de progreso, fotos del paciente, estudios de laboratorio, importación PDF/JSON | ✅ Completado |
+| **Fase 3 — Productividad** | Asistente clínico contextual, plantillas rápidas, centro de ayuda | ✅ Parcial |
+| **Fase 3b — Pendiente** | Agenda y citas, personalización del motor por paciente | 📋 Siguiente |
 | **Fase 4 — Escala** | Backend remoto, soporte multi-nutriólogo, cumplimiento NOM-051 y COFEPRIS | 📋 Futuro |
 
 ---

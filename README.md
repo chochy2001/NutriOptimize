@@ -186,15 +186,19 @@ NutriOptimize/
 │   │   ├── PatientFeedbackView.swift
 │   │   ├── PatientHistoryView.swift
 │   │   ├── LabResultsView.swift
+│   │   ├── LabImportView.swift          # Importación de estudios PDF/JSON
 │   │   ├── PhotoCaptureView.swift
 │   │   └── ProgressPhotoView.swift
 │   ├── Draft/
 │   │   ├── DraftEditorView.swift
 │   │   ├── ProcessingStateView.swift
 │   │   └── EngineDebugView.swift
+│   ├── Help/
+│   │   └── HelpView.swift               # Centro de ayuda con guías y FAQs
 │   ├── Settings/
 │   │   └── SettingsView.swift
 │   └── Components/
+│       ├── ContextualAssistantView.swift # Asistente clínico contextual
 │       ├── EditMealSheet.swift
 │       ├── MealRowView.swift
 │       └── MacrosBadgeView.swift
@@ -222,15 +226,18 @@ NutriOptimizeTests/
 
 ## Roadmap
 
-### Fase 2 — Seguimiento del Paciente
+### Fase 2 — Seguimiento del Paciente ✅
 - Historial de consultas y progreso del paciente con gráficas
 - Fotos de progreso del paciente con cámara
 - Integración de estudios de laboratorio (sangre, etc.)
+- Importación de estudios desde PDF y JSON
 
-### Fase 3 — Productividad Clínica
-- Agenda y citas
-- Asistente contextual en cada sección
-- Personalización del motor por paciente
+### Fase 3 — Productividad Clínica (parcial ✅)
+- Asistente clínico contextual en cada sección ✅
+- Plantillas rápidas para pacientes y comidas ✅
+- Centro de ayuda in-app ✅
+- Agenda y citas (pendiente)
+- Personalización del motor por paciente (pendiente)
 
 ### Fase 4 — Escala y Cumplimiento
 - Sincronización con backend remoto
