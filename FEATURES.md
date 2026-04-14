@@ -385,35 +385,82 @@ Registro de resultados de laboratorio con análisis de tendencias:
 
 ---
 
-### 18. Agenda y Citas
+### 18. Datos Demo Realistas para 5 Pacientes
+**Estado:** ✅ Implementado
+
+Datos de demostración precargados con 5 pacientes completos, cada uno con 6 consultas históricas, resultados de laboratorio y mediciones de composición corporal. Permite demostrar todas las funcionalidades sin necesidad de ingresar datos manualmente.
+
+**Archivos:** `DemoDataSeeder.swift`, `MockPatientService.swift`
+
+---
+
+### 19. Verificación de Conexión API
+**Estado:** ✅ Implementado
+
+Comprobación visual del estado de conexión al motor de optimización en la vista de configuración. Muestra si la API key es válida y el servicio está disponible, con fallback automático a datos mock.
+
+**Archivos:** `SettingsView.swift`, `OpenRouterService.swift`
+
+---
+
+### 20. Accesibilidad (Labels en Componentes)
+**Estado:** ✅ Implementado
+
+Labels descriptivos en elementos interactivos para compatibilidad con lectores de pantalla (VoiceOver). Mejora la experiencia para usuarios con discapacidad visual.
+
+**Archivos:** Componentes en `Views/Components/`, `Views/Dashboard/`, `Views/Patient/`
+
+---
+
+### 21. Comidas Ordenadas por Tipo
+**Estado:** ✅ Implementado
+
+Las comidas en el editor de borradores y en el PDF exportado se ordenan automáticamente por `MealType.sortOrder`: Desayuno (0), Snack (1), Comida (2), Cena (3). Garantiza un orden clínico consistente.
+
+**Archivos:** `Meal.swift`, `DraftEditorView.swift`, `PDFExportService.swift`
+
+---
+
+### 22. Registro de Consulta al Aprobar Plan
+**Estado:** ✅ Implementado
+
+Al aprobar un borrador de plan alimenticio, se genera automáticamente un `ConsultationRecord` con los datos del plan aprobado (calorías, macros, notas). Este registro alimenta el historial de consultas y las gráficas de progreso del paciente.
+
+**Archivos:** `ConsultationRecord.swift`, `DraftEditorViewModel.swift`, `PatientHistoryView.swift`
+
+---
+
+## Funcionalidades Planificadas
+
+### 23. Agenda y Citas
 **Estado:** 📋 Planificado (Fase 3)
 
 Calendario integrado para gestionar citas con pacientes, recordatorios y seguimiento de asistencia.
 
 ---
 
-### 19. Asistente Contextual por Sección
+### 24. Asistente Contextual por Sección
 **Estado:** 📋 Planificado (Fase 3)
 
 Motor de asistencia integrado en cada sección de la app que responde preguntas contextuales del nutriólogo sobre el paciente actual, los datos clínicos o el plan en edición.
 
 ---
 
-### 20. Personalización del Motor por Paciente
+### 25. Personalización del Motor por Paciente
 **Estado:** 📋 Planificado (Fase 3)
 
 Configuración de prompts y parámetros del motor a nivel de paciente individual, permitiendo ajustes más finos que el prompt global.
 
 ---
 
-### 21. Sincronización con Backend Remoto
+### 26. Sincronización con Backend Remoto
 **Estado:** 📋 Planificado (Fase 4)
 
 Backend en la nube para sincronizar datos entre dispositivos, respaldos automáticos y soporte multi-nutriólogo en una misma clínica.
 
 ---
 
-### 22. Cumplimiento NOM-051 y COFEPRIS
+### 27. Cumplimiento NOM-051 y COFEPRIS
 **Estado:** 📋 Planificado (Fase 4)
 
 Validación de planes alimenticios contra la normativa mexicana de etiquetado (NOM-051) y lineamientos de COFEPRIS para recomendaciones nutricionales profesionales.

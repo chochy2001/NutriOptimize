@@ -71,6 +71,41 @@ La interfaz fue diseñada para el flujo de trabajo real de un nutriólogo: regis
 - **Estudios de laboratorio con tendencias** — Registro de glucosa, colesterol, triglicéridos, TSH y más, con código de colores y flechas de tendencia.
 - **Datos demo realistas precargados** — 5 pacientes con 6 consultas de historial, resultados de laboratorio y mediciones corporales para demo presencial.
 - **Perfil de paciente rediseñado** — Layout centrado con avatar, pills informativos, grid 2x2 de herramientas clínicas y secciones editables.
+- **Datos demo realistas para 5 pacientes** — Historiales de 6 consultas, laboratorios y mediciones precargados para demostración presencial.
+- **Verificación de conexión API** — Comprobación de disponibilidad del motor con estado visual en configuración.
+- **Accesibilidad (labels en componentes)** — Labels descriptivos en elementos interactivos para lectores de pantalla.
+- **Comidas ordenadas por tipo** — Meals ordenadas por sortOrder (Desayuno, Snack, Comida, Cena) en editor y PDF.
+- **Registro de consulta al aprobar plan** — Al aprobar un borrador se genera automáticamente un ConsultationRecord con los datos del plan.
+
+---
+
+## Tests
+
+El proyecto incluye 84 pruebas unitarias organizadas en 6 suites:
+
+```bash
+# Regenerar proyecto (si se modificó project.yml)
+xcodegen generate
+
+# Compilar
+xcodebuild -project NutriOptimize.xcodeproj -scheme NutriOptimize -sdk iphonesimulator build
+
+# Ejecutar tests
+xcodebuild -project NutriOptimize.xcodeproj -scheme NutriOptimizeTests \
+  -sdk iphonesimulator \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+  test
+```
+
+**Suites de prueba:**
+| Suite | Tests | Cobertura |
+|---|---|---|
+| `PatientModelTests` | 17 | BMI, TMB, TDEE, presupuesto, PAL factors |
+| `MealModelTests` | 17 | Macros, calorías, porcentajes, MealType, inicialización |
+| `PlanOptimizationDraftTests` | 15 | Agregados, agrupación por tipo, adherencia calórica |
+| `MockOptimizationServiceTests` | 13 | Generación, aprobación, descarte, drafts pendientes |
+| `PDFExportServiceTests` | 5 | Generación PDF, header %PDF, paginación |
+| `OpenRouterServiceTests` | 17 | Construcción de prompts, alergias, presupuesto, feedback |
 
 ---
 
@@ -114,15 +149,19 @@ open NutriOptimize.xcodeproj
 ```
 NutriOptimize/
 ├── Models/
-│   ├── Patient.swift              # Perfil clínico con datos antropométricos
-│   ├── Meal.swift                 # Comida con macronutrientes y tipo
-│   ├── PlanOptimizationDraft.swift # Borrador de plan con estado de revisión
-│   ├── Professional.swift         # Modelo del profesional
-│   └── ServiceError.swift         # Errores tipados del dominio
+│   ├── Patient.swift                # Perfil clínico con datos antropométricos
+│   ├── Meal.swift                   # Comida con macronutrientes y tipo
+│   ├── PlanOptimizationDraft.swift   # Borrador de plan con estado de revisión
+│   ├── ConsultationRecord.swift      # Registro de consulta (SwiftData)
+│   ├── LabResult.swift               # Resultados de laboratorio
+│   ├── RecommendationFeedback.swift  # Feedback sobre recomendaciones
+│   ├── Professional.swift           # Modelo del profesional
+│   └── ServiceError.swift           # Errores tipados del dominio
 ├── Services/
-│   ├── OpenRouterService.swift    # Motor de optimización (producción)
-│   ├── PDFExportService.swift     # Generador de PDF profesional
-│   ├── PatientStore.swift         # CRUD con SwiftData
+│   ├── OpenRouterService.swift      # Motor de optimización (producción)
+│   ├── PDFExportService.swift       # Generador de PDF profesional
+│   ├── PatientStore.swift           # CRUD con SwiftData
+│   ├── DemoDataSeeder.swift         # Datos demo para 5 pacientes
 │   ├── Protocols/
 │   │   ├── OptimizationServiceProtocol.swift
 │   │   └── PatientServiceProtocol.swift
@@ -138,7 +177,12 @@ NutriOptimize/
 │   │   └── OptimizationDashboardView.swift
 │   ├── Patient/
 │   │   ├── PatientDetailView.swift
-│   │   └── AddEditPatientView.swift
+│   │   ├── AddEditPatientView.swift
+│   │   ├── PatientFeedbackView.swift
+│   │   ├── PatientHistoryView.swift
+│   │   ├── LabResultsView.swift
+│   │   ├── PhotoCaptureView.swift
+│   │   └── ProgressPhotoView.swift
 │   ├── Draft/
 │   │   ├── DraftEditorView.swift
 │   │   ├── ProcessingStateView.swift
@@ -150,8 +194,16 @@ NutriOptimize/
 │       ├── MealRowView.swift
 │       └── MacrosBadgeView.swift
 └── Theme/
-    ├── AppTheme.swift             # Tokens de diseño centralizados
-    └── HapticManager.swift        # Retroalimentación háptica
+    ├── AppTheme.swift               # Tokens de diseño centralizados
+    └── HapticManager.swift          # Retroalimentación háptica
+
+NutriOptimizeTests/
+├── PatientModelTests.swift          # 17 tests: BMI, TMB, TDEE, presupuesto
+├── MealModelTests.swift             # 17 tests: macros, calorías, MealType
+├── PlanOptimizationDraftTests.swift # 15 tests: agregados, agrupación, adherencia
+├── MockOptimizationServiceTests.swift # 13 tests: generación, aprobación, fetch
+├── PDFExportServiceTests.swift      # 5 tests: generación y validación PDF
+└── OpenRouterServiceTests.swift     # 17 tests: prompts, alergias, feedback
 ```
 
 ### Patrón MVVM con Protocolos
