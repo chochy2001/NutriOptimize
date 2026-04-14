@@ -21,9 +21,24 @@ struct PatientFeedbackView: View {
 
     @State private var hasLoaded = false
 
+    /// Current feedback record for generating assistant insights.
+    private var loadedFeedbackRecord: PatientFeedbackRecord? {
+        let targetId = patientId
+        let descriptor = FetchDescriptor<PatientFeedbackRecord>(
+            predicate: #Predicate<PatientFeedbackRecord> { $0.patientId == targetId }
+        )
+        return try? modelContext.fetch(descriptor).first
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: AppTheme.sectionSpacing) {
+                ContextualAssistantView(
+                    insights: InsightGenerator.forFeedback(
+                        feedback: loadedFeedbackRecord,
+                        patientName: patientName
+                    )
+                )
                 likedSection
                 dislikedSection
                 bannedSection

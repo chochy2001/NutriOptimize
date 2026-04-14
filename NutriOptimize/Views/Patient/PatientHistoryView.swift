@@ -7,6 +7,7 @@ import Charts
 struct PatientHistoryView: View {
     let patientId: UUID
     let patientName: String
+    var patientGoals: String = ""
 
     @Environment(\.modelContext) private var modelContext
     @State private var consultations: [ConsultationRecord] = []
@@ -27,6 +28,12 @@ struct PatientHistoryView: View {
                 if consultations.isEmpty {
                     emptyState
                 } else {
+                    ContextualAssistantView(
+                        insights: InsightGenerator.forHistory(
+                            consultations: consultations,
+                            patientGoals: patientGoals
+                        )
+                    )
                     chartSelector
                     chartSection
                     timelineSection

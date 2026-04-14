@@ -26,6 +26,11 @@ struct LabResultsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: AppTheme.sectionSpacing) {
+                if !results.isEmpty {
+                    ContextualAssistantView(
+                        insights: InsightGenerator.forLabResults(results: results)
+                    )
+                }
                 if results.isEmpty {
                     emptyState
                 } else {

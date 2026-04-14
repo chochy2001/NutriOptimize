@@ -27,6 +27,7 @@
 		3D1C4969F1CA9331E8CD60C4 /* PDFExportServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700FC5CCBDFC2753E3918C72 /* PDFExportServiceTests.swift */; };
 		481A34FA465DC9485CD77210 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F451710617661483F01FCB1D /* HapticManager.swift */; };
 		4E20C2070C82038322B4B2E1 /* NutriOptimizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */; };
+		51CA68743A48EDC975CD44C0 /* ContextualAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89A1F7B5A34790C6690682B /* ContextualAssistantView.swift */; };
 		531A6CBA935317464518A9ED /* RecommendationFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172D70373B23569489771F48 /* RecommendationFeedback.swift */; };
 		539A3B29EC128A889CE1B7C9 /* PatientModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18DF59E31E548887D5A44E5 /* PatientModelTests.swift */; };
 		66C6B09AAF63E2DAF7A56974 /* PlanOptimizationDraftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49E678EA85E2C5F7BB598A0 /* PlanOptimizationDraftTests.swift */; };
@@ -95,6 +96,7 @@
 		9453CFCD8278C1055E08641C /* PatientStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientStore.swift; sourceTree = "<group>"; };
 		9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutriOptimizeApp.swift; sourceTree = "<group>"; };
 		A7A037368547843AFCD0DE49 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
+		A89A1F7B5A34790C6690682B /* ContextualAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualAssistantView.swift; sourceTree = "<group>"; };
 		B28BD3DB3B95E2843718541A /* DraftEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftEditorViewModel.swift; sourceTree = "<group>"; };
 		B4EBE73E75F60D3660C9B090 /* OptimizationDashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationDashboardViewModel.swift; sourceTree = "<group>"; };
 		B517142B259D4380961C3187 /* PhotoCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureView.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 		3C532F3FB8568F91430CD763 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				A89A1F7B5A34790C6690682B /* ContextualAssistantView.swift */,
 				8C215AC29F093FD14CA5FDEB /* EditMealSheet.swift */,
 				BCC80E41F7611CADE593AE9C /* MacrosBadgeView.swift */,
 				03DC692955D3FADEF2727738 /* MealRowView.swift */,
@@ -391,6 +394,7 @@
 				689E143AF02EFA42E02247E3 /* AddEditPatientView.swift in Sources */,
 				1CE9322BEADF504D3B74C74D /* AppTheme.swift in Sources */,
 				2205C41722DD87A2DDD6F961 /* ConsultationRecord.swift in Sources */,
+				51CA68743A48EDC975CD44C0 /* ContextualAssistantView.swift in Sources */,
 				BB9DE6568D603F19CE54B786 /* DemoDataSeeder.swift in Sources */,
 				71A1A5C9C5FD0E72CB3954B8 /* DraftEditorView.swift in Sources */,
 				1E9A44AAF3C27D9EE8996A1F /* DraftEditorViewModel.swift in Sources */,

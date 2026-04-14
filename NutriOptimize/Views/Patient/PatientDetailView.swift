@@ -12,6 +12,10 @@ struct PatientDetailView: View {
             VStack(spacing: 16) {
                 profileHeader
                 metricsGrid
+                ContextualAssistantView(
+                    insights: InsightGenerator.forPatientProfile(patient: viewModel.patient)
+                )
+                .padding(.horizontal)
                 Divider().padding(.horizontal)
                 clinicalInfo
                 Divider().padding(.horizontal)
@@ -250,7 +254,7 @@ struct PatientDetailView: View {
                     icon: "chart.line.uptrend.xyaxis",
                     title: "Historial",
                     subtitle: "Consultas y gráficas",
-                    destination: AnyView(PatientHistoryView(patientId: viewModel.patient.id, patientName: viewModel.patient.fullName))
+                    destination: AnyView(PatientHistoryView(patientId: viewModel.patient.id, patientName: viewModel.patient.fullName, patientGoals: viewModel.patient.clinicalGoals))
                 )
                 actionCard(
                     icon: "camera.viewfinder",
