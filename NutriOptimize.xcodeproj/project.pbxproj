@@ -22,6 +22,7 @@
 		3C33865974D22BB1D0054909 /* OptimizationDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EBE73E75F60D3660C9B090 /* OptimizationDashboardViewModel.swift */; };
 		481A34FA465DC9485CD77210 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F451710617661483F01FCB1D /* HapticManager.swift */; };
 		4E20C2070C82038322B4B2E1 /* NutriOptimizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */; };
+		531A6CBA935317464518A9ED /* RecommendationFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172D70373B23569489771F48 /* RecommendationFeedback.swift */; };
 		689E143AF02EFA42E02247E3 /* AddEditPatientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1231C5478F1C5A536B68B7E /* AddEditPatientView.swift */; };
 		71A1A5C9C5FD0E72CB3954B8 /* DraftEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3637EA2BBE27AD5D6E51E49 /* DraftEditorView.swift */; };
 		854B5B9DA46CDBF1F5EBF15B /* PatientStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453CFCD8278C1055E08641C /* PatientStore.swift */; };
@@ -31,6 +32,7 @@
 		9A657349A4DB539B06AF3754 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F985C8464519385895968E3A /* Meal.swift */; };
 		9C25989DFB3A03333B113A94 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9CEE7389210D658925059 /* ServiceError.swift */; };
 		A4E40217FC852A0573DA92F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A160F7AC6B1874D10CAB11 /* SettingsView.swift */; };
+		B11459B31DE6A740B243C606 /* PatientFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB19445E0FB65A1711B164 /* PatientFeedbackView.swift */; };
 		B5C5CE988D9B9D5906CA1095 /* EditMealSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C215AC29F093FD14CA5FDEB /* EditMealSheet.swift */; };
 		BFF9B9E2C6B629AB4D290B87 /* PatientDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E8E3306F12044ABE944871 /* PatientDetailView.swift */; };
 		C964626AED5D78B760CD5411 /* PDFExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E1EC3E1A5476DC1164D66E /* PDFExportService.swift */; };
@@ -43,12 +45,14 @@
 		03DC692955D3FADEF2727738 /* MealRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRowView.swift; sourceTree = "<group>"; };
 		10C3E6C263E175CE0DF2105A /* MockPatientService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPatientService.swift; sourceTree = "<group>"; };
 		11D9CEE7389210D658925059 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
+		172D70373B23569489771F48 /* RecommendationFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationFeedback.swift; sourceTree = "<group>"; };
 		19F6CB0C92C7A95B4EE6F364 /* PatientDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailViewModel.swift; sourceTree = "<group>"; };
 		20AF078C9F46592C44F3E995 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		2303941614F220B6DFC7B984 /* PlanOptimizationDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanOptimizationDraft.swift; sourceTree = "<group>"; };
 		25E1EC3E1A5476DC1164D66E /* PDFExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFExportService.swift; sourceTree = "<group>"; };
 		3BF04591979765FA09569224 /* OpenRouterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenRouterService.swift; sourceTree = "<group>"; };
 		41E8E3306F12044ABE944871 /* PatientDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailView.swift; sourceTree = "<group>"; };
+		44EB19445E0FB65A1711B164 /* PatientFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientFeedbackView.swift; sourceTree = "<group>"; };
 		4DE69CBE8B3BAAE73476AE51 /* NutriOptimize.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NutriOptimize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A160F7AC6B1874D10CAB11 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5C4845A9ECB57442F50A1090 /* PatientServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientServiceProtocol.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 			children = (
 				D1231C5478F1C5A536B68B7E /* AddEditPatientView.swift */,
 				41E8E3306F12044ABE944871 /* PatientDetailView.swift */,
+				44EB19445E0FB65A1711B164 /* PatientFeedbackView.swift */,
 			);
 			path = Patient;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 				CAA4BB47E437856074EB9C30 /* Patient.swift */,
 				2303941614F220B6DFC7B984 /* PlanOptimizationDraft.swift */,
 				EAD05BBD34816D3804AE5744 /* Professional.swift */,
+				172D70373B23569489771F48 /* RecommendationFeedback.swift */,
 				11D9CEE7389210D658925059 /* ServiceError.swift */,
 			);
 			path = Models;
@@ -308,11 +314,13 @@
 				0F011908C5AF05B1F28C2C54 /* Patient.swift in Sources */,
 				BFF9B9E2C6B629AB4D290B87 /* PatientDetailView.swift in Sources */,
 				15A891BEA07B48C7357011BD /* PatientDetailViewModel.swift in Sources */,
+				B11459B31DE6A740B243C606 /* PatientFeedbackView.swift in Sources */,
 				CB88814A6493E81E89513061 /* PatientServiceProtocol.swift in Sources */,
 				854B5B9DA46CDBF1F5EBF15B /* PatientStore.swift in Sources */,
 				F8B2D77162E99FB6A6C8BD97 /* PlanOptimizationDraft.swift in Sources */,
 				2F2F44C6C7FC1D2EECBEE1BC /* ProcessingStateView.swift in Sources */,
 				2E0F03BD62F7A6F15DFBDBEB /* Professional.swift in Sources */,
+				531A6CBA935317464518A9ED /* RecommendationFeedback.swift in Sources */,
 				9C25989DFB3A03333B113A94 /* ServiceError.swift in Sources */,
 				A4E40217FC852A0573DA92F6 /* SettingsView.swift in Sources */,
 			);

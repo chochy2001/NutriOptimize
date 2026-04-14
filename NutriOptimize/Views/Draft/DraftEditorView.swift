@@ -1,8 +1,10 @@
 import SwiftUI
+import SwiftData
 
 struct DraftEditorView: View {
     @StateObject var viewModel: DraftEditorViewModel
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
 
     @State private var showDiscardAlert = false
     @State private var showApproveAlert = false
@@ -11,6 +13,7 @@ struct DraftEditorView: View {
     @State private var showShareSheet = false
     @State private var pdfData: Data?
     @State private var showDebugView = false
+    @State private var feedbackToast: String?
 
     /// The patient object needed for PDF export. Injected from the parent.
     var patient: Patient?
@@ -93,6 +96,19 @@ struct DraftEditorView: View {
         .overlay {
             if viewModel.wasApproved {
                 approvedOverlay
+            }
+        }
+        .overlay(alignment: .bottom) {
+            if let toast = feedbackToast {
+                Text(toast)
+                    .font(.system(.subheadline, design: .rounded, weight: .medium))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(.ultraThinMaterial, in: Capsule())
+                    .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+                    .padding(.bottom, 24)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .animation(.spring(response: 0.3), value: feedbackToast)
             }
         }
     }
@@ -213,6 +229,12 @@ struct DraftEditorView: View {
                     onDelete: {
                         HapticManager.impact(.light)
                         viewModel.deleteMeal(meal)
+                    },
+                    onLike: {
+                        saveMealFeedback(mealName: meal.name, liked: true)
+                    },
+                    onDislike: {
+                        saveMealFeedback(mealName: meal.name, liked: false)
                     }
                 )
                 .transition(.asymmetric(insertion: .scale.combined(with: .opacity), removal: .opacity))
@@ -336,6 +358,47 @@ struct DraftEditorView: View {
         pdfData = data
         HapticManager.notification(.success)
         showShareSheet = true
+    }
+
+    // MARK: - Meal Feedback
+
+    private func saveMealFeedback(mealName: String, liked: Bool) {
+        let targetId = viewModel.patientId
+        let descriptor = FetchDescriptor<PatientFeedbackRecord>(
+            predicate: #Predicate<PatientFeedbackRecord> { $0.patientId == targetId }
+        )
+
+        let record: PatientFeedbackRecord
+        if let existing = try? modelContext.fetch(descriptor).first {
+            record = existing
+        } else {
+            record = PatientFeedbackRecord(patientId: targetId)
+            modelContext.insert(record)
+        }
+
+        if liked {
+            if !record.likedFoods.contains(mealName) {
+                record.likedFoods.append(mealName)
+            }
+            record.dislikedFoods.removeAll { $0 == mealName }
+            feedbackToast = "\(mealName) marcado como preferido"
+        } else {
+            if !record.dislikedFoods.contains(mealName) {
+                record.dislikedFoods.append(mealName)
+            }
+            record.likedFoods.removeAll { $0 == mealName }
+            feedbackToast = "\(mealName) marcado como no preferido"
+        }
+
+        record.updatedAt = .now
+        try? modelContext.save()
+
+        HapticManager.notification(liked ? .success : .warning)
+
+        Task {
+            try? await Task.sleep(for: .seconds(2))
+            feedbackToast = nil
+        }
     }
 }
 

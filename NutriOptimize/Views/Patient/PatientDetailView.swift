@@ -1,8 +1,11 @@
 import SwiftUI
+import SwiftData
 
 struct PatientDetailView: View {
     @StateObject var viewModel: PatientDetailViewModel
+    @Environment(\.modelContext) private var modelContext
     @State private var showDraftEditor = false
+    @State private var showFeedbackView = false
 
     var body: some View {
         ScrollView {
@@ -10,6 +13,7 @@ struct PatientDetailView: View {
                 profileHeader
                 metricsGrid
                 clinicalInfo
+                feedbackButton
                 generateButton
             }
             .padding()
@@ -17,6 +21,7 @@ struct PatientDetailView: View {
         .background(AppTheme.surfaceWhite.ignoresSafeArea())
         .navigationTitle(viewModel.patient.fullName)
         .navigationBarTitleDisplayMode(.large)
+        .onAppear { viewModel.modelContext = modelContext }
         .fullScreenCover(isPresented: $showDraftEditor) {
             if let draft = viewModel.generatedDraft {
                 NavigationStack {
@@ -159,6 +164,39 @@ struct PatientDetailView: View {
             }
         }
         .cardStyle()
+    }
+
+    // MARK: - Feedback Button
+
+    private var feedbackButton: some View {
+        NavigationLink {
+            PatientFeedbackView(
+                patientId: viewModel.patient.id,
+                patientName: viewModel.patient.fullName
+            )
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "slider.horizontal.3")
+                    .font(.title3)
+                    .foregroundStyle(AppTheme.deepOrange)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Preferencias y feedback")
+                        .font(AppTheme.subheadFont)
+                    Text("Alimentos preferidos, exclusiones y notas")
+                        .font(AppTheme.captionFont)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+            }
+            .cardStyle()
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Generate Button

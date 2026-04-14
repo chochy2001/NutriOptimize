@@ -4,6 +4,8 @@ struct MealRowView: View {
     let meal: Meal
     var onEdit: (() -> Void)?
     var onDelete: (() -> Void)?
+    var onLike: (() -> Void)?
+    var onDislike: (() -> Void)?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -20,6 +22,20 @@ struct MealRowView: View {
 
                 Spacer()
 
+                if let onLike {
+                    Button(action: onLike) {
+                        Image(systemName: "hand.thumbsup.circle.fill")
+                            .font(.title3)
+                            .foregroundStyle(AppTheme.success)
+                    }
+                }
+                if let onDislike {
+                    Button(action: onDislike) {
+                        Image(systemName: "hand.thumbsdown.circle.fill")
+                            .font(.title3)
+                            .foregroundStyle(AppTheme.danger)
+                    }
+                }
                 if let onEdit {
                     Button(action: onEdit) {
                         Image(systemName: "pencil.circle.fill")

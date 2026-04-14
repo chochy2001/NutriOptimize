@@ -1,9 +1,18 @@
 import Foundation
+import SwiftData
 
 /// Protocol for the optimization engine that generates meal plan proposals.
 /// Decoupled from the specific backend to allow mock and production implementations.
 protocol OptimizationEngineProtocol: Sendable {
-    func generateOptimizedPlan(for patient: Patient, customPrompt: String?) async throws -> PlanOptimizationDraft
+    func generateOptimizedPlan(for patient: Patient, customPrompt: String?, feedback: PatientFeedbackSnapshot?) async throws -> PlanOptimizationDraft
+}
+
+/// Lightweight, Sendable snapshot of patient feedback for use in async contexts.
+struct PatientFeedbackSnapshot: Sendable {
+    let likedFoods: [String]
+    let dislikedFoods: [String]
+    let bannedFoods: [String]
+    let generalNotes: String
 }
 
 /// Production implementation of the optimization engine backed by OpenRouter.
@@ -34,12 +43,12 @@ final class OpenRouterService: OptimizationEngineProtocol, Sendable {
 
     // MARK: - Plan Generation
 
-    func generateOptimizedPlan(for patient: Patient, customPrompt: String?) async throws -> PlanOptimizationDraft {
+    func generateOptimizedPlan(for patient: Patient, customPrompt: String?, feedback: PatientFeedbackSnapshot? = nil) async throws -> PlanOptimizationDraft {
         let apiKey = Self.apiKey
         guard !apiKey.isEmpty else { throw ServiceError.invalidData }
 
         let systemPrompt = buildSystemPrompt()
-        let userPrompt = buildUserPrompt(for: patient, customPrompt: customPrompt)
+        let userPrompt = buildUserPrompt(for: patient, customPrompt: customPrompt, feedback: feedback)
 
         let requestBody = OpenRouterRequest(
             model: Self.model,
@@ -115,7 +124,7 @@ final class OpenRouterService: OptimizationEngineProtocol, Sendable {
         """
     }
 
-    private func buildUserPrompt(for patient: Patient, customPrompt: String?) -> String {
+    private func buildUserPrompt(for patient: Patient, customPrompt: String?, feedback: PatientFeedbackSnapshot? = nil) -> String {
         var sections: [String] = []
 
         sections.append("""
@@ -154,6 +163,22 @@ final class OpenRouterService: OptimizationEngineProtocol, Sendable {
 
         if let custom = customPrompt, !custom.isEmpty {
             sections.append("NUTRITIONIST PRESCRIBING NOTES:\n\(custom)")
+        }
+
+        // Patient feedback from the nutritionist's preference tracking
+        if let feedback {
+            if !feedback.likedFoods.isEmpty {
+                sections.append("Alimentos que el paciente prefiere: \(feedback.likedFoods.joined(separator: ", "))")
+            }
+            if !feedback.dislikedFoods.isEmpty {
+                sections.append("Alimentos que el paciente no tolera: \(feedback.dislikedFoods.joined(separator: ", "))")
+            }
+            if !feedback.bannedFoods.isEmpty {
+                sections.append("EXCLUSIONES OBLIGATORIAS - NUNCA incluir: \(feedback.bannedFoods.joined(separator: ", "))")
+            }
+            if !feedback.generalNotes.isEmpty {
+                sections.append("Notas adicionales del nutriólogo: \(feedback.generalNotes)")
+            }
         }
 
         sections.append("Generate a complete daily meal plan (breakfast, lunch, dinner, and at least 1 snack) optimized for this patient.")

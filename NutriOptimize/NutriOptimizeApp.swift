@@ -7,6 +7,6 @@ struct NutriOptimizeApp: App {
         WindowGroup {
             OptimizationDashboardView()
         }
-        .modelContainer(for: PatientRecord.self)
+        .modelContainer(for: [PatientRecord.self, PatientFeedbackRecord.self])
     }
 }
