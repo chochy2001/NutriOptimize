@@ -8,23 +8,27 @@ final class PatientDetailViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var generationProgress: Double = 0
 
-    private let optimizationService: OptimizationServiceProtocol
+    private let mockService: OptimizationServiceProtocol
+    private let engineService: OptimizationEngineProtocol
 
     init(
         patient: Patient,
-        optimizationService: OptimizationServiceProtocol = MockOptimizationService()
+        optimizationService: OptimizationServiceProtocol = MockOptimizationService(),
+        engineService: OptimizationEngineProtocol = OpenRouterService()
     ) {
         self.patient = patient
-        self.optimizationService = optimizationService
+        self.mockService = optimizationService
+        self.engineService = engineService
     }
 
+    /// Generates an optimized meal plan using the configured engine.
+    /// Falls back to the mock service if no API key is configured.
     func generateOptimizedPlan() async {
         isGenerating = true
         generationProgress = 0
         errorMessage = nil
 
-        // Progress simulation runs alongside the real engine call.
-        // The production backend would emit server-sent events for real progress.
+        // Progress simulation runs alongside the engine call.
         let progressTask = Task {
             let steps = [0.15, 0.35, 0.55, 0.75, 0.90]
             for step in steps {
@@ -34,7 +38,18 @@ final class PatientDetailViewModel: ObservableObject {
         }
 
         do {
-            let draft = try await optimizationService.generateDraft(for: patient)
+            let draft: PlanOptimizationDraft
+
+            if OpenRouterService.isConfigured {
+                let customPrompt = OpenRouterService.customPrompt
+                draft = try await engineService.generateOptimizedPlan(
+                    for: patient,
+                    customPrompt: customPrompt.isEmpty ? nil : customPrompt
+                )
+            } else {
+                draft = try await mockService.generateDraft(for: patient)
+            }
+
             progressTask.cancel()
             generationProgress = 1.0
             try await Task.sleep(for: .milliseconds(300))
