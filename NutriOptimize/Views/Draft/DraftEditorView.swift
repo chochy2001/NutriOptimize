@@ -12,6 +12,7 @@ struct DraftEditorView: View {
     @State private var showAddMealSheet = false
     @State private var showShareSheet = false
     @State private var pdfData: Data?
+    @State private var pdfFileURL: URL?
     @State private var showDebugView = false
     @State private var feedbackToast: String?
 
@@ -65,8 +66,8 @@ struct DraftEditorView: View {
             EngineDebugView()
         }
         .sheet(isPresented: $showShareSheet) {
-            if let data = pdfData {
-                ShareSheet(activityItems: [data])
+            if let url = pdfFileURL {
+                ShareSheet(activityItems: [url])
             }
         }
         .alert("Descartar borrador", isPresented: $showDiscardAlert) {
@@ -356,7 +357,15 @@ struct DraftEditorView: View {
     private func exportPDF() {
         guard let patient else { return }
         let data = viewModel.exportPDF(patient: patient)
+
+        // Write PDF to a temporary file so the share sheet can render a proper preview
+        let tempDir = FileManager.default.temporaryDirectory
+        let fileName = "NutriOptimize_\(patient.fullName.replacingOccurrences(of: " ", with: "_")).pdf"
+        let fileURL = tempDir.appendingPathComponent(fileName)
+        try? data.write(to: fileURL)
+
         pdfData = data
+        pdfFileURL = fileURL
         HapticManager.notification(.success)
         showShareSheet = true
     }
