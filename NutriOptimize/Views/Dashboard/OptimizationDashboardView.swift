@@ -71,6 +71,17 @@ struct OptimizationDashboardView: View {
             .padding(.horizontal)
             .padding(.top, 8)
         }
+        .navigationDestination(for: PlanOptimizationDraft.self) { draft in
+            DraftEditorView(
+                viewModel: DraftEditorViewModel(
+                    draft: draft,
+                    patientName: viewModel.patientName(for: draft)
+                )
+            )
+        }
+        .navigationDestination(for: Patient.self) { patient in
+            PatientDetailView(viewModel: PatientDetailViewModel(patient: patient))
+        }
     }
 
     // MARK: - Pending Drafts Section
@@ -96,17 +107,11 @@ struct OptimizationDashboardView: View {
             ForEach(viewModel.pendingDrafts) { draft in
                 NavigationLink(value: draft) {
                     pendingDraftRow(draft)
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
+                .simultaneousGesture(TapGesture().onEnded { HapticManager.selection() })
             }
-        }
-        .navigationDestination(for: PlanOptimizationDraft.self) { draft in
-            DraftEditorView(
-                viewModel: DraftEditorViewModel(
-                    draft: draft,
-                    patientName: viewModel.patientName(for: draft)
-                )
-            )
         }
     }
 
@@ -166,12 +171,11 @@ struct OptimizationDashboardView: View {
             ForEach(filteredPatients) { patient in
                 NavigationLink(value: patient) {
                     patientRow(patient)
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
+                .simultaneousGesture(TapGesture().onEnded { HapticManager.selection() })
             }
-        }
-        .navigationDestination(for: Patient.self) { patient in
-            PatientDetailView(viewModel: PatientDetailViewModel(patient: patient))
         }
     }
 

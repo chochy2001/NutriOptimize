@@ -165,6 +165,7 @@ struct PatientDetailView: View {
     private var generateButton: some View {
         VStack(spacing: 8) {
             Button {
+                HapticManager.impact(.medium)
                 Task { await viewModel.generateOptimizedPlan() }
             } label: {
                 HStack(spacing: 8) {
@@ -180,6 +181,7 @@ struct PatientDetailView: View {
             .tint(AppTheme.deepOrange)
             .controlSize(.large)
             .disabled(viewModel.isGenerating)
+            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: viewModel.isGenerating)
 
             if let error = viewModel.errorMessage {
                 Text(error)

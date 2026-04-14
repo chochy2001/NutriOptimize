@@ -13,6 +13,7 @@
 		15A891BEA07B48C7357011BD /* PatientDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F6CB0C92C7A95B4EE6F364 /* PatientDetailViewModel.swift */; };
 		1C23FA42DD0691D508867271 /* MealRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DC692955D3FADEF2727738 /* MealRowView.swift */; };
 		1CE9322BEADF504D3B74C74D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AF078C9F46592C44F3E995 /* AppTheme.swift */; };
+		A7B3E91D4F2C8A0E5D6B7C3F /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F4A82B7E1C9D0F6A5B8E4C /* HapticManager.swift */; };
 		1D5DD551CB857EADF844E4B7 /* MockOptimizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA494FA2341C4F18BC576DC /* MockOptimizationService.swift */; };
 		1E9A44AAF3C27D9EE8996A1F /* DraftEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28BD3DB3B95E2843718541A /* DraftEditorViewModel.swift */; };
 		2C961B97CB0CD5F9610A89FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 022B118448A5F21AFC5077C0 /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 		11D9CEE7389210D658925059 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
 		19F6CB0C92C7A95B4EE6F364 /* PatientDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailViewModel.swift; sourceTree = "<group>"; };
 		20AF078C9F46592C44F3E995 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		D3F4A82B7E1C9D0F6A5B8E4C /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		2303941614F220B6DFC7B984 /* PlanOptimizationDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanOptimizationDraft.swift; sourceTree = "<group>"; };
 		41E8E3306F12044ABE944871 /* PatientDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailView.swift; sourceTree = "<group>"; };
 		4DE69CBE8B3BAAE73476AE51 /* NutriOptimize.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NutriOptimize.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				20AF078C9F46592C44F3E995 /* AppTheme.swift */,
+				D3F4A82B7E1C9D0F6A5B8E4C /* HapticManager.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CE9322BEADF504D3B74C74D /* AppTheme.swift in Sources */,
+				A7B3E91D4F2C8A0E5D6B7C3F /* HapticManager.swift in Sources */,
 				71A1A5C9C5FD0E72CB3954B8 /* DraftEditorView.swift in Sources */,
 				1E9A44AAF3C27D9EE8996A1F /* DraftEditorViewModel.swift in Sources */,
 				B5C5CE988D9B9D5906CA1095 /* EditMealSheet.swift in Sources */,

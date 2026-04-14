@@ -115,7 +115,5 @@ struct EditMealSheet: View {
 }
 
 #Preview {
-    EditMealSheet { meal in
-        print("Saved: \(meal.name)")
-    }
+    EditMealSheet { _ in }
 }

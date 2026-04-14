@@ -47,7 +47,12 @@ struct DraftEditorView: View {
         .alert("Aprobar y enviar", isPresented: $showApproveAlert) {
             Button("Cancelar", role: .cancel) {}
             Button("Aprobar") {
-                Task { await viewModel.approveDraft() }
+                Task {
+                    await viewModel.approveDraft()
+                    if viewModel.wasApproved {
+                        HapticManager.notification(.success)
+                    }
+                }
             }
         } message: {
             Text("El plan será enviado al paciente. ¿Confirmas que has revisado todas las comidas?")
@@ -172,9 +177,14 @@ struct DraftEditorView: View {
                 MealRowView(
                     meal: meal,
                     onEdit: { editingMeal = meal },
-                    onDelete: { viewModel.deleteMeal(meal) }
+                    onDelete: {
+                        HapticManager.impact(.light)
+                        viewModel.deleteMeal(meal)
+                    }
                 )
+                .transition(.asymmetric(insertion: .scale.combined(with: .opacity), removal: .opacity))
             }
+            .animation(.spring(response: 0.3), value: viewModel.draft.meals.count)
         }
     }
 

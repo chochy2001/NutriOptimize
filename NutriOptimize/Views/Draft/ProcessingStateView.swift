@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProcessingStateView: View {
     let progress: Double
+    @State private var isPulsing = false
 
     private let phases = [
         ("Analizando perfil clínico del paciente...", "person.text.rectangle"),
@@ -77,12 +78,20 @@ struct ProcessingStateView: View {
                         .font(.body)
                         .foregroundStyle(phaseColor(for: index))
                         .frame(width: 26)
+                        .scaleEffect(index == activePhase ? (isPulsing ? 1.2 : 1.0) : 1.0)
+                        .animation(
+                            index == activePhase
+                                ? .easeInOut(duration: 0.8).repeatForever(autoreverses: true)
+                                : .default,
+                            value: isPulsing
+                        )
 
                     Text(phase.0)
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundStyle(index <= activePhase ? .primary : .tertiary)
                 }
             }
+            .onAppear { isPulsing = true }
         }
         .padding(.horizontal, 32)
     }

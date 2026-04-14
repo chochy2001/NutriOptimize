@@ -54,6 +54,7 @@ struct MealRowView: View {
                 .padding(.top, 4)
         }
         .cardStyle()
+        .contentShape(Rectangle())
     }
 }
 
