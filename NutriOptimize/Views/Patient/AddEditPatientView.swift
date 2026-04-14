@@ -55,22 +55,22 @@ struct AddEditPatientView: View {
             errors.append("El nombre es obligatorio.")
         }
         if let ageVal = Int(age), ageVal <= 0 || ageVal > 150 {
-            errors.append("La edad debe estar entre 1 y 150 a\u{00F1}os.")
+            errors.append("La edad debe estar entre 1 y 150 años.")
         } else if Int(age) == nil {
-            errors.append("La edad debe ser un n\u{00FA}mero v\u{00E1}lido.")
+            errors.append("La edad debe ser un número válido.")
         }
         if let w = Double(weight), w <= 0 {
             errors.append("El peso debe ser positivo.")
         } else if Double(weight) == nil {
-            errors.append("El peso debe ser un n\u{00FA}mero v\u{00E1}lido.")
+            errors.append("El peso debe ser un número válido.")
         }
         if let h = Double(height), h <= 0 {
             errors.append("La altura debe ser positiva.")
         } else if Double(height) == nil {
-            errors.append("La altura debe ser un n\u{00FA}mero v\u{00E1}lido.")
+            errors.append("La altura debe ser un número válido.")
         }
         if clinicalGoals.trimmingCharacters(in: .whitespaces).isEmpty {
-            errors.append("El objetivo cl\u{00ED}nico es obligatorio.")
+            errors.append("El objetivo clínico es obligatorio.")
         }
         if !monthlyFoodBudget.isEmpty, let budget = Double(monthlyFoodBudget), budget < 0 {
             errors.append("El presupuesto mensual no puede ser negativo.")
@@ -78,9 +78,7 @@ struct AddEditPatientView: View {
         return errors
     }
 
-    private var isValid: Bool {
-        validationErrors.isEmpty
-    }
+    private var isValid: Bool { validationErrors.isEmpty }
 
     // MARK: - Body
 
@@ -89,8 +87,10 @@ struct AddEditPatientView: View {
             Form {
                 personalInfoSection
                 anthropometricSection
-                clinicalSection
-                dietarySection
+                clinicalGoalsSection
+                allergiesSection
+                conditionsSection
+                preferencesSection
                 lifestyleSection
                 budgetSection
 
@@ -112,10 +112,10 @@ struct AddEditPatientView: View {
         }
     }
 
-    // MARK: - Sections
+    // MARK: - Personal Info
 
     private var personalInfoSection: some View {
-        Section("Informaci\u{00F3}n Personal") {
+        Section {
             TextField("Nombre completo", text: $fullName)
                 .textContentType(.name)
                 .autocorrectionDisabled()
@@ -123,105 +123,109 @@ struct AddEditPatientView: View {
             TextField("Edad", text: $age)
                 .keyboardType(.numberPad)
 
-            Picker("Sexo biol\u{00F3}gico", selection: $sex) {
+            Picker("Sexo biológico", selection: $sex) {
                 ForEach(Patient.BiologicalSex.allCases, id: \.self) { option in
                     Text(option.rawValue).tag(option)
                 }
             }
+        } header: {
+            Label("Información Personal", systemImage: "person.fill")
         }
     }
+
+    // MARK: - Anthropometric
 
     private var anthropometricSection: some View {
-        Section("Datos Antropom\u{00E9}tricos") {
-            HStack {
-                Text("Peso (kg)")
-                    .foregroundStyle(.secondary)
-                Spacer()
-                TextField("0.0", text: $weight)
-                    .keyboardType(.decimalPad)
-                    .multilineTextAlignment(.trailing)
-                    .frame(width: 100)
-            }
-
-            HStack {
-                Text("Altura (cm)")
-                    .foregroundStyle(.secondary)
-                Spacer()
-                TextField("0", text: $height)
-                    .keyboardType(.decimalPad)
-                    .multilineTextAlignment(.trailing)
-                    .frame(width: 100)
-            }
-
-            HStack {
-                Text("% Grasa corporal")
-                    .foregroundStyle(.secondary)
-                Spacer()
-                TextField("Opcional", text: $bodyFatPercentage)
-                    .keyboardType(.decimalPad)
-                    .multilineTextAlignment(.trailing)
-                    .frame(width: 100)
-            }
+        Section {
+            labeledNumberField(label: "Peso", unit: "kg", text: $weight)
+            labeledNumberField(label: "Altura", unit: "cm", text: $height)
+            labeledNumberField(label: "Grasa corporal", unit: "%", text: $bodyFatPercentage, placeholder: "Opcional")
+        } header: {
+            Label("Datos Antropométricos", systemImage: "figure.stand")
         }
     }
 
-    private var clinicalSection: some View {
-        Section("Informaci\u{00F3}n Cl\u{00ED}nica") {
-            TextField("Objetivo cl\u{00ED}nico", text: $clinicalGoals, axis: .vertical)
+    // MARK: - Clinical Goals
+
+    private var clinicalGoalsSection: some View {
+        Section {
+            TextField("Ej: Pérdida de peso, control de glucosa...", text: $clinicalGoals, axis: .vertical)
                 .lineLimit(2...4)
-
-            TextField("Condiciones m\u{00E9}dicas (separadas por coma)", text: $medicalConditionsText, axis: .vertical)
-                .lineLimit(1...3)
-
-            TextField("Alergias (separadas por coma)", text: $allergiesText, axis: .vertical)
-                .lineLimit(1...3)
+        } header: {
+            Label("Objetivo Clínico", systemImage: "target")
+        } footer: {
+            Text("Describe el objetivo principal del tratamiento nutricional.")
         }
     }
 
-    private var dietarySection: some View {
-        Section("Preferencias Alimenticias") {
-            TextField("Preferencias (separadas por coma)", text: $dietaryPreferencesText, axis: .vertical)
+    // MARK: - Allergies
+
+    private var allergiesSection: some View {
+        Section {
+            TextField("Ej: Gluten, Mariscos, Huevo, Lácteos...", text: $allergiesText, axis: .vertical)
                 .lineLimit(1...3)
+        } header: {
+            Label("Alergias Alimentarias", systemImage: "exclamationmark.triangle.fill")
+        } footer: {
+            Text("Separa cada alergia con coma. El motor excluirá estos alimentos automáticamente.")
         }
     }
+
+    // MARK: - Medical Conditions
+
+    private var conditionsSection: some View {
+        Section {
+            TextField("Ej: Diabetes tipo 2, Hipotiroidismo...", text: $medicalConditionsText, axis: .vertical)
+                .lineLimit(1...3)
+        } header: {
+            Label("Condiciones Médicas", systemImage: "cross.case.fill")
+        } footer: {
+            Text("El motor ajusta la distribución de macronutrientes según las condiciones del paciente.")
+        }
+    }
+
+    // MARK: - Dietary Preferences
+
+    private var preferencesSection: some View {
+        Section {
+            TextField("Ej: Comida mexicana, Ensaladas, Pescado...", text: $dietaryPreferencesText, axis: .vertical)
+                .lineLimit(1...3)
+        } header: {
+            Label("Preferencias Alimenticias", systemImage: "fork.knife")
+        } footer: {
+            Text("Alimentos y estilos de cocina que el paciente disfruta.")
+        }
+    }
+
+    // MARK: - Lifestyle
 
     private var lifestyleSection: some View {
-        Section("Estilo de Vida") {
+        Section {
             Picker("Nivel de actividad", selection: $activityLevel) {
                 ForEach(Patient.ActivityLevel.allCases, id: \.self) { level in
                     Text(level.rawValue).tag(level)
                 }
             }
 
-            HStack {
-                Text("Tiempo disponible para cocinar (min)")
-                    .foregroundStyle(.secondary)
-                Spacer()
-                TextField("30", text: $availableCookingTime)
-                    .keyboardType(.numberPad)
-                    .multilineTextAlignment(.trailing)
-                    .frame(width: 80)
-            }
+            labeledNumberField(label: "Tiempo para cocinar", unit: "min", text: $availableCookingTime)
+        } header: {
+            Label("Estilo de Vida", systemImage: "figure.walk")
         }
     }
 
+    // MARK: - Budget
+
     private var budgetSection: some View {
         Section {
-            HStack {
-                Text("Presupuesto mensual (MXN)")
-                    .foregroundStyle(.secondary)
-                Spacer()
-                TextField("Opcional", text: $monthlyFoodBudget)
-                    .keyboardType(.decimalPad)
-                    .multilineTextAlignment(.trailing)
-                    .frame(width: 120)
-            }
+            labeledNumberField(label: "Presupuesto mensual", unit: "MXN", text: $monthlyFoodBudget, placeholder: "Opcional")
         } header: {
-            Text("Presupuesto Alimenticio")
+            Label("Presupuesto Alimenticio", systemImage: "dollarsign.circle")
         } footer: {
-            Text("El motor de optimizaci\u{00F3}n considerar\u{00E1} este presupuesto al seleccionar ingredientes.")
+            Text("El motor priorizará ingredientes costo-efectivos cuando se especifique un presupuesto.")
         }
     }
+
+    // MARK: - Validation
 
     private var validationSection: some View {
         Section {
@@ -233,15 +237,28 @@ struct AddEditPatientView: View {
         }
     }
 
+    // MARK: - Reusable Components
+
+    private func labeledNumberField(label: String, unit: String, text: Binding<String>, placeholder: String = "0") -> some View {
+        HStack {
+            Text(label)
+                .foregroundStyle(.primary)
+            Spacer()
+            TextField(placeholder, text: text)
+                .keyboardType(.decimalPad)
+                .multilineTextAlignment(.trailing)
+                .frame(width: 80)
+            Text(unit)
+                .foregroundStyle(.secondary)
+                .frame(width: 36, alignment: .leading)
+        }
+    }
+
     // MARK: - Save
 
     private func savePatient() {
         showValidationErrors = true
         guard isValid else { return }
-
-        let allergies = parseCommaSeparated(allergiesText)
-        let conditions = parseCommaSeparated(medicalConditionsText)
-        let preferences = parseCommaSeparated(dietaryPreferencesText)
 
         let patient = Patient(
             id: existingPatient?.id ?? UUID(),
@@ -251,9 +268,9 @@ struct AddEditPatientView: View {
             weight: Double(weight) ?? 0,
             height: Double(height) ?? 0,
             bodyFatPercentage: Double(bodyFatPercentage),
-            allergies: allergies,
-            medicalConditions: conditions,
-            dietaryPreferences: preferences,
+            allergies: parseCommaSeparated(allergiesText),
+            medicalConditions: parseCommaSeparated(medicalConditionsText),
+            dietaryPreferences: parseCommaSeparated(dietaryPreferencesText),
             clinicalGoals: clinicalGoals.trimmingCharacters(in: .whitespaces),
             availableCookingTime: Int(availableCookingTime) ?? 30,
             activityLevel: activityLevel,
