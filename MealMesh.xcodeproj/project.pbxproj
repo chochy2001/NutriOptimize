@@ -1,0 +1,463 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		10A5D92A1E544D250D00E165 /* DraftReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE8F3D489015CA0E32BD44F /* DraftReviewViewModel.swift */; };
+		11A88A90989095FCD7E88119 /* MealMeshApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CB4B90FCD450D24DD98380 /* MealMeshApp.swift */; };
+		139B23D20AC27FA4824DDFA6 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CB972C129E6467629C8F0 /* DashboardView.swift */; };
+		158C6BBEDDAECB93748D8760 /* DraftGenerationLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D128B35DAB81D97AF2AF23B /* DraftGenerationLoadingView.swift */; };
+		27D804796F1F972A419B86B4 /* EditMealSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996704A8AF259392950397D3 /* EditMealSheet.swift */; };
+		376BC277D3B707294430EEAF /* PatientDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375FAB4857239114C753D78D /* PatientDetailViewModel.swift */; };
+		3CC6B4CC4F3EF825E7C08BC8 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F415632FAAB2EBE37E685A6 /* DashboardViewModel.swift */; };
+		407F7871993654E22BCBCEDD /* MockMealPlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC81074F8B00039D7F1969F /* MockMealPlanService.swift */; };
+		60911A67A74807B44DFF6A28 /* MealPlanDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F55A6E9F110CB36F82D9FE2 /* MealPlanDraft.swift */; };
+		70C5DC960D6E99F780B8EB80 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002C01F4AD1A5C89FF2B4CEF /* ServiceError.swift */; };
+		8C0F3E974DF6C1DAD16D1820 /* MockPatientService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997140B95FFD74B21A87180E /* MockPatientService.swift */; };
+		9D04B55FE67A8815F15B239F /* PatientDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F53CCC391AF773FACFAF02B /* PatientDetailView.swift */; };
+		A9BC315D9893F750E51DD042 /* MealPlanServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E060E0C834CA67F5CA059 /* MealPlanServiceProtocol.swift */; };
+		C80B43F39A53F2537315C28C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 541244F3927307302DB15CB0 /* Assets.xcassets */; };
+		C959001F9705FCB22EB10ED9 /* ReviewDraftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFECF258461A7F84CE7D2AC3 /* ReviewDraftView.swift */; };
+		E7821F21F546BAC2470A926E /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C40AF08A1FEC02998DF010 /* Patient.swift */; };
+		E7F0AF64BA1921F84D307267 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0812ADDB3633373EC07B799C /* Meal.swift */; };
+		E812C58664BD3AE6F32AE6EE /* MealRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8218B4CC84AFF082B1C834D /* MealRowView.swift */; };
+		F2E6C795136B053BD010C9AD /* MacrosBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B876D38A01A5AE157BF30749 /* MacrosBadgeView.swift */; };
+		F5C0137804FDA3D08B0B8058 /* PatientServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE0DC7B91212527943786A9 /* PatientServiceProtocol.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		002C01F4AD1A5C89FF2B4CEF /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
+		0812ADDB3633373EC07B799C /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
+		0D128B35DAB81D97AF2AF23B /* DraftGenerationLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftGenerationLoadingView.swift; sourceTree = "<group>"; };
+		1BC81074F8B00039D7F1969F /* MockMealPlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMealPlanService.swift; sourceTree = "<group>"; };
+		375FAB4857239114C753D78D /* PatientDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailViewModel.swift; sourceTree = "<group>"; };
+		454CB972C129E6467629C8F0 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		495FC7B75533E04DC9BBF4FE /* MealMesh.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MealMesh.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		541244F3927307302DB15CB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5FE0DC7B91212527943786A9 /* PatientServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientServiceProtocol.swift; sourceTree = "<group>"; };
+		6F53CCC391AF773FACFAF02B /* PatientDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailView.swift; sourceTree = "<group>"; };
+		848E060E0C834CA67F5CA059 /* MealPlanServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanServiceProtocol.swift; sourceTree = "<group>"; };
+		8F415632FAAB2EBE37E685A6 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		8F55A6E9F110CB36F82D9FE2 /* MealPlanDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanDraft.swift; sourceTree = "<group>"; };
+		98CB4B90FCD450D24DD98380 /* MealMeshApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealMeshApp.swift; sourceTree = "<group>"; };
+		996704A8AF259392950397D3 /* EditMealSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMealSheet.swift; sourceTree = "<group>"; };
+		997140B95FFD74B21A87180E /* MockPatientService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPatientService.swift; sourceTree = "<group>"; };
+		AFECF258461A7F84CE7D2AC3 /* ReviewDraftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDraftView.swift; sourceTree = "<group>"; };
+		B876D38A01A5AE157BF30749 /* MacrosBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacrosBadgeView.swift; sourceTree = "<group>"; };
+		D5C40AF08A1FEC02998DF010 /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
+		DFE8F3D489015CA0E32BD44F /* DraftReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftReviewViewModel.swift; sourceTree = "<group>"; };
+		E8218B4CC84AFF082B1C834D /* MealRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRowView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		07C7C639F6DC9A0E88A30BCC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				183716CDB58AA6EAA4886371 /* Mock */,
+				6EAB4E59CB57A652DE98FC13 /* Protocols */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		183716CDB58AA6EAA4886371 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				1BC81074F8B00039D7F1969F /* MockMealPlanService.swift */,
+				997140B95FFD74B21A87180E /* MockPatientService.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		2819E54D5E9A6EE318F8B9AC /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				454CB972C129E6467629C8F0 /* DashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		2A86AEE42FFA38A16218B09A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8F415632FAAB2EBE37E685A6 /* DashboardViewModel.swift */,
+				DFE8F3D489015CA0E32BD44F /* DraftReviewViewModel.swift */,
+				375FAB4857239114C753D78D /* PatientDetailViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		30C45215B1191A73F864106D /* Draft */ = {
+			isa = PBXGroup;
+			children = (
+				0D128B35DAB81D97AF2AF23B /* DraftGenerationLoadingView.swift */,
+				AFECF258461A7F84CE7D2AC3 /* ReviewDraftView.swift */,
+			);
+			path = Draft;
+			sourceTree = "<group>";
+		};
+		4C0087875FB58E6AF9456640 /* MealMesh */ = {
+			isa = PBXGroup;
+			children = (
+				541244F3927307302DB15CB0 /* Assets.xcassets */,
+				98CB4B90FCD450D24DD98380 /* MealMeshApp.swift */,
+				7F6364AB2BB11BA289E6F7EE /* Models */,
+				07C7C639F6DC9A0E88A30BCC /* Services */,
+				2A86AEE42FFA38A16218B09A /* ViewModels */,
+				4D60870CCF71FF447954CC3D /* Views */,
+			);
+			path = MealMesh;
+			sourceTree = "<group>";
+		};
+		4D60870CCF71FF447954CC3D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6F1D88FC8EB085A85EB5099B /* Components */,
+				2819E54D5E9A6EE318F8B9AC /* Dashboard */,
+				30C45215B1191A73F864106D /* Draft */,
+				65157487886059522A1BEF06 /* Patient */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		65157487886059522A1BEF06 /* Patient */ = {
+			isa = PBXGroup;
+			children = (
+				6F53CCC391AF773FACFAF02B /* PatientDetailView.swift */,
+			);
+			path = Patient;
+			sourceTree = "<group>";
+		};
+		6EAB4E59CB57A652DE98FC13 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				848E060E0C834CA67F5CA059 /* MealPlanServiceProtocol.swift */,
+				5FE0DC7B91212527943786A9 /* PatientServiceProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		6F1D88FC8EB085A85EB5099B /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				996704A8AF259392950397D3 /* EditMealSheet.swift */,
+				B876D38A01A5AE157BF30749 /* MacrosBadgeView.swift */,
+				E8218B4CC84AFF082B1C834D /* MealRowView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		7F6364AB2BB11BA289E6F7EE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0812ADDB3633373EC07B799C /* Meal.swift */,
+				8F55A6E9F110CB36F82D9FE2 /* MealPlanDraft.swift */,
+				D5C40AF08A1FEC02998DF010 /* Patient.swift */,
+				002C01F4AD1A5C89FF2B4CEF /* ServiceError.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9025131BBB60E2677A0C9220 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				495FC7B75533E04DC9BBF4FE /* MealMesh.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E4FE9E6DCA0031E979EDF713 = {
+			isa = PBXGroup;
+			children = (
+				4C0087875FB58E6AF9456640 /* MealMesh */,
+				9025131BBB60E2677A0C9220 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F7EBFE414285817960A2A484 /* MealMesh */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A817D56FAC214DDCD9BC769C /* Build configuration list for PBXNativeTarget "MealMesh" */;
+			buildPhases = (
+				B4E05233B2D73F56914E875B /* Sources */,
+				719B3B420D0A23D155EFCDF4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MealMesh;
+			packageProductDependencies = (
+			);
+			productName = MealMesh;
+			productReference = 495FC7B75533E04DC9BBF4FE /* MealMesh.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		677AA593A69F1AA0FE9734A9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 7D0CA31CA8785AE278D9ACDF /* Build configuration list for PBXProject "MealMesh" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = E4FE9E6DCA0031E979EDF713;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 9025131BBB60E2677A0C9220 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F7EBFE414285817960A2A484 /* MealMesh */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		719B3B420D0A23D155EFCDF4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C80B43F39A53F2537315C28C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B4E05233B2D73F56914E875B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				139B23D20AC27FA4824DDFA6 /* DashboardView.swift in Sources */,
+				3CC6B4CC4F3EF825E7C08BC8 /* DashboardViewModel.swift in Sources */,
+				158C6BBEDDAECB93748D8760 /* DraftGenerationLoadingView.swift in Sources */,
+				10A5D92A1E544D250D00E165 /* DraftReviewViewModel.swift in Sources */,
+				27D804796F1F972A419B86B4 /* EditMealSheet.swift in Sources */,
+				F2E6C795136B053BD010C9AD /* MacrosBadgeView.swift in Sources */,
+				E7F0AF64BA1921F84D307267 /* Meal.swift in Sources */,
+				11A88A90989095FCD7E88119 /* MealMeshApp.swift in Sources */,
+				60911A67A74807B44DFF6A28 /* MealPlanDraft.swift in Sources */,
+				A9BC315D9893F750E51DD042 /* MealPlanServiceProtocol.swift in Sources */,
+				E812C58664BD3AE6F32AE6EE /* MealRowView.swift in Sources */,
+				407F7871993654E22BCBCEDD /* MockMealPlanService.swift in Sources */,
+				8C0F3E974DF6C1DAD16D1820 /* MockPatientService.swift in Sources */,
+				E7821F21F546BAC2470A926E /* Patient.swift in Sources */,
+				9D04B55FE67A8815F15B239F /* PatientDetailView.swift in Sources */,
+				376BC277D3B707294430EEAF /* PatientDetailViewModel.swift in Sources */,
+				F5C0137804FDA3D08B0B8058 /* PatientServiceProtocol.swift in Sources */,
+				C959001F9705FCB22EB10ED9 /* ReviewDraftView.swift in Sources */,
+				70C5DC960D6E99F780B8EB80 /* ServiceError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		027184A10E4BB41584F96E44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mealmesh.MealMesh;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BB53351F5D62428EBDDD3D65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mealmesh.MealMesh;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BEDFC7D41738000A5857A911 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C953C42D846AF35989043AB5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7D0CA31CA8785AE278D9ACDF /* Build configuration list for PBXProject "MealMesh" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEDFC7D41738000A5857A911 /* Debug */,
+				C953C42D846AF35989043AB5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A817D56FAC214DDCD9BC769C /* Build configuration list for PBXNativeTarget "MealMesh" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB53351F5D62428EBDDD3D65 /* Debug */,
+				027184A10E4BB41584F96E44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 677AA593A69F1AA0FE9734A9 /* Project object */;
+}

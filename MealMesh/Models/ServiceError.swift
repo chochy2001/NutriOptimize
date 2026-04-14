@@ -1,0 +1,21 @@
+import Foundation
+
+enum ServiceError: LocalizedError {
+    case notFound
+    case networkFailure
+    case invalidData
+    case generationFailed
+
+    var errorDescription: String? {
+        switch self {
+        case .notFound:
+            return "El recurso solicitado no fue encontrado."
+        case .networkFailure:
+            return "Error de conexión. Verifica tu red e intenta de nuevo."
+        case .invalidData:
+            return "Los datos recibidos no son válidos."
+        case .generationFailed:
+            return "No fue posible generar la propuesta. Intenta de nuevo."
+        }
+    }
+}
