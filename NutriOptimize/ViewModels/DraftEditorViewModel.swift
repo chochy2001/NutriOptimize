@@ -9,8 +9,10 @@ final class DraftEditorViewModel: ObservableObject {
     @Published var wasDiscarded = false
 
     let patientName: String
+    let patientId: UUID
 
     private let optimizationService: OptimizationServiceProtocol
+    private let pdfService = PDFExportService()
 
     init(
         draft: PlanOptimizationDraft,
@@ -19,6 +21,7 @@ final class DraftEditorViewModel: ObservableObject {
     ) {
         self.draft = draft
         self.patientName = patientName
+        self.patientId = draft.patientId
         self.optimizationService = optimizationService
     }
 
@@ -66,5 +69,12 @@ final class DraftEditorViewModel: ObservableObject {
         }
 
         isProcessing = false
+    }
+
+    // MARK: - PDF Export
+
+    /// Generates a PDF document for the current draft and patient data.
+    func exportPDF(patient: Patient) -> Data {
+        pdfService.generatePDF(for: draft, patient: patient)
     }
 }

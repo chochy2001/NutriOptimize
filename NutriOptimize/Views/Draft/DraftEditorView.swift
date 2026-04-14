@@ -8,6 +8,12 @@ struct DraftEditorView: View {
     @State private var showApproveAlert = false
     @State private var editingMeal: Meal?
     @State private var showAddMealSheet = false
+    @State private var showShareSheet = false
+    @State private var pdfData: Data?
+    @State private var showDebugView = false
+
+    /// The patient object needed for PDF export. Injected from the parent.
+    var patient: Patient?
 
     var body: some View {
         ScrollView {
@@ -23,6 +29,25 @@ struct DraftEditorView: View {
         .background(AppTheme.surfaceWhite.ignoresSafeArea())
         .navigationTitle("Editor de Plan")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                if UserDefaults.standard.bool(forKey: "show_engine_debug") {
+                    Button {
+                        showDebugView = true
+                    } label: {
+                        Image(systemName: "terminal")
+                    }
+                }
+
+                if patient != nil {
+                    Button {
+                        exportPDF()
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                }
+            }
+        }
         .sheet(item: $editingMeal) { meal in
             EditMealSheet(existingMeal: meal) { updated in
                 viewModel.updateMeal(updated)
@@ -31,6 +56,14 @@ struct DraftEditorView: View {
         .sheet(isPresented: $showAddMealSheet) {
             EditMealSheet { newMeal in
                 viewModel.addMeal(newMeal)
+            }
+        }
+        .sheet(isPresented: $showDebugView) {
+            EngineDebugView()
+        }
+        .sheet(isPresented: $showShareSheet) {
+            if let data = pdfData {
+                ShareSheet(activityItems: [data])
             }
         }
         .alert("Descartar borrador", isPresented: $showDiscardAlert) {
@@ -42,7 +75,7 @@ struct DraftEditorView: View {
                 }
             }
         } message: {
-            Text("¿Deseas descartar este borrador? Esta acción no se puede deshacer.")
+            Text("\u{00BF}Deseas descartar este borrador? Esta acci\u{00F3}n no se puede deshacer.")
         }
         .alert("Aprobar y enviar", isPresented: $showApproveAlert) {
             Button("Cancelar", role: .cancel) {}
@@ -55,7 +88,7 @@ struct DraftEditorView: View {
                 }
             }
         } message: {
-            Text("El plan será enviado al paciente. ¿Confirmas que has revisado todas las comidas?")
+            Text("El plan ser\u{00E1} enviado al paciente. \u{00BF}Confirmas que has revisado todas las comidas?")
         }
         .overlay {
             if viewModel.wasApproved {
@@ -100,7 +133,7 @@ struct DraftEditorView: View {
 
     private var rationaleSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Label("Análisis del motor de optimización", systemImage: "brain.head.profile")
+            Label("An\u{00E1}lisis del motor de optimizaci\u{00F3}n", systemImage: "brain.head.profile")
                 .font(AppTheme.subheadFont)
                 .foregroundStyle(AppTheme.deepOrange)
 
@@ -121,9 +154,9 @@ struct DraftEditorView: View {
                 .font(AppTheme.subheadFont)
 
             HStack(spacing: 0) {
-                summaryPill(label: "Calorías", value: "\(Int(viewModel.draft.totalCalories))", unit: "kcal", color: AppTheme.calorieColor)
+                summaryPill(label: "Calor\u{00ED}as", value: "\(Int(viewModel.draft.totalCalories))", unit: "kcal", color: AppTheme.calorieColor)
                 summaryDivider
-                summaryPill(label: "Proteína", value: "\(Int(viewModel.draft.totalProtein))", unit: "g", color: AppTheme.proteinColor)
+                summaryPill(label: "Prote\u{00ED}na", value: "\(Int(viewModel.draft.totalProtein))", unit: "g", color: AppTheme.proteinColor)
                 summaryDivider
                 summaryPill(label: "Carbohidratos", value: "\(Int(viewModel.draft.totalCarbs))", unit: "g", color: AppTheme.carbColor)
                 summaryDivider
@@ -215,6 +248,24 @@ struct DraftEditorView: View {
             .tint(AppTheme.success)
             .disabled(viewModel.draft.meals.isEmpty || viewModel.isProcessing)
 
+            if patient != nil {
+                Button {
+                    exportPDF()
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "doc.richtext")
+                        Text("Exportar PDF")
+                            .fontWeight(.semibold)
+                    }
+                    .font(.system(.body, design: .rounded))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                }
+                .buttonStyle(.bordered)
+                .tint(AppTheme.info)
+                .disabled(viewModel.draft.meals.isEmpty)
+            }
+
             HStack(spacing: 12) {
                 Button(role: .destructive) {
                     showDiscardAlert = true
@@ -276,6 +327,30 @@ struct DraftEditorView: View {
         .background(.ultraThickMaterial)
         .transition(.opacity)
     }
+
+    // MARK: - PDF Export
+
+    private func exportPDF() {
+        guard let patient else { return }
+        let data = viewModel.exportPDF(patient: patient)
+        pdfData = data
+        HapticManager.notification(.success)
+        showShareSheet = true
+    }
+}
+
+// MARK: - Share Sheet (UIKit bridge)
+
+/// UIKit wrapper for UIActivityViewController to enable system sharing.
+struct ShareSheet: UIViewControllerRepresentable {
+    let activityItems: [Any]
+    var applicationActivities: [UIActivity]? = nil
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 extension PlanOptimizationDraft: Hashable {
@@ -296,15 +371,16 @@ extension PlanOptimizationDraft: Hashable {
                     id: UUID(),
                     patientId: UUID(),
                     status: .pendingReview,
-                    calculatedRationale: "TDEE estimado: 1,680 kcal. Se excluyeron alimentos con gluten y mariscos. Distribución ajustada por hipotiroidismo.",
+                    calculatedRationale: "TDEE estimado: 1,680 kcal. Se excluyeron alimentos con gluten y mariscos. Distribuci\u{00F3}n ajustada por hipotiroidismo.",
                     meals: [
                         Meal(type: .breakfast, name: "Avena con frutos", ingredients: ["Avena", "Fresas"], macros: Macros(protein: 12, carbohydrates: 45, fat: 8)),
                         Meal(type: .lunch, name: "Pollo con quinoa", ingredients: ["Pollo", "Quinoa"], macros: Macros(protein: 38, carbohydrates: 42, fat: 14))
                     ],
                     createdAt: .now
                 ),
-                patientName: "María García López"
-            )
+                patientName: "Mar\u{00ED}a Garc\u{00ED}a L\u{00F3}pez"
+            ),
+            patient: MockPatientService.samplePatients[0]
         )
     }
 }

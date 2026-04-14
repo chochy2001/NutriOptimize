@@ -24,7 +24,8 @@ struct PatientDetailView: View {
                         viewModel: DraftEditorViewModel(
                             draft: draft,
                             patientName: viewModel.patient.fullName
-                        )
+                        ),
+                        patient: viewModel.patient
                     )
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
