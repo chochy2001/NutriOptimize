@@ -430,37 +430,98 @@ Al aprobar un borrador de plan alimenticio, se genera automáticamente un `Consu
 
 ---
 
+### 23. Asistente Clínico Contextual
+**Estado:** ✅ Implementado
+
+Asistente integrado en las secciones clave de la app (perfil del paciente, historial, laboratorios y retroalimentación) que analiza los datos clínicos del paciente actual y genera observaciones relevantes. Utiliza un `InsightGenerator` que formula preguntas al nutriólogo en lugar de dar instrucciones directas, respetando la filosofía HCAI.
+
+**Funcionalidades:**
+- Análisis contextual según la sección activa (perfil, historial, laboratorios, feedback)
+- Generación de observaciones clínicas basadas en los datos del paciente
+- Preguntas al profesional para guiar la toma de decisiones
+- Integración no intrusiva con interfaz expandible/colapsable
+
+**Archivos:** `Views/Components/ContextualAssistantView.swift`, `Views/Patient/PatientDetailView.swift`, `Views/Patient/PatientHistoryView.swift`, `Views/Patient/LabResultsView.swift`, `Views/Patient/PatientFeedbackView.swift`
+
+---
+
+### 24. Importación de Documentos PDF/JSON para Laboratorios
+**Estado:** ✅ Implementado
+
+Importación de resultados de laboratorio desde archivos PDF y JSON. El `LabDocumentImporter` utiliza PDFKit para extraer texto de documentos PDF y parseo de JSON estructurado, permitiendo cargar estudios de laboratorio sin captura manual.
+
+**Funcionalidades:**
+- Extracción de texto desde documentos PDF con PDFKit
+- Parseo de archivos JSON con estructura de laboratorio
+- Selector de documentos integrado en la vista de laboratorios
+- Mapeo automático de resultados a las plantillas de estudios existentes
+
+**Archivos:** `Services/LabDocumentImporter.swift`, `Views/Patient/LabImportView.swift`
+
+---
+
+### 25. Plantillas Rápidas para Pacientes y Comidas
+**Estado:** ✅ Implementado
+
+Plantillas predefinidas que aceleran la captura de datos frecuentes. En la vista de pacientes, plantillas con perfiles clínicos comunes. En la edición de comidas, plantillas con combinaciones de alimentos típicas del contexto mexicano.
+
+**Funcionalidades:**
+- Plantillas de pacientes con perfiles clínicos predefinidos
+- Plantillas de comidas con ingredientes y macros pre-calculados
+- Aplicación con un toque desde los formularios de captura
+
+**Archivos:** `Views/Patient/AddEditPatientView.swift`, `Views/Components/EditMealSheet.swift`
+
+---
+
+### 26. Centro de Ayuda In-App
+**Estado:** ✅ Implementado
+
+Centro de ayuda integrado con guías paso a paso y preguntas frecuentes. Accesible desde la configuración, permite al nutriólogo resolver dudas sin salir de la aplicación.
+
+**Funcionalidades:**
+- 9 guías paso a paso para funcionalidades principales
+- 6 preguntas frecuentes con respuestas detalladas
+- Búsqueda integrada para localizar temas rápidamente
+- Navegación organizada por categorías
+
+**Archivos:** `Views/Help/HelpView.swift`
+
+---
+
+### 27. Guía de Contribución para Equipo
+**Estado:** ✅ Implementado
+
+Documentación de contribución con reglas de ramas, estilo de código y flujo de trabajo para desarrollo colaborativo.
+
+**Archivos:** `CONTRIBUTING.md`
+
+---
+
 ## Funcionalidades Planificadas
 
-### 23. Agenda y Citas
+### 28. Agenda y Citas
 **Estado:** 📋 Planificado (Fase 3)
 
 Calendario integrado para gestionar citas con pacientes, recordatorios y seguimiento de asistencia.
 
 ---
 
-### 24. Asistente Contextual por Sección
-**Estado:** 📋 Planificado (Fase 3)
-
-Motor de asistencia integrado en cada sección de la app que responde preguntas contextuales del nutriólogo sobre el paciente actual, los datos clínicos o el plan en edición.
-
----
-
-### 25. Personalización del Motor por Paciente
+### 29. Personalización del Motor por Paciente
 **Estado:** 📋 Planificado (Fase 3)
 
 Configuración de prompts y parámetros del motor a nivel de paciente individual, permitiendo ajustes más finos que el prompt global.
 
 ---
 
-### 26. Sincronización con Backend Remoto
+### 30. Sincronización con Backend Remoto
 **Estado:** 📋 Planificado (Fase 4)
 
 Backend en la nube para sincronizar datos entre dispositivos, respaldos automáticos y soporte multi-nutriólogo en una misma clínica.
 
 ---
 
-### 27. Cumplimiento NOM-051 y COFEPRIS
+### 31. Cumplimiento NOM-051 y COFEPRIS
 **Estado:** 📋 Planificado (Fase 4)
 
 Validación de planes alimenticios contra la normativa mexicana de etiquetado (NOM-051) y lineamientos de COFEPRIS para recomendaciones nutricionales profesionales.

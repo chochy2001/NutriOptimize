@@ -76,6 +76,10 @@ La interfaz fue diseñada para el flujo de trabajo real de un nutriólogo: regis
 - **Accesibilidad (labels en componentes)** — Labels descriptivos en elementos interactivos para lectores de pantalla.
 - **Comidas ordenadas por tipo** — Meals ordenadas por sortOrder (Desayuno, Snack, Comida, Cena) en editor y PDF.
 - **Registro de consulta al aprobar plan** — Al aprobar un borrador se genera automáticamente un ConsultationRecord con los datos del plan.
+- **Asistente clínico contextual en cada sección** — Analiza datos del paciente y genera observaciones clínicas relevantes en perfil, historial, laboratorios y retroalimentación.
+- **Importación de estudios desde PDF y JSON** — Carga resultados de laboratorio desde documentos PDF (con PDFKit) y archivos JSON estructurados.
+- **Plantillas rápidas para pacientes y comidas** — Perfiles clínicos y combinaciones de alimentos predefinidos para agilizar la captura de datos.
+- **Centro de ayuda in-app con guías paso a paso** — 9 guías, 6 preguntas frecuentes y búsqueda integrada para resolver dudas sin salir de la aplicación.
 
 ---
 
@@ -162,6 +166,7 @@ NutriOptimize/
 │   ├── PDFExportService.swift       # Generador de PDF profesional
 │   ├── PatientStore.swift           # CRUD con SwiftData
 │   ├── DemoDataSeeder.swift         # Datos demo para 5 pacientes
+│   ├── LabDocumentImporter.swift    # Importador de PDF/JSON para laboratorios
 │   ├── Protocols/
 │   │   ├── OptimizationServiceProtocol.swift
 │   │   └── PatientServiceProtocol.swift
