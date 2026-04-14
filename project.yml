@@ -29,3 +29,13 @@ targets:
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         INFOPLIST_KEY_NSCameraUsageDescription: "NutriOptimize necesita acceso a la cámara para tomar fotos de progreso del paciente."
         INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "NutriOptimize necesita acceso a la galería para seleccionar fotos de progreso del paciente."
+  NutriOptimizeTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - NutriOptimizeTests
+    dependencies:
+      - target: NutriOptimize
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: true

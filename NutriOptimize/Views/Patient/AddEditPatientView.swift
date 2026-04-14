@@ -82,9 +82,53 @@ struct AddEditPatientView: View {
 
     // MARK: - Body
 
+    /// Quick profile templates that pre-fill common clinical scenarios.
+    private struct PatientTemplate: Identifiable {
+        let id = UUID()
+        let name: String
+        let icon: String
+        let goals: String
+        let conditions: String
+        let activityLevel: Patient.ActivityLevel
+    }
+
+    private let quickTemplates: [PatientTemplate] = [
+        PatientTemplate(
+            name: "Pérdida de peso",
+            icon: "flame.fill",
+            goals: "Reducción de peso corporal con déficit calórico controlado",
+            conditions: "",
+            activityLevel: .moderatelyActive
+        ),
+        PatientTemplate(
+            name: "Ganancia muscular",
+            icon: "dumbbell.fill",
+            goals: "Hipertrofia muscular con superávit calórico y alto aporte proteico",
+            conditions: "",
+            activityLevel: .veryActive
+        ),
+        PatientTemplate(
+            name: "Control de diabetes",
+            icon: "cross.case.fill",
+            goals: "Control glucémico mediante alimentación con bajo índice glucémico",
+            conditions: "Diabetes tipo 2",
+            activityLevel: .lightlyActive
+        ),
+        PatientTemplate(
+            name: "Embarazo/lactancia",
+            icon: "heart.fill",
+            goals: "Nutrición adecuada para embarazo o periodo de lactancia",
+            conditions: "Embarazo/Lactancia",
+            activityLevel: .lightlyActive
+        ),
+    ]
+
     var body: some View {
         NavigationStack {
             Form {
+                if existingPatient == nil {
+                    quickTemplatesSection
+                }
                 personalInfoSection
                 anthropometricSection
                 clinicalGoalsSection
@@ -109,6 +153,49 @@ struct AddEditPatientView: View {
                         .fontWeight(.semibold)
                 }
             }
+        }
+    }
+
+    // MARK: - Quick Templates
+
+    private var quickTemplatesSection: some View {
+        Section {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10) {
+                    ForEach(quickTemplates) { template in
+                        Button {
+                            HapticManager.selection()
+                            applyTemplate(template)
+                        } label: {
+                            VStack(spacing: 6) {
+                                Image(systemName: template.icon)
+                                    .font(.title3)
+                                    .foregroundStyle(AppTheme.deepOrange)
+                                Text(template.name)
+                                    .font(.system(.caption, design: .rounded, weight: .medium))
+                                    .foregroundStyle(.primary)
+                                    .multilineTextAlignment(.center)
+                            }
+                            .frame(width: 100, height: 72)
+                            .background(AppTheme.deepOrange.opacity(0.06), in: RoundedRectangle(cornerRadius: 10))
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+        } header: {
+            Label("Plantillas rápidas", systemImage: "rectangle.on.rectangle.angled")
+        } footer: {
+            Text("Selecciona un perfil para pre-llenar los campos. Puedes modificar todo después.")
+        }
+    }
+
+    private func applyTemplate(_ template: PatientTemplate) {
+        clinicalGoals = template.goals
+        activityLevel = template.activityLevel
+        if !template.conditions.isEmpty {
+            medicalConditionsText = template.conditions
         }
     }
 

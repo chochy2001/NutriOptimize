@@ -10,6 +10,7 @@ struct LabResultsView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var results: [LabResultRecord] = []
     @State private var showAddSheet = false
+    @State private var showImportSheet = false
     @State private var hasLoaded = false
 
     /// Groups results by test date for section-based display.
@@ -41,16 +42,29 @@ struct LabResultsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    showAddSheet = true
-                } label: {
-                    Image(systemName: "plus.circle.fill")
-                        .foregroundStyle(AppTheme.deepOrange)
+                HStack(spacing: 12) {
+                    Button {
+                        showImportSheet = true
+                    } label: {
+                        Image(systemName: "doc.badge.plus")
+                            .foregroundStyle(AppTheme.deepOrange)
+                    }
+                    Button {
+                        showAddSheet = true
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundStyle(AppTheme.deepOrange)
+                    }
                 }
             }
         }
         .sheet(isPresented: $showAddSheet) {
             AddLabResultSheet(patientId: patientId) {
+                loadResults()
+            }
+        }
+        .sheet(isPresented: $showImportSheet) {
+            LabImportView(patientId: patientId) {
                 loadResults()
             }
         }
