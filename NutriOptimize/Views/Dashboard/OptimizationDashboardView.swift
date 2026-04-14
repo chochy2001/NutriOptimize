@@ -8,6 +8,7 @@ struct OptimizationDashboardView: View {
     @State private var showAddPatient = false
     @State private var editingPatient: Patient?
     @State private var showSettings = false
+    @State private var showHelp = false
 
     private var filteredPatients: [Patient] {
         if searchText.isEmpty { return viewModel.patients }
@@ -32,10 +33,17 @@ struct OptimizationDashboardView: View {
             .searchable(text: $searchText, prompt: "Buscar paciente")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        showSettings = true
-                    } label: {
-                        Image(systemName: "gearshape")
+                    HStack(spacing: 12) {
+                        Button {
+                            showSettings = true
+                        } label: {
+                            Image(systemName: "gearshape")
+                        }
+                        Button {
+                            showHelp = true
+                        } label: {
+                            Image(systemName: "questionmark.circle")
+                        }
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -65,6 +73,16 @@ struct OptimizationDashboardView: View {
             }
             .sheet(isPresented: $showSettings) {
                 SettingsView()
+            }
+            .sheet(isPresented: $showHelp) {
+                NavigationStack {
+                    HelpView()
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Cerrar") { showHelp = false }
+                            }
+                        }
+                }
             }
         }
         .tint(AppTheme.deepOrange)

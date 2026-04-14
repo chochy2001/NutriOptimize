@@ -51,6 +51,7 @@
 		CB88814A6493E81E89513061 /* PatientServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4845A9ECB57442F50A1090 /* PatientServiceProtocol.swift */; };
 		D99623D84CB15E084E8A2EBB /* ProgressPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BC5F57DA41D8FD2C878361 /* ProgressPhotoView.swift */; };
 		E133DD87E1D8301F87DDBBE5 /* MockOptimizationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843243006D1EF831099409A7 /* MockOptimizationServiceTests.swift */; };
+		ED95B46530C90165BAF1B78A /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A037368547843AFCD0DE49 /* HelpView.swift */; };
 		F8B2D77162E99FB6A6C8BD97 /* PlanOptimizationDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2303941614F220B6DFC7B984 /* PlanOptimizationDraft.swift */; };
 		FF6EF92759C3352F3ED3CFF5 /* OpenRouterServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EBD263E3DE8826A37EA9C3 /* OpenRouterServiceTests.swift */; };
 /* End PBXBuildFile section */
@@ -93,6 +94,7 @@
 		8C215AC29F093FD14CA5FDEB /* EditMealSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMealSheet.swift; sourceTree = "<group>"; };
 		9453CFCD8278C1055E08641C /* PatientStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientStore.swift; sourceTree = "<group>"; };
 		9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutriOptimizeApp.swift; sourceTree = "<group>"; };
+		A7A037368547843AFCD0DE49 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		B28BD3DB3B95E2843718541A /* DraftEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftEditorViewModel.swift; sourceTree = "<group>"; };
 		B4EBE73E75F60D3660C9B090 /* OptimizationDashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationDashboardViewModel.swift; sourceTree = "<group>"; };
 		B517142B259D4380961C3187 /* PhotoCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureView.swift; sourceTree = "<group>"; };
@@ -151,12 +153,21 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		5C837A44B760722D6385EA47 /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				A7A037368547843AFCD0DE49 /* HelpView.swift */,
+			);
+			path = Help;
+			sourceTree = "<group>";
+		};
 		5CBB842EE730D63694199A2A /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				3C532F3FB8568F91430CD763 /* Components */,
 				BA1A5E64EE02EE83129B019B /* Dashboard */,
 				B66DBFE9014E986775AC4273 /* Draft */,
+				5C837A44B760722D6385EA47 /* Help */,
 				E387845BE1839156C427FAB0 /* Patient */,
 				84F39FAA74197594866415B3 /* Settings */,
 			);
@@ -386,6 +397,7 @@
 				B5C5CE988D9B9D5906CA1095 /* EditMealSheet.swift in Sources */,
 				30C8E792384EC191F9F74CB4 /* EngineDebugView.swift in Sources */,
 				481A34FA465DC9485CD77210 /* HapticManager.swift in Sources */,
+				ED95B46530C90165BAF1B78A /* HelpView.swift in Sources */,
 				2E5F4677F68B19F7E36940EA /* LabDocumentImporter.swift in Sources */,
 				9E79099F4B88E636151FAEEA /* LabImportView.swift in Sources */,
 				2D65A6400B4732F54734BC80 /* LabResult.swift in Sources */,
