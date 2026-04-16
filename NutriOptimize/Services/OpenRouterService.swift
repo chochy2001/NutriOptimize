@@ -1,4 +1,5 @@
 import Foundation
+import Security
 import SwiftData
 
 /// Protocol for the optimization engine that generates meal plan proposals.
@@ -15,6 +16,58 @@ struct PatientFeedbackSnapshot: Sendable {
     let generalNotes: String
 }
 
+// MARK: - Keychain Helper
+
+/// Provides secure storage for sensitive strings using the system Keychain.
+/// Uses kSecClassGenericPassword items with a fixed service identifier.
+private enum KeychainHelper {
+
+    private static let service = "com.nutrioptimize.api"
+
+    static func save(key: String, value: String) {
+        guard let data = value.data(using: .utf8) else { return }
+
+        // Remove any existing item first to avoid errSecDuplicateItem
+        delete(key: key)
+
+        let query: [String: Any] = [
+            kSecClass as String:       kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrAccount as String: key,
+            kSecValueData as String:   data,
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock,
+        ]
+
+        SecItemAdd(query as CFDictionary, nil)
+    }
+
+    static func load(key: String) -> String? {
+        let query: [String: Any] = [
+            kSecClass as String:       kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrAccount as String: key,
+            kSecReturnData as String:  true,
+            kSecMatchLimit as String:  kSecMatchLimitOne,
+        ]
+
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+
+        guard status == errSecSuccess, let data = result as? Data else { return nil }
+        return String(data: data, encoding: .utf8)
+    }
+
+    static func delete(key: String) {
+        let query: [String: Any] = [
+            kSecClass as String:       kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrAccount as String: key,
+        ]
+
+        SecItemDelete(query as CFDictionary)
+    }
+}
+
 /// Production implementation of the optimization engine backed by OpenRouter.
 /// Sends patient clinical data to a large language model and parses structured
 /// meal plan responses with macro breakdowns and rationale.
@@ -28,8 +81,8 @@ final class OpenRouterService: OptimizationEngineProtocol, Sendable {
     // MARK: - Settings Accessors
 
     static var apiKey: String {
-        get { UserDefaults.standard.string(forKey: apiKeyKey) ?? "" }
-        set { UserDefaults.standard.set(newValue, forKey: apiKeyKey) }
+        get { KeychainHelper.load(key: apiKeyKey) ?? "" }
+        set { KeychainHelper.save(key: apiKeyKey, value: newValue) }
     }
 
     static var customPrompt: String {
