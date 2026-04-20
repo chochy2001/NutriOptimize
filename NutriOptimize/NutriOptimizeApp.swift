@@ -22,6 +22,7 @@ struct NutriOptimizeApp: App {
     var body: some Scene {
         WindowGroup {
             OptimizationDashboardView()
+                .preferredColorScheme(.light)
         }
         .modelContainer(modelContainer)
     }
