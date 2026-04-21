@@ -42,6 +42,9 @@
 		9C25989DFB3A03333B113A94 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9CEE7389210D658925059 /* ServiceError.swift */; };
 		9E79099F4B88E636151FAEEA /* LabImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB947747B0F286CFA3EFFA63 /* LabImportView.swift */; };
 		A4E40217FC852A0573DA92F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A160F7AC6B1874D10CAB11 /* SettingsView.swift */; };
+		AA11AA11AA11AA11AA11AA11 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB11BB11BB11BB11BB11BB11 /* SplashView.swift */; };
+		AA22AA22AA22AA22AA22AA22 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22BB22BB22BB22BB22BB22 /* OnboardingView.swift */; };
+		AA33AA33AA33AA33AA33AA33 /* RootCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB33BB33BB33BB33BB33BB33 /* RootCoordinatorView.swift */; };
 		AB03933A49067121DC0DA908 /* PhotoCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517142B259D4380961C3187 /* PhotoCaptureView.swift */; };
 		B11459B31DE6A740B243C606 /* PatientFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB19445E0FB65A1711B164 /* PatientFeedbackView.swift */; };
 		B5687A768B1564BE4CE863F3 /* MealModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB017B6521E05B5DA3E21CA8 /* MealModelTests.swift */; };
@@ -102,6 +105,9 @@
 		B517142B259D4380961C3187 /* PhotoCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureView.swift; sourceTree = "<group>"; };
 		BA8ED11744A68B7C9E63BB0D /* LabResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabResultsView.swift; sourceTree = "<group>"; };
 		BB017B6521E05B5DA3E21CA8 /* MealModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealModelTests.swift; sourceTree = "<group>"; };
+		BB11BB11BB11BB11BB11BB11 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		BB22BB22BB22BB22BB22BB22 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		BB33BB33BB33BB33BB33BB33 /* RootCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinatorView.swift; sourceTree = "<group>"; };
 		BCC80E41F7611CADE593AE9C /* MacrosBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacrosBadgeView.swift; sourceTree = "<group>"; };
 		C18DF59E31E548887D5A44E5 /* PatientModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModelTests.swift; sourceTree = "<group>"; };
 		C3637EA2BBE27AD5D6E51E49 /* DraftEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftEditorView.swift; sourceTree = "<group>"; };
@@ -167,12 +173,15 @@
 		5CBB842EE730D63694199A2A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BB33BB33BB33BB33BB33BB33 /* RootCoordinatorView.swift */,
 				3C532F3FB8568F91430CD763 /* Components */,
 				BA1A5E64EE02EE83129B019B /* Dashboard */,
 				B66DBFE9014E986775AC4273 /* Draft */,
 				5C837A44B760722D6385EA47 /* Help */,
+				CC22CC22CC22CC22CC22CC22 /* Onboarding */,
 				E387845BE1839156C427FAB0 /* Patient */,
 				84F39FAA74197594866415B3 /* Settings */,
+				CC11CC11CC11CC11CC11CC11 /* Splash */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -242,6 +251,22 @@
 				73980FDB39C23EA59BEAB5FE /* Protocols */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		CC11CC11CC11CC11CC11CC11 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				BB11BB11BB11BB11BB11BB11 /* SplashView.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		CC22CC22CC22CC22CC22CC22 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				BB22BB22BB22BB22BB22BB22 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		D88D98D12E6DD25B9BF3DC42 /* Products */ = {
@@ -430,6 +455,9 @@
 				531A6CBA935317464518A9ED /* RecommendationFeedback.swift in Sources */,
 				9C25989DFB3A03333B113A94 /* ServiceError.swift in Sources */,
 				A4E40217FC852A0573DA92F6 /* SettingsView.swift in Sources */,
+				AA11AA11AA11AA11AA11AA11 /* SplashView.swift in Sources */,
+				AA22AA22AA22AA22AA22AA22 /* OnboardingView.swift in Sources */,
+				AA33AA33AA33AA33AA33AA33 /* RootCoordinatorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,7 +491,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 429655DZ35;
+				DEVELOPMENT_TEAM = 5YXL83H5V6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "NutriOptimize necesita acceso a la cámara para tomar fotos de progreso del paciente.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "NutriOptimize necesita acceso a la galería para seleccionar fotos de progreso del paciente.";
@@ -476,7 +504,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nutrioptimize.NutriOptimize;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nutrioptimize.NutriOptimize.pao;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -505,7 +533,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 429655DZ35;
+				DEVELOPMENT_TEAM = 5YXL83H5V6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "NutriOptimize necesita acceso a la cámara para tomar fotos de progreso del paciente.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "NutriOptimize necesita acceso a la galería para seleccionar fotos de progreso del paciente.";
@@ -518,7 +546,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nutrioptimize.NutriOptimize;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nutrioptimize.NutriOptimize.pao;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

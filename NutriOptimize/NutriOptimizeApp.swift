@@ -11,7 +11,8 @@ struct NutriOptimizeApp: App {
                 for: PatientRecord.self,
                 PatientFeedbackRecord.self,
                 ConsultationRecord.self,
-                LabResultRecord.self
+                LabResultRecord.self,
+                PlanDraftRecord.self
             )
             DemoDataSeeder.seedIfNeeded(context: modelContainer.mainContext)
         } catch {
@@ -21,7 +22,7 @@ struct NutriOptimizeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            OptimizationDashboardView()
+            RootCoordinatorView()
                 .preferredColorScheme(.light)
         }
         .modelContainer(modelContainer)
