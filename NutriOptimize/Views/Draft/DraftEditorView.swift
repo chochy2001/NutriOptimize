@@ -33,6 +33,7 @@ struct DraftEditorView: View {
         .background(AppTheme.surfaceWhite.ignoresSafeArea())
         .navigationTitle("Editor de Plan")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear { viewModel.modelContext = modelContext }
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 if UserDefaults.standard.bool(forKey: "show_engine_debug") {
@@ -255,6 +256,31 @@ struct DraftEditorView: View {
                     .foregroundStyle(AppTheme.danger)
                     .multilineTextAlignment(.center)
             }
+
+            Button {
+                Task {
+                    viewModel.modelContext = modelContext
+                    await viewModel.saveToPendingReview()
+                    if viewModel.wasSavedToPending {
+                        HapticManager.notification(.success)
+                        feedbackToast = "Guardado en pendientes"
+                        try? await Task.sleep(for: .milliseconds(800))
+                        dismiss()
+                    }
+                }
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "tray.and.arrow.down.fill")
+                    Text("Guardar en pendientes")
+                        .fontWeight(.semibold)
+                }
+                .font(.system(.body, design: .rounded))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+            }
+            .buttonStyle(.bordered)
+            .tint(AppTheme.deepOrange)
+            .disabled(viewModel.draft.meals.isEmpty || viewModel.isProcessing || viewModel.draft.status == .approved)
 
             Button {
                 showApproveAlert = true

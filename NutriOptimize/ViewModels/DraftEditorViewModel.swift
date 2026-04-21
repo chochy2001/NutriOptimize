@@ -8,6 +8,7 @@ final class DraftEditorViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var wasApproved = false
     @Published var wasDiscarded = false
+    @Published var wasSavedToPending = false
 
     let patientName: String
     let patientId: UUID
@@ -76,6 +77,10 @@ final class DraftEditorViewModel: ObservableObject {
                 )
                 context.insert(record)
                 try? context.save()
+
+                // Clean up the pending-review record if one exists, so the
+                // approved draft no longer appears in the pending list.
+                deletePendingRecordIfAny(context: context)
             }
         } catch {
             errorMessage = error.localizedDescription
@@ -91,11 +96,53 @@ final class DraftEditorViewModel: ObservableObject {
         do {
             try await optimizationService.discardDraft(draft)
             wasDiscarded = true
+
+            if let context = modelContext {
+                deletePendingRecordIfAny(context: context)
+            }
         } catch {
             errorMessage = error.localizedDescription
         }
 
         isProcessing = false
+    }
+
+    /// Persists the current draft to SwiftData so the professional can review it later,
+    /// even after dismissing the editor. If a record for this draft already exists it is
+    /// updated in place (keeping meal edits intact across sessions).
+    func saveToPendingReview() async {
+        guard let context = modelContext else {
+            errorMessage = "No se pudo guardar el borrador"
+            return
+        }
+        isProcessing = true
+        errorMessage = nil
+
+        let targetId = draft.id
+        let descriptor = FetchDescriptor<PlanDraftRecord>(
+            predicate: #Predicate<PlanDraftRecord> { $0.draftId == targetId }
+        )
+        if let existing = try? context.fetch(descriptor).first {
+            existing.update(from: draft)
+        } else {
+            let record = PlanDraftRecord(from: draft)
+            context.insert(record)
+        }
+        try? context.save()
+
+        wasSavedToPending = true
+        isProcessing = false
+    }
+
+    private func deletePendingRecordIfAny(context: ModelContext) {
+        let targetId = draft.id
+        let descriptor = FetchDescriptor<PlanDraftRecord>(
+            predicate: #Predicate<PlanDraftRecord> { $0.draftId == targetId }
+        )
+        if let record = try? context.fetch(descriptor).first {
+            context.delete(record)
+            try? context.save()
+        }
     }
 
     // MARK: - PDF Export

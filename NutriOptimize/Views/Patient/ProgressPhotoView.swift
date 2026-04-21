@@ -14,6 +14,7 @@ struct ProgressPhotoView: View {
     @State private var showSourcePicker = false
     @State private var selectedPhoto: PhotoEntry?
     @State private var hasLoaded = false
+    @State private var showDeleteConfirmation = false
 
     var body: some View {
         ScrollView {
@@ -131,6 +132,14 @@ struct ProgressPhotoView: View {
                         photoThumbnail(entry)
                     }
                     .buttonStyle(.plain)
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            HapticManager.impact(.medium)
+                            deletePhoto(entry)
+                        } label: {
+                            Label("Eliminar", systemImage: "trash")
+                        }
+                    }
                 }
             }
         }
@@ -187,8 +196,25 @@ struct ProgressPhotoView: View {
                         .font(.system(.subheadline, design: .rounded, weight: .semibold))
                         .foregroundStyle(.white)
                 }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showDeleteConfirmation = true
+                    } label: {
+                        Image(systemName: "trash.circle.fill")
+                            .font(.title2)
+                            .foregroundStyle(.white.opacity(0.9))
+                    }
+                }
             }
             .toolbarBackground(.hidden, for: .navigationBar)
+            .alert("Eliminar foto", isPresented: $showDeleteConfirmation) {
+                Button("Cancelar", role: .cancel) {}
+                Button("Eliminar", role: .destructive) {
+                    deletePhoto(entry)
+                }
+            } message: {
+                Text("¿Seguro que quieres eliminar esta foto? Esta acción no se puede deshacer.")
+            }
         }
     }
 
@@ -209,6 +235,17 @@ struct ProgressPhotoView: View {
         do {
             try data.write(to: fileURL)
             HapticManager.notification(.success)
+            loadPhotos()
+        } catch {
+            HapticManager.notification(.error)
+        }
+    }
+
+    private func deletePhoto(_ entry: PhotoEntry) {
+        do {
+            try FileManager.default.removeItem(atPath: entry.path)
+            HapticManager.notification(.success)
+            selectedPhoto = nil
             loadPhotos()
         } catch {
             HapticManager.notification(.error)

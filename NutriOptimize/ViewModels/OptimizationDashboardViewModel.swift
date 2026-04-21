@@ -9,6 +9,7 @@ final class OptimizationDashboardViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     private var patientStore: PatientStore?
+    private var modelContext: ModelContext?
     private let optimizationService: OptimizationServiceProtocol
 
     init(
@@ -19,6 +20,7 @@ final class OptimizationDashboardViewModel: ObservableObject {
 
     /// Injects the SwiftData-backed patient store. Called once when the model context becomes available.
     func configure(modelContext: ModelContext) {
+        self.modelContext = modelContext
         guard patientStore == nil else { return }
         patientStore = PatientStore(modelContext: modelContext)
     }
@@ -38,12 +40,42 @@ final class OptimizationDashboardViewModel: ObservableObject {
                 patients = try await MockPatientService().fetchPatients()
             }
 
-            pendingDrafts = try await optimizationService.fetchPendingDrafts()
+            pendingDrafts = fetchPendingDraftsFromStore()
         } catch {
             errorMessage = error.localizedDescription
         }
 
         isLoading = false
+    }
+
+    /// Lightweight refresh for just the pending-drafts list (e.g. after approve/discard).
+    func refreshPendingDrafts() {
+        pendingDrafts = fetchPendingDraftsFromStore()
+    }
+
+    /// Removes the persisted record corresponding to a pending-review draft.
+    func deletePendingDraft(_ draft: PlanOptimizationDraft) {
+        guard let context = modelContext else { return }
+        let targetId = draft.id
+        let descriptor = FetchDescriptor<PlanDraftRecord>(
+            predicate: #Predicate<PlanDraftRecord> { $0.draftId == targetId }
+        )
+        if let record = try? context.fetch(descriptor).first {
+            context.delete(record)
+            try? context.save()
+        }
+        pendingDrafts.removeAll { $0.id == draft.id }
+    }
+
+    private func fetchPendingDraftsFromStore() -> [PlanOptimizationDraft] {
+        guard let context = modelContext else { return [] }
+        let pendingRaw = DraftStatus.pendingReview.rawValue
+        let descriptor = FetchDescriptor<PlanDraftRecord>(
+            predicate: #Predicate<PlanDraftRecord> { $0.statusRaw == pendingRaw },
+            sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
+        )
+        let records = (try? context.fetch(descriptor)) ?? []
+        return records.map { $0.toDraft() }
     }
 
     func patientName(for draft: PlanOptimizationDraft) -> String {

@@ -61,6 +61,12 @@ struct OptimizationDashboardView: View {
                 viewModel.configure(modelContext: modelContext)
                 await viewModel.loadDashboard()
             }
+            .onAppear {
+                // Refresh when navigating back from a draft editor so pending
+                // drafts reflect any saves / approvals / discards made there.
+                viewModel.configure(modelContext: modelContext)
+                viewModel.refreshPendingDrafts()
+            }
             .sheet(isPresented: $showAddPatient) {
                 AddEditPatientView { newPatient in
                     viewModel.addPatient(newPatient)
