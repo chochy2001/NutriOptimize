@@ -1,4 +1,4 @@
-# NutriOptimize — Documentación de Funcionalidades
+# NutriOptimize - Documentación de Funcionalidades
 
 Referencia técnica completa de todas las funcionalidades implementadas, en progreso y planificadas.
 
@@ -33,10 +33,10 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Eliminación por swipe y menú contextual
 
 **Archivos:**
-- `Models/Patient.swift` — Struct del dominio con cálculos antropométricos
-- `Services/PatientStore.swift` — PatientRecord (@Model) + PatientStore (CRUD)
-- `Views/Patient/AddEditPatientView.swift` — Formulario de creación/edición
-- `ViewModels/OptimizationDashboardViewModel.swift` — Operaciones CRUD desde el dashboard
+- `Models/Patient.swift` - Struct del dominio con cálculos antropométricos
+- `Services/PatientStore.swift` - PatientRecord (@Model) + PatientStore (CRUD)
+- `Views/Patient/AddEditPatientView.swift` - Formulario de creación/edición
+- `ViewModels/OptimizationDashboardViewModel.swift` - Operaciones CRUD desde el dashboard
 
 ---
 
@@ -67,10 +67,10 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Respuesta parseada a `PlanOptimizationDraft` con estado `pendingReview`
 
 **Archivos:**
-- `Services/OpenRouterService.swift` — Implementación de producción
-- `Services/Protocols/OptimizationServiceProtocol.swift` — Contrato del servicio
-- `Services/Mock/MockOptimizationService.swift` — Implementación mock para desarrollo
-- `ViewModels/PatientDetailViewModel.swift` — Orquestación de la generación
+- `Services/OpenRouterService.swift` - Implementación de producción
+- `Services/Protocols/OptimizationServiceProtocol.swift` - Contrato del servicio
+- `Services/Mock/MockOptimizationService.swift` - Implementación mock para desarrollo
+- `ViewModels/PatientDetailViewModel.swift` - Orquestación de la generación
 
 ---
 
@@ -88,8 +88,8 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Campo de texto multilínea (4-10 líneas) en la vista de configuración
 
 **Archivos:**
-- `Services/OpenRouterService.swift` — Lectura y aplicación del prompt personalizado
-- `Views/Settings/SettingsView.swift` — Interfaz de edición del prompt
+- `Services/OpenRouterService.swift` - Lectura y aplicación del prompt personalizado
+- `Views/Settings/SettingsView.swift` - Interfaz de edición del prompt
 
 ---
 
@@ -120,11 +120,11 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Adherencia calórica comparada contra TDEE del paciente
 
 **Archivos:**
-- `ViewModels/DraftEditorViewModel.swift` — Lógica de edición, aprobación y descarte
-- `Views/Draft/DraftEditorView.swift` — Vista principal del editor
-- `Views/Components/EditMealSheet.swift` — Sheet de edición de comida individual
-- `Views/Components/MealRowView.swift` — Fila de comida con macros
-- `Views/Components/MacrosBadgeView.swift` — Badge visual de macronutrientes
+- `ViewModels/DraftEditorViewModel.swift` - Lógica de edición, aprobación y descarte
+- `Views/Draft/DraftEditorView.swift` - Vista principal del editor
+- `Views/Components/EditMealSheet.swift` - Sheet de edición de comida individual
+- `Views/Components/MealRowView.swift` - Fila de comida con macros
+- `Views/Components/MacrosBadgeView.swift` - Badge visual de macronutrientes
 
 ---
 
@@ -154,8 +154,8 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Texto con word-wrap para ingredientes y rationale largos
 
 **Archivos:**
-- `Services/PDFExportService.swift` — Generador completo de PDF
-- `ViewModels/DraftEditorViewModel.swift` — Método `exportPDF(patient:)`
+- `Services/PDFExportService.swift` - Generador completo de PDF
+- `ViewModels/DraftEditorViewModel.swift` - Método `exportPDF(patient:)`
 
 ---
 
@@ -177,8 +177,8 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Acceso a configuración (icono de engranaje)
 
 **Archivos:**
-- `Views/Dashboard/OptimizationDashboardView.swift` — Vista del dashboard
-- `ViewModels/OptimizationDashboardViewModel.swift` — Estado y lógica del dashboard
+- `Views/Dashboard/OptimizationDashboardView.swift` - Vista del dashboard
+- `ViewModels/OptimizationDashboardViewModel.swift` - Estado y lógica del dashboard
 
 ---
 
@@ -205,9 +205,9 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - **Presupuesto semanal:** Derivado del mensual (÷ 4)
 
 **Archivos:**
-- `Models/Patient.swift` — IMC, TMB, TDEE, clasificación
-- `Models/Meal.swift` — Macros (calorías totales, porcentajes)
-- `Models/PlanOptimizationDraft.swift` — Agregados y adherencia calórica
+- `Models/Patient.swift` - IMC, TMB, TDEE, clasificación
+- `Models/Meal.swift` - Macros (calorías totales, porcentajes)
+- `Models/PlanOptimizationDraft.swift` - Agregados y adherencia calórica
 
 ---
 
@@ -223,7 +223,7 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Actualización instantánea de la lista
 
 **Archivos:**
-- `Views/Dashboard/OptimizationDashboardView.swift` — Implementación de la búsqueda
+- `Views/Dashboard/OptimizationDashboardView.swift` - Implementación de la búsqueda
 
 ---
 
@@ -246,8 +246,8 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Preferencia almacenada en UserDefaults (`show_engine_debug`)
 
 **Archivos:**
-- `Views/Draft/EngineDebugView.swift` — Vista de depuración
-- `Services/OpenRouterService.swift` — Almacenamiento en `EngineDebugStore`
+- `Views/Draft/EngineDebugView.swift` - Vista de depuración
+- `Services/OpenRouterService.swift` - Almacenamiento en `EngineDebugStore`
 
 ---
 
@@ -258,12 +258,12 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 **Descripción:** Sistema centralizado de retroalimentación táctil que proporciona feedback físico en interacciones clave.
 
 **Tipos de feedback:**
-- `impact` — Tap en elementos interactivos (ligero, medio, pesado)
-- `notification` — Confirmación de guardado exitoso, errores
-- `selection` — Selección de pacientes y borradores en listas
+- `impact` - Tap en elementos interactivos (ligero, medio, pesado)
+- `notification` - Confirmación de guardado exitoso, errores
+- `selection` - Selección de pacientes y borradores en listas
 
 **Archivos:**
-- `Theme/HapticManager.swift` — Utilidad centralizada
+- `Theme/HapticManager.swift` - Utilidad centralizada
 - Usado en: `OptimizationDashboardView`, `SettingsView`, `EngineDebugView`
 
 ---
@@ -283,7 +283,7 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Modificador reutilizable: `.cardStyle()` con sombra sutil
 
 **Archivos:**
-- `Theme/AppTheme.swift` — Definición de tokens y modificadores
+- `Theme/AppTheme.swift` - Definición de tokens y modificadores
 
 ---
 
@@ -301,7 +301,7 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Confirmación visual animada al guardar
 
 **Archivos:**
-- `Views/Settings/SettingsView.swift` — Vista de configuración completa
+- `Views/Settings/SettingsView.swift` - Vista de configuración completa
 
 ---
 
@@ -317,8 +317,8 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Transición fluida al editor de borrador al completar
 
 **Archivos:**
-- `Views/Draft/ProcessingStateView.swift` — Vista de procesamiento
-- `ViewModels/PatientDetailViewModel.swift` — Lógica de progreso
+- `Views/Draft/ProcessingStateView.swift` - Vista de procesamiento
+- `ViewModels/PatientDetailViewModel.swift` - Lógica de progreso
 
 ---
 
@@ -335,8 +335,8 @@ Referencia técnica completa de todas las funcionalidades implementadas, en prog
 - Expresado en MXN (pesos mexicanos)
 
 **Archivos:**
-- `Models/Patient.swift` — Campo y cálculo de presupuesto semanal
-- `Services/OpenRouterService.swift` — Inclusión en el prompt
+- `Models/Patient.swift` - Campo y cálculo de presupuesto semanal
+- `Services/OpenRouterService.swift` - Inclusión en el prompt
 
 ---
 

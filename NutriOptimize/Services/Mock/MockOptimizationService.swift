@@ -6,7 +6,7 @@ final class MockOptimizationService: OptimizationServiceProtocol {
     /// The rationale references clinical formulas and the patient's restrictions
     /// so the reviewing professional can verify the system's reasoning.
     func generateDraft(for patient: Patient) async throws -> PlanOptimizationDraft {
-        // Simulates engine processing — the production service calls the backend
+        // Simulates engine processing - the production service calls the backend
         try await Task.sleep(for: .seconds(3))
 
         let rationale = buildRationale(for: patient)

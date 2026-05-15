@@ -2,7 +2,7 @@ import XCTest
 @testable import NutriOptimize
 
 /// Tests for prompt construction logic using the OpenRouterService.
-/// Does not make actual API calls — verifies the prompt building
+/// Does not make actual API calls - verifies the prompt building
 /// by inspecting the formatted text through the protocol interface.
 final class OpenRouterServiceTests: XCTestCase {
 

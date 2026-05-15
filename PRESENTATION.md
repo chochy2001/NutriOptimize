@@ -1,4 +1,4 @@
-# NutriOptimize — Guía de Presentación para Hackathon
+# NutriOptimize - Guía de Presentación para Hackathon
 
 > Formato optimizado para copiar/pegar en Gamma. Cada sección separada por `---` corresponde a una diapositiva.
 
@@ -31,18 +31,18 @@ Color de marca: `#F27822`
 
 ---
 
-## Diapositiva 3: Human-Centered AI — Nuestra Filosofía
+## Diapositiva 3: Human-Centered AI - Nuestra Filosofía
 
 **El sistema PROPONE, el profesional DECIDE**
 
 Principios HCAI que guían NutriOptimize:
 
-1. **Human-in-the-loop** — El motor genera borradores, nunca planes finales. Todo pasa por la aprobación del nutriólogo.
-2. **Transparencia** — El motor explica el "por qué" de cada sugerencia: razonamiento clínico, distribución de macros, selección de alimentos.
-3. **Control total** — El profesional puede editar, agregar, eliminar o sobreescribir cualquier comida o ingrediente.
-4. **Sin decisiones automatizadas** — Ningún plan llega al paciente sin revisión humana explícita.
-5. **Verificabilidad** — Vista de depuración que muestra exactamente qué datos se enviaron y qué respondió el motor.
-6. **Asistente contextual HCAI** — El asistente observa, pregunta y sugiere — pero NUNCA decide. Genera observaciones clínicas y formula preguntas al nutriólogo para guiar su razonamiento, sin emitir diagnósticos ni instrucciones.
+1. **Human-in-the-loop** - El motor genera borradores, nunca planes finales. Todo pasa por la aprobación del nutriólogo.
+2. **Transparencia** - El motor explica el "por qué" de cada sugerencia: razonamiento clínico, distribución de macros, selección de alimentos.
+3. **Control total** - El profesional puede editar, agregar, eliminar o sobreescribir cualquier comida o ingrediente.
+4. **Sin decisiones automatizadas** - Ningún plan llega al paciente sin revisión humana explícita.
+5. **Verificabilidad** - Vista de depuración que muestra exactamente qué datos se enviaron y qué respondió el motor.
+6. **Asistente contextual HCAI** - El asistente observa, pregunta y sugiere - pero NUNCA decide. Genera observaciones clínicas y formula preguntas al nutriólogo para guiar su razonamiento, sin emitir diagnósticos ni instrucciones.
 
 **Flujo HCAI:**
 
@@ -155,11 +155,11 @@ Datos del Paciente → Motor de Optimización → Borrador
 
 | Fase | Funcionalidades | Estado |
 |------|----------------|--------|
-| **Fase 1 — MVP** | CRUD de pacientes, motor de optimización, editor de borradores, exportación PDF, dashboard, cálculos clínicos | ✅ Completado |
-| **Fase 2 — Seguimiento** | Historial de consultas, gráficas de progreso, fotos del paciente, estudios de laboratorio, importación PDF/JSON | ✅ Completado |
-| **Fase 3 — Productividad** | Asistente clínico contextual, plantillas rápidas, centro de ayuda | ✅ Parcial |
-| **Fase 3b — Pendiente** | Agenda y citas, personalización del motor por paciente | 📋 Siguiente |
-| **Fase 4 — Escala** | Backend remoto, soporte multi-nutriólogo, cumplimiento NOM-051 y COFEPRIS | 📋 Futuro |
+| **Fase 1 - MVP** | CRUD de pacientes, motor de optimización, editor de borradores, exportación PDF, dashboard, cálculos clínicos | ✅ Completado |
+| **Fase 2 - Seguimiento** | Historial de consultas, gráficas de progreso, fotos del paciente, estudios de laboratorio, importación PDF/JSON | ✅ Completado |
+| **Fase 3 - Productividad** | Asistente clínico contextual, plantillas rápidas, centro de ayuda | ✅ Parcial |
+| **Fase 3b - Pendiente** | Agenda y citas, personalización del motor por paciente | 📋 Siguiente |
+| **Fase 4 - Escala** | Backend remoto, soporte multi-nutriólogo, cumplimiento NOM-051 y COFEPRIS | 📋 Futuro |
 
 ---
 
@@ -170,7 +170,7 @@ Datos del Paciente → Motor de Optimización → Borrador
 - **Tiempo:** Reduce la creación de planes alimenticios de **45 minutos a 5 minutos** por paciente
 - **Consistencia:** Cálculos antropométricos automatizados (IMC, TMB, TDEE) eliminan errores manuales
 - **Accesibilidad:** Democratiza herramientas profesionales para nutriólogos independientes que no pueden pagar software empresarial
-- **Autonomía:** Respeta completamente la autonomía profesional del nutriólogo — siempre tiene la última palabra
+- **Autonomía:** Respeta completamente la autonomía profesional del nutriólogo - siempre tiene la última palabra
 - **Pacientes:** Más pacientes atendidos por día con planes de mayor calidad y personalización
 - **Confianza:** El paciente recibe un PDF profesional con el análisis clínico que respalda su plan
 
@@ -198,4 +198,4 @@ No reemplazamos al nutriólogo. Le damos superpoderes.
 - **Duración estimada:** 8-10 minutos de presentación + 5 minutos de Q&A
 - **Demo en vivo:** Si es posible, mostrar el flujo completo en el simulador: seleccionar paciente, generar plan, editar comida, exportar PDF
 - **Punto clave a enfatizar:** El enfoque HCAI no es un accesorio, es la filosofía central del diseño. Cada decisión arquitectónica refuerza que el profesional tiene el control.
-- **Pregunta anticipada:** "¿Qué pasa si el motor falla o no hay internet?" — La app funciona con datos de demostración y el nutriólogo siempre puede crear planes manualmente editando un borrador vacío.
+- **Pregunta anticipada:** "¿Qué pasa si el motor falla o no hay internet?" - La app funciona con datos de demostración y el nutriólogo siempre puede crear planes manualmente editando un borrador vacío.

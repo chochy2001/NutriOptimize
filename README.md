@@ -53,33 +53,33 @@ La interfaz fue diseñada para el flujo de trabajo real de un nutriólogo: regis
 
 ## Funcionalidades
 
-- **CRUD completo de pacientes con persistencia local (SwiftData)** — Crear, leer, actualizar y eliminar pacientes con datos clínicos completos almacenados en el dispositivo.
-- **Motor de optimización inteligente con personalización de prompts** — Genera planes alimenticios personalizados considerando el perfil clínico, alergias, condiciones médicas, preferencias dietéticas y presupuesto del paciente.
-- **Editor de borradores con edición granular de comidas** — Interfaz completa para modificar cada comida: nombre, ingredientes, macronutrientes, porciones. Agregar o eliminar comidas libremente.
-- **Exportación a PDF profesional para compartir por WhatsApp** — Documento PDF con branding, datos del paciente, resumen nutricional, detalle de comidas y análisis del motor.
-- **Panel de control con planes pendientes de revisión** — Dashboard que muestra pacientes y borradores que requieren atención del nutriólogo.
-- **Cálculos clínicos: IMC, TMB (Mifflin-St Jeor), TDEE** — Cálculos antropométricos automatizados a partir de los datos del paciente.
-- **Retroalimentación háptica y micro-animaciones** — Feedback táctil en interacciones clave para una experiencia profesional y fluida.
-- **Paleta naranja/blanco profesional y minimalista** — Sistema de diseño cohesivo con tokens centralizados (`AppTheme`).
-- **Búsqueda y filtrado de pacientes** — Barra de búsqueda integrada para localizar pacientes rápidamente.
-- **Vista de depuración del motor de optimización** — Inspección del prompt enviado y la respuesta cruda del motor para verificación profesional.
-- **Configuración de clave API y personalización del prompt** — El nutriólogo configura su conexión al motor y personaliza el comportamiento según su estilo de prescripción.
-- **Consideración de presupuesto alimentario del paciente** — El motor prioriza ingredientes costo-efectivos cuando se especifica un presupuesto mensual en MXN.
-- **Sistema de feedback sobre recomendaciones** — El nutriólogo marca alimentos como "preferido", "evitar" o "nunca más", y el motor los considera en futuras propuestas.
-- **Historial de consultas con gráficas (Swift Charts)** — Seguimiento longitudinal de peso, composición corporal, calorías prescritas y distribución de macros con gráficas interactivas.
-- **Fotos de progreso del paciente** — Captura desde cámara o galería para documentar visualmente el avance entre consultas.
-- **Estudios de laboratorio con tendencias** — Registro de glucosa, colesterol, triglicéridos, TSH y más, con código de colores y flechas de tendencia.
-- **Datos demo realistas precargados** — 5 pacientes con 6 consultas de historial, resultados de laboratorio y mediciones corporales para demo presencial.
-- **Perfil de paciente rediseñado** — Layout centrado con avatar, pills informativos, grid 2x2 de herramientas clínicas y secciones editables.
-- **Datos demo realistas para 5 pacientes** — Historiales de 6 consultas, laboratorios y mediciones precargados para demostración presencial.
-- **Verificación de conexión API** — Comprobación de disponibilidad del motor con estado visual en configuración.
-- **Accesibilidad (labels en componentes)** — Labels descriptivos en elementos interactivos para lectores de pantalla.
-- **Comidas ordenadas por tipo** — Meals ordenadas por sortOrder (Desayuno, Snack, Comida, Cena) en editor y PDF.
-- **Registro de consulta al aprobar plan** — Al aprobar un borrador se genera automáticamente un ConsultationRecord con los datos del plan.
-- **Asistente clínico contextual en cada sección** — Analiza datos del paciente y genera observaciones clínicas relevantes en perfil, historial, laboratorios y retroalimentación.
-- **Importación de estudios desde PDF y JSON** — Carga resultados de laboratorio desde documentos PDF (con PDFKit) y archivos JSON estructurados.
-- **Plantillas rápidas para pacientes y comidas** — Perfiles clínicos y combinaciones de alimentos predefinidos para agilizar la captura de datos.
-- **Centro de ayuda in-app con guías paso a paso** — 9 guías, 6 preguntas frecuentes y búsqueda integrada para resolver dudas sin salir de la aplicación.
+- **CRUD completo de pacientes con persistencia local (SwiftData)** - Crear, leer, actualizar y eliminar pacientes con datos clínicos completos almacenados en el dispositivo.
+- **Motor de optimización inteligente con personalización de prompts** - Genera planes alimenticios personalizados considerando el perfil clínico, alergias, condiciones médicas, preferencias dietéticas y presupuesto del paciente.
+- **Editor de borradores con edición granular de comidas** - Interfaz completa para modificar cada comida: nombre, ingredientes, macronutrientes, porciones. Agregar o eliminar comidas libremente.
+- **Exportación a PDF profesional para compartir por WhatsApp** - Documento PDF con branding, datos del paciente, resumen nutricional, detalle de comidas y análisis del motor.
+- **Panel de control con planes pendientes de revisión** - Dashboard que muestra pacientes y borradores que requieren atención del nutriólogo.
+- **Cálculos clínicos: IMC, TMB (Mifflin-St Jeor), TDEE** - Cálculos antropométricos automatizados a partir de los datos del paciente.
+- **Retroalimentación háptica y micro-animaciones** - Feedback táctil en interacciones clave para una experiencia profesional y fluida.
+- **Paleta naranja/blanco profesional y minimalista** - Sistema de diseño cohesivo con tokens centralizados (`AppTheme`).
+- **Búsqueda y filtrado de pacientes** - Barra de búsqueda integrada para localizar pacientes rápidamente.
+- **Vista de depuración del motor de optimización** - Inspección del prompt enviado y la respuesta cruda del motor para verificación profesional.
+- **Configuración de clave API y personalización del prompt** - El nutriólogo configura su conexión al motor y personaliza el comportamiento según su estilo de prescripción.
+- **Consideración de presupuesto alimentario del paciente** - El motor prioriza ingredientes costo-efectivos cuando se especifica un presupuesto mensual en MXN.
+- **Sistema de feedback sobre recomendaciones** - El nutriólogo marca alimentos como "preferido", "evitar" o "nunca más", y el motor los considera en futuras propuestas.
+- **Historial de consultas con gráficas (Swift Charts)** - Seguimiento longitudinal de peso, composición corporal, calorías prescritas y distribución de macros con gráficas interactivas.
+- **Fotos de progreso del paciente** - Captura desde cámara o galería para documentar visualmente el avance entre consultas.
+- **Estudios de laboratorio con tendencias** - Registro de glucosa, colesterol, triglicéridos, TSH y más, con código de colores y flechas de tendencia.
+- **Datos demo realistas precargados** - 5 pacientes con 6 consultas de historial, resultados de laboratorio y mediciones corporales para demo presencial.
+- **Perfil de paciente rediseñado** - Layout centrado con avatar, pills informativos, grid 2x2 de herramientas clínicas y secciones editables.
+- **Datos demo realistas para 5 pacientes** - Historiales de 6 consultas, laboratorios y mediciones precargados para demostración presencial.
+- **Verificación de conexión API** - Comprobación de disponibilidad del motor con estado visual en configuración.
+- **Accesibilidad (labels en componentes)** - Labels descriptivos en elementos interactivos para lectores de pantalla.
+- **Comidas ordenadas por tipo** - Meals ordenadas por sortOrder (Desayuno, Snack, Comida, Cena) en editor y PDF.
+- **Registro de consulta al aprobar plan** - Al aprobar un borrador se genera automáticamente un ConsultationRecord con los datos del plan.
+- **Asistente clínico contextual en cada sección** - Analiza datos del paciente y genera observaciones clínicas relevantes en perfil, historial, laboratorios y retroalimentación.
+- **Importación de estudios desde PDF y JSON** - Carga resultados de laboratorio desde documentos PDF (con PDFKit) y archivos JSON estructurados.
+- **Plantillas rápidas para pacientes y comidas** - Perfiles clínicos y combinaciones de alimentos predefinidos para agilizar la captura de datos.
+- **Centro de ayuda in-app con guías paso a paso** - 9 guías, 6 preguntas frecuentes y búsqueda integrada para resolver dudas sin salir de la aplicación.
 
 ---
 
@@ -217,29 +217,29 @@ NutriOptimizeTests/
 
 ### Patrón MVVM con Protocolos
 
-- **Models** — Structs inmutables (`Patient`, `Meal`, `PlanOptimizationDraft`) que representan el dominio clínico.
-- **ViewModels** — Clases `@MainActor` con `@Published` que gestionan estado y lógica de negocio.
-- **Views** — Vistas declarativas en SwiftUI que observan los ViewModels.
-- **Protocols** — `OptimizationServiceProtocol` y `PatientServiceProtocol` permiten inyectar implementaciones mock para pruebas y desarrollo sin dependencia del motor remoto.
+- **Models** - Structs inmutables (`Patient`, `Meal`, `PlanOptimizationDraft`) que representan el dominio clínico.
+- **ViewModels** - Clases `@MainActor` con `@Published` que gestionan estado y lógica de negocio.
+- **Views** - Vistas declarativas en SwiftUI que observan los ViewModels.
+- **Protocols** - `OptimizationServiceProtocol` y `PatientServiceProtocol` permiten inyectar implementaciones mock para pruebas y desarrollo sin dependencia del motor remoto.
 
 ---
 
 ## Roadmap
 
-### Fase 2 — Seguimiento del Paciente ✅
+### Fase 2 - Seguimiento del Paciente ✅
 - Historial de consultas y progreso del paciente con gráficas
 - Fotos de progreso del paciente con cámara
 - Integración de estudios de laboratorio (sangre, etc.)
 - Importación de estudios desde PDF y JSON
 
-### Fase 3 — Productividad Clínica (parcial ✅)
+### Fase 3 - Productividad Clínica (parcial ✅)
 - Asistente clínico contextual en cada sección ✅
 - Plantillas rápidas para pacientes y comidas ✅
 - Centro de ayuda in-app ✅
 - Agenda y citas (pendiente)
 - Personalización del motor por paciente (pendiente)
 
-### Fase 4 — Escala y Cumplimiento
+### Fase 4 - Escala y Cumplimiento
 - Sincronización con backend remoto
 - Soporte multi-nutriólogo
 - Cumplimiento NOM-051 y COFEPRIS

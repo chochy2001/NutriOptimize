@@ -50,7 +50,7 @@ struct PlanOptimizationDraft: Identifiable, Codable {
 
 /// SwiftData-backed persistence record for a plan draft awaiting professional review.
 /// Meals are encoded as JSON so we don't have to declare each nested struct as a
-/// separate @Model — the `Meal` / `Macros` value types stay pure Codable.
+/// separate @Model - the `Meal` / `Macros` value types stay pure Codable.
 @Model
 final class PlanDraftRecord {
     @Attribute(.unique) var draftId: UUID
