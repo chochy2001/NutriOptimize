@@ -12,6 +12,10 @@ struct SettingsView: View {
     @State private var connectionStatus: ConnectionTestStatus = .idle
     @State private var isTestingConnection = false
 
+    // Bound to the same AppStorage key the app root reads from, so flipping
+    // this picker re-renders the entire window with the new color scheme.
+    @AppStorage(AppearancePreference.storageKey) private var schemePreference: String = AppearancePreference.system.rawValue
+
     enum ConnectionTestStatus: Equatable {
         case idle
         case testing
@@ -22,6 +26,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
+                appearanceSection
                 engineSection
                 promptSection
                 debugSection
@@ -47,6 +52,24 @@ struct SettingsView: View {
     }
 
     // MARK: - Sections
+
+    private var appearanceSection: some View {
+        Section {
+            Picker(selection: $schemePreference) {
+                ForEach(AppearancePreference.allCases) { option in
+                    Label(option.localizedLabel, systemImage: option.iconName)
+                        .tag(option.rawValue)
+                }
+            } label: {
+                Text("Modo de color")
+            }
+            .pickerStyle(.inline)
+        } header: {
+            Text("Apariencia")
+        } footer: {
+            Text("Elige c\u{00F3}mo se ver\u{00E1} la app. \u{00AB}Sistema\u{00BB} sigue la preferencia de iOS.")
+        }
+    }
 
     private var engineSection: some View {
         Section {
