@@ -1,4 +1,4 @@
-# Guía de Contribución — NutriOptimize
+# Guía de Contribución - NutriOptimize
 
 ## Reglas del Repositorio
 
