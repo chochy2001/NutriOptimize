@@ -5,6 +5,11 @@ import SwiftData
 struct NutriOptimizeApp: App {
     let modelContainer: ModelContainer
 
+    // Persisted user preference for the appearance picker. Values: "system",
+    // "light", "dark". Default is "system" so the app follows the OS until
+    // the user opts into a specific mode from Settings.
+    @AppStorage(AppearancePreference.storageKey) private var schemePreference: String = AppearancePreference.system.rawValue
+
     init() {
         do {
             modelContainer = try ModelContainer(
@@ -23,7 +28,7 @@ struct NutriOptimizeApp: App {
     var body: some Scene {
         WindowGroup {
             RootCoordinatorView()
-                .preferredColorScheme(.light)
+                .preferredColorScheme(AppearancePreference(rawValue: schemePreference)?.colorScheme)
         }
         .modelContainer(modelContainer)
     }
