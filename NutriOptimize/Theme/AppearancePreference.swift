@@ -25,13 +25,12 @@ enum AppearancePreference: String, CaseIterable, Identifiable {
         }
     }
 
-    /// Localized label for the picker. NutriOptimize ships Spanish UI today,
-    /// so labels are kept in Spanish to match the rest of the app.
+    /// Localized label for the appearance picker (EN/ES via Localizable.strings).
     var localizedLabel: String {
         switch self {
-        case .system: return "Sistema"
-        case .light: return "Claro"
-        case .dark: return "Oscuro"
+        case .system: return L10n.appearanceSystem
+        case .light: return L10n.appearanceLight
+        case .dark: return L10n.appearanceDark
         }
     }
 

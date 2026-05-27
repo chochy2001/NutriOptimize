@@ -30,7 +30,7 @@ struct OptimizationDashboardView: View {
             }
             .background(AppTheme.surfaceWhite.ignoresSafeArea())
             .navigationTitle("NutriOptimize")
-            .searchable(text: $searchText, prompt: "Buscar paciente")
+            .searchable(text: $searchText, prompt: L10n.dashboardSearchPrompt)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     HStack(spacing: 12) {
@@ -85,7 +85,7 @@ struct OptimizationDashboardView: View {
                     HelpView()
                         .toolbar {
                             ToolbarItem(placement: .cancellationAction) {
-                                Button("Cerrar") { showHelp = false }
+                                Button(L10n.actionClose) { showHelp = false }
                             }
                         }
                 }
@@ -101,7 +101,7 @@ struct OptimizationDashboardView: View {
             ProgressView()
                 .tint(AppTheme.deepOrange)
                 .scaleEffect(1.2)
-            Text("Cargando panel...")
+            Text(L10n.dashboardLoading)
                 .font(AppTheme.subheadFont)
                 .foregroundStyle(.secondary)
         }
@@ -110,7 +110,7 @@ struct OptimizationDashboardView: View {
 
     private func errorState(_ message: String) -> some View {
         ContentUnavailableView(
-            "Error al cargar",
+            L10n.dashboardLoadError,
             systemImage: "exclamationmark.triangle",
             description: Text(message)
         )
@@ -152,7 +152,7 @@ struct OptimizationDashboardView: View {
             HStack(spacing: 8) {
                 Image(systemName: "clock.badge.exclamationmark")
                     .foregroundStyle(AppTheme.deepOrange)
-                Text("Pendientes de revisi\u{00F3}n")
+                Text(L10n.dashboardPendingReview)
                     .font(AppTheme.subheadFont)
 
                 Spacer()
@@ -190,7 +190,7 @@ struct OptimizationDashboardView: View {
                 Text(viewModel.patientName(for: draft))
                     .font(.system(.subheadline, design: .rounded, weight: .semibold))
                 HStack(spacing: 8) {
-                    Label("\(draft.meals.count) comidas", systemImage: "fork.knife")
+                    Label(L10n.dashboardMealsCount(draft.meals.count), systemImage: "fork.knife")
                     Text("\u{00B7}")
                     Text("\(Int(draft.totalCalories)) kcal")
                 }
@@ -219,7 +219,7 @@ struct OptimizationDashboardView: View {
             HStack(spacing: 8) {
                 Image(systemName: "person.2.fill")
                     .foregroundStyle(AppTheme.deepOrange)
-                Text("Pacientes")
+                Text(L10n.dashboardPatients)
                     .font(AppTheme.subheadFont)
 
                 Spacer()
@@ -240,13 +240,13 @@ struct OptimizationDashboardView: View {
                     Button {
                         editingPatient = patient
                     } label: {
-                        Label("Editar", systemImage: "pencil")
+                        Label(L10n.actionEdit, systemImage: "pencil")
                     }
                     Button(role: .destructive) {
                         HapticManager.impact(.medium)
                         viewModel.deletePatient(patient)
                     } label: {
-                        Label("Eliminar", systemImage: "trash")
+                        Label(L10n.actionDelete, systemImage: "trash")
                     }
                 }
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
@@ -254,14 +254,14 @@ struct OptimizationDashboardView: View {
                         HapticManager.impact(.medium)
                         viewModel.deletePatient(patient)
                     } label: {
-                        Label("Eliminar", systemImage: "trash")
+                        Label(L10n.actionDelete, systemImage: "trash")
                     }
                 }
                 .swipeActions(edge: .leading, allowsFullSwipe: false) {
                     Button {
                         editingPatient = patient
                     } label: {
-                        Label("Editar", systemImage: "pencil")
+                        Label(L10n.actionEdit, systemImage: "pencil")
                     }
                     .tint(AppTheme.deepOrange)
                 }

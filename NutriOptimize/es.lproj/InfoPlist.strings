@@ -1,0 +1,2 @@
+"NSCameraUsageDescription" = "NutriOptimize necesita acceso a la cámara para tomar fotos de progreso del paciente.";
+"NSPhotoLibraryUsageDescription" = "NutriOptimize necesita acceso a la galería para seleccionar fotos de progreso del paciente.";

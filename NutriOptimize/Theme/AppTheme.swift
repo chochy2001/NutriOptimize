@@ -7,8 +7,11 @@ enum AppTheme {
     static let primaryOrange = Color("PrimaryOrange", bundle: .main)
     static let deepOrange = Color(red: 0.90, green: 0.42, blue: 0.14)
     static let warmOrange = Color(red: 1.0, green: 0.60, blue: 0.20)
-    static let lightOrange = Color(red: 1.0, green: 0.93, blue: 0.85)
-    static let surfaceWhite = Color(red: 0.98, green: 0.98, blue: 0.97)
+    static let lightOrange = Color("LightOrangeBackground", bundle: .main)
+    static let surface = Color("Surface", bundle: .main)
+    /// Backward-compatible alias used across dashboard and list backgrounds.
+    static let surfaceWhite = surface
+    static let cardBackground = Color("CardBackground", bundle: .main)
 
     // MARK: - Semantic Colors
     static let success = Color(red: 0.20, green: 0.72, blue: 0.40)
@@ -38,11 +41,18 @@ enum AppTheme {
 struct CardStyle: ViewModifier {
     var padding: CGFloat = AppTheme.cardPadding
 
+    @Environment(\.colorScheme) private var colorScheme
+
     func body(content: Content) -> some View {
         content
             .padding(padding)
-            .background(.white, in: RoundedRectangle(cornerRadius: AppTheme.cornerRadius))
-            .shadow(color: .black.opacity(0.04), radius: 8, x: 0, y: 2)
+            .background(AppTheme.cardBackground, in: RoundedRectangle(cornerRadius: AppTheme.cornerRadius))
+            .shadow(
+                color: Color.primary.opacity(colorScheme == .dark ? 0.18 : 0.04),
+                radius: 8,
+                x: 0,
+                y: 2
+            )
     }
 }
 

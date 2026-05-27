@@ -32,14 +32,14 @@ struct SettingsView: View {
                 debugSection
                 infoSection
             }
-            .navigationTitle("Configuraci\u{00F3}n")
+            .navigationTitle(L10n.settingsTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cerrar") { dismiss() }
+                    Button(L10n.actionClose) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Guardar") { saveSettings() }
+                    Button(L10n.actionSave) { saveSettings() }
                         .fontWeight(.semibold)
                 }
             }
@@ -61,19 +61,19 @@ struct SettingsView: View {
                         .tag(option.rawValue)
                 }
             } label: {
-                Text("Modo de color")
+                Text(L10n.appearanceColorMode)
             }
             .pickerStyle(.inline)
         } header: {
-            Text("Apariencia")
+            Text(L10n.appearanceSectionTitle)
         } footer: {
-            Text("Elige c\u{00F3}mo se ver\u{00E1} la app. \u{00AB}Sistema\u{00BB} sigue la preferencia de iOS.")
+            Text(L10n.appearanceFooter)
         }
     }
 
     private var engineSection: some View {
         Section {
-            SecureField("API Key de OpenRouter", text: $apiKey)
+            SecureField(L10n.settingsEngineApiKey, text: $apiKey)
                 .textContentType(.password)
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
@@ -89,11 +89,11 @@ struct SettingsView: View {
                         Image(systemName: connectionStatusIcon)
                             .foregroundStyle(connectionStatusColor)
                     }
-                    Text("Verificar conexi\u{00F3}n")
+                    Text(L10n.settingsEngineTestConnection)
                         .font(.system(.subheadline, design: .rounded, weight: .medium))
                     Spacer()
                     if case .success = connectionStatus {
-                        Text("Conectado")
+                        Text(L10n.settingsEngineConnected)
                             .font(AppTheme.captionFont)
                             .foregroundStyle(AppTheme.success)
                     } else if case .failure(let msg) = connectionStatus {
@@ -106,9 +106,9 @@ struct SettingsView: View {
             }
             .disabled(apiKey.trimmingCharacters(in: .whitespaces).isEmpty || connectionStatus == .testing)
         } header: {
-            Text("Motor de Optimizaci\u{00F3}n")
+            Text(L10n.settingsEngineSection)
         } footer: {
-            Text("Obt\u{00E9}n tu clave en openrouter.ai/keys. Se almacena localmente en el dispositivo.")
+            Text(L10n.settingsEngineFooter)
         }
     }
 
@@ -134,7 +134,7 @@ struct SettingsView: View {
         connectionStatus = .testing
 
         guard let url = URL(string: "https://openrouter.ai/api/v1/models") else {
-            connectionStatus = .failure("URL inv\u{00E1}lida")
+            connectionStatus = .failure(L10n.settingsInvalidURL)
             HapticManager.notification(.error)
             return
         }
@@ -152,63 +152,63 @@ struct SettingsView: View {
                 HapticManager.notification(.success)
             } else {
                 let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
-                connectionStatus = .failure("Error \(statusCode)")
+                connectionStatus = .failure(L10n.settingsHTTPError(statusCode))
                 HapticManager.notification(.error)
             }
         } catch {
-            connectionStatus = .failure("Sin conexi\u{00F3}n")
+            connectionStatus = .failure(L10n.settingsNoConnection)
             HapticManager.notification(.error)
         }
     }
 
     private var promptSection: some View {
         Section {
-            TextField("Describe tus patrones de prescripci\u{00F3}n habituales...", text: $customPrompt, axis: .vertical)
+            TextField(L10n.settingsPromptPlaceholder, text: $customPrompt, axis: .vertical)
                 .lineLimit(4...10)
         } header: {
-            Text("Prompt de Optimizaci\u{00F3}n Personalizado")
+            Text(L10n.settingsPromptSection)
         } footer: {
-            Text("El motor usar\u{00E1} estas indicaciones junto con el perfil del paciente. Ejemplo: \"Priorizo dietas mediterr\u{00E1}neas, evito suplementos artificiales, prefiero 5 comidas al d\u{00ED}a.\"")
+            Text(L10n.settingsPromptFooter)
         }
     }
 
     private var debugSection: some View {
         Section {
-            Toggle("Mostrar procesamiento del motor", isPresented: $showDebugView)
+            Toggle(L10n.settingsDebugToggle, isOn: $showDebugView)
         } footer: {
-            Text("Permite ver el prompt enviado y la respuesta cruda del motor de optimizaci\u{00F3}n para verificaci\u{00F3}n profesional.")
+            Text(L10n.settingsDebugFooter)
         }
     }
 
     private var infoSection: some View {
         Section {
             HStack {
-                Text("Modelo")
+                Text(L10n.settingsInfoModel)
                 Spacer()
                 Text("Gemini 2.5 Flash")
                     .foregroundStyle(.secondary)
             }
             HStack {
-                Text("Proveedor")
+                Text(L10n.settingsInfoProvider)
                 Spacer()
                 Text("OpenRouter")
                     .foregroundStyle(.secondary)
             }
             HStack {
-                Text("Estado")
+                Text(L10n.settingsInfoStatus)
                 Spacer()
                 if OpenRouterService.isConfigured {
-                    Label("Configurado", systemImage: "checkmark.circle.fill")
+                    Label(L10n.settingsInfoConfigured, systemImage: "checkmark.circle.fill")
                         .foregroundStyle(AppTheme.success)
                         .font(AppTheme.captionFont)
                 } else {
-                    Label("Sin configurar", systemImage: "xmark.circle.fill")
+                    Label(L10n.settingsInfoNotConfigured, systemImage: "xmark.circle.fill")
                         .foregroundStyle(AppTheme.danger)
                         .font(AppTheme.captionFont)
                 }
             }
         } header: {
-            Text("Informaci\u{00F3}n del Motor")
+            Text(L10n.settingsInfoSection)
         }
     }
 
@@ -235,20 +235,12 @@ struct SettingsView: View {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 48))
                 .foregroundStyle(AppTheme.success)
-            Text("Guardado")
+            Text(L10n.savedConfirmation)
                 .font(AppTheme.subheadFont)
         }
         .padding(32)
         .background(.ultraThickMaterial, in: RoundedRectangle(cornerRadius: 20))
         .transition(.scale.combined(with: .opacity))
-    }
-}
-
-// MARK: - Toggle Convenience
-
-private extension Toggle where Label == Text {
-    init(_ titleKey: LocalizedStringKey, isPresented: Binding<Bool>) {
-        self.init(titleKey, isOn: isPresented)
     }
 }
 
