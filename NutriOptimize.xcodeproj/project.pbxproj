@@ -7,27 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0253312914D03372D137CD75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E14D0BCFE7B92B799BD5CE95 /* InfoPlist.strings */; };
 		0A3DFB61F05FCB3AE7C1E004 /* OptimizationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D277DB36B7E8F1B944F3451 /* OptimizationServiceProtocol.swift */; };
 		0F011908C5AF05B1F28C2C54 /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA4BB47E437856074EB9C30 /* Patient.swift */; };
 		157D8334B4234BBE9C431FBB /* MacrosBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC80E41F7611CADE593AE9C /* MacrosBadgeView.swift */; };
 		15A891BEA07B48C7357011BD /* PatientDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F6CB0C92C7A95B4EE6F364 /* PatientDetailViewModel.swift */; };
 		1C23FA42DD0691D508867271 /* MealRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DC692955D3FADEF2727738 /* MealRowView.swift */; };
+		1CE56D3D6FE7B11E46B2F071 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5261D4AD5B0D2DC2F095C980 /* OnboardingView.swift */; };
 		1CE9322BEADF504D3B74C74D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AF078C9F46592C44F3E995 /* AppTheme.swift */; };
-		A0B1C2D3E4F500000000001A /* AppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B1C2D3E4F500000000001B /* AppearancePreference.swift */; };
 		1D5DD551CB857EADF844E4B7 /* MockOptimizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA494FA2341C4F18BC576DC /* MockOptimizationService.swift */; };
 		1E9A44AAF3C27D9EE8996A1F /* DraftEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28BD3DB3B95E2843718541A /* DraftEditorViewModel.swift */; };
 		2205C41722DD87A2DDD6F961 /* ConsultationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A1937A35E33A684ACBC009 /* ConsultationRecord.swift */; };
 		275D3E6F45E6AA2CCC341E5A /* LabResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8ED11744A68B7C9E63BB0D /* LabResultsView.swift */; };
+		292231F3F12FAC8D9A10C10B /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E256A223C1B6E45973940613 /* LocalizationTests.swift */; };
 		2C961B97CB0CD5F9610A89FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 022B118448A5F21AFC5077C0 /* Assets.xcassets */; };
 		2D65A6400B4732F54734BC80 /* LabResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC7E8621D21C017C236AFF8 /* LabResult.swift */; };
 		2E0F03BD62F7A6F15DFBDBEB /* Professional.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD05BBD34816D3804AE5744 /* Professional.swift */; };
+		2E15C16901F1F699A90CBDF9 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF678536C2AF8097898A0442 /* SplashView.swift */; };
 		2E5F4677F68B19F7E36940EA /* LabDocumentImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649CFA81259633F037E6C993 /* LabDocumentImporter.swift */; };
 		2F2F44C6C7FC1D2EECBEE1BC /* ProcessingStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9CF0B40A4774FE7067CEB /* ProcessingStateView.swift */; };
 		30C8E792384EC191F9F74CB4 /* EngineDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D01D78B1011809E1254AED /* EngineDebugView.swift */; };
+		30ED25AAE1EA07C0E10474DB /* RootCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F3E1A2AF0780354BFA3C6 /* RootCoordinatorView.swift */; };
 		3C33865974D22BB1D0054909 /* OptimizationDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EBE73E75F60D3660C9B090 /* OptimizationDashboardViewModel.swift */; };
 		3D1C4969F1CA9331E8CD60C4 /* PDFExportServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700FC5CCBDFC2753E3918C72 /* PDFExportServiceTests.swift */; };
 		481A34FA465DC9485CD77210 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F451710617661483F01FCB1D /* HapticManager.swift */; };
 		4E20C2070C82038322B4B2E1 /* NutriOptimizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */; };
+		4F975813C7500650027CE36E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13EE58CE1C8F9345D2152587 /* Localizable.strings */; };
 		51CA68743A48EDC975CD44C0 /* ContextualAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89A1F7B5A34790C6690682B /* ContextualAssistantView.swift */; };
 		531A6CBA935317464518A9ED /* RecommendationFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172D70373B23569489771F48 /* RecommendationFeedback.swift */; };
 		539A3B29EC128A889CE1B7C9 /* PatientModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18DF59E31E548887D5A44E5 /* PatientModelTests.swift */; };
@@ -42,10 +47,8 @@
 		9A657349A4DB539B06AF3754 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F985C8464519385895968E3A /* Meal.swift */; };
 		9C25989DFB3A03333B113A94 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9CEE7389210D658925059 /* ServiceError.swift */; };
 		9E79099F4B88E636151FAEEA /* LabImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB947747B0F286CFA3EFFA63 /* LabImportView.swift */; };
+		A391DB48D416DD6A01E8DB0B /* NutriOptimize.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = DC122ED686F2242F042169D1 /* NutriOptimize.xcodeproj */; };
 		A4E40217FC852A0573DA92F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A160F7AC6B1874D10CAB11 /* SettingsView.swift */; };
-		AA11AA11AA11AA11AA11AA11 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB11BB11BB11BB11BB11BB11 /* SplashView.swift */; };
-		AA22AA22AA22AA22AA22AA22 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22BB22BB22BB22BB22BB22 /* OnboardingView.swift */; };
-		AA33AA33AA33AA33AA33AA33 /* RootCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB33BB33BB33BB33BB33BB33 /* RootCoordinatorView.swift */; };
 		AB03933A49067121DC0DA908 /* PhotoCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517142B259D4380961C3187 /* PhotoCaptureView.swift */; };
 		B11459B31DE6A740B243C606 /* PatientFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB19445E0FB65A1711B164 /* PatientFeedbackView.swift */; };
 		B5687A768B1564BE4CE863F3 /* MealModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB017B6521E05B5DA3E21CA8 /* MealModelTests.swift */; };
@@ -54,8 +57,10 @@
 		BFF9B9E2C6B629AB4D290B87 /* PatientDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E8E3306F12044ABE944871 /* PatientDetailView.swift */; };
 		C964626AED5D78B760CD5411 /* PDFExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E1EC3E1A5476DC1164D66E /* PDFExportService.swift */; };
 		CB88814A6493E81E89513061 /* PatientServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4845A9ECB57442F50A1090 /* PatientServiceProtocol.swift */; };
+		CEE1A07735DE2363D2820E12 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82359B71B4782EAB896EC595 /* L10n.swift */; };
 		D99623D84CB15E084E8A2EBB /* ProgressPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BC5F57DA41D8FD2C878361 /* ProgressPhotoView.swift */; };
 		E133DD87E1D8301F87DDBBE5 /* MockOptimizationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843243006D1EF831099409A7 /* MockOptimizationServiceTests.swift */; };
+		E527C0D86720378DBC01D72D /* AppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9BDCA6F172E029C8FB00C /* AppearancePreference.swift */; };
 		ED95B46530C90165BAF1B78A /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A037368547843AFCD0DE49 /* HelpView.swift */; };
 		F8B2D77162E99FB6A6C8BD97 /* PlanOptimizationDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2303941614F220B6DFC7B984 /* PlanOptimizationDraft.swift */; };
 		FF6EF92759C3352F3ED3CFF5 /* OpenRouterServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EBD263E3DE8826A37EA9C3 /* OpenRouterServiceTests.swift */; };
@@ -76,30 +81,36 @@
 		03DC692955D3FADEF2727738 /* MealRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRowView.swift; sourceTree = "<group>"; };
 		06EBD263E3DE8826A37EA9C3 /* OpenRouterServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenRouterServiceTests.swift; sourceTree = "<group>"; };
 		0AB01C5E5B5CF78627321880 /* NutriOptimizeTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NutriOptimizeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F4C55EFB03DECD9E8D72151 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		10C3E6C263E175CE0DF2105A /* MockPatientService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPatientService.swift; sourceTree = "<group>"; };
 		11D9CEE7389210D658925059 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
 		172D70373B23569489771F48 /* RecommendationFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationFeedback.swift; sourceTree = "<group>"; };
 		19F6CB0C92C7A95B4EE6F364 /* PatientDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailViewModel.swift; sourceTree = "<group>"; };
 		1BC7E8621D21C017C236AFF8 /* LabResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabResult.swift; sourceTree = "<group>"; };
 		20AF078C9F46592C44F3E995 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
-		A0B1C2D3E4F500000000001B /* AppearancePreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePreference.swift; sourceTree = "<group>"; };
 		2303941614F220B6DFC7B984 /* PlanOptimizationDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanOptimizationDraft.swift; sourceTree = "<group>"; };
 		25E1EC3E1A5476DC1164D66E /* PDFExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFExportService.swift; sourceTree = "<group>"; };
 		3BF04591979765FA09569224 /* OpenRouterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenRouterService.swift; sourceTree = "<group>"; };
 		41E8E3306F12044ABE944871 /* PatientDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailView.swift; sourceTree = "<group>"; };
 		44EB19445E0FB65A1711B164 /* PatientFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientFeedbackView.swift; sourceTree = "<group>"; };
-		4DE69CBE8B3BAAE73476AE51 /* NutriOptimize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NutriOptimize.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DE69CBE8B3BAAE73476AE51 /* NutriOptimize.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NutriOptimize.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5261D4AD5B0D2DC2F095C980 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		58A160F7AC6B1874D10CAB11 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5C4845A9ECB57442F50A1090 /* PatientServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientServiceProtocol.swift; sourceTree = "<group>"; };
 		649CFA81259633F037E6C993 /* LabDocumentImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabDocumentImporter.swift; sourceTree = "<group>"; };
 		6D277DB36B7E8F1B944F3451 /* OptimizationServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationServiceProtocol.swift; sourceTree = "<group>"; };
 		700FC5CCBDFC2753E3918C72 /* PDFExportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFExportServiceTests.swift; sourceTree = "<group>"; };
+		7830E62D27C38095A1204BC2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7EA494FA2341C4F18BC576DC /* MockOptimizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOptimizationService.swift; sourceTree = "<group>"; };
+		7ED9BDCA6F172E029C8FB00C /* AppearancePreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePreference.swift; sourceTree = "<group>"; };
+		82359B71B4782EAB896EC595 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
 		843243006D1EF831099409A7 /* MockOptimizationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOptimizationServiceTests.swift; sourceTree = "<group>"; };
 		88B7A5DE9153D162E4C9F660 /* OptimizationDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationDashboardView.swift; sourceTree = "<group>"; };
 		8C215AC29F093FD14CA5FDEB /* EditMealSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMealSheet.swift; sourceTree = "<group>"; };
+		8C71E8F29B7F4CD1E3192B1B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9453CFCD8278C1055E08641C /* PatientStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientStore.swift; sourceTree = "<group>"; };
 		9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutriOptimizeApp.swift; sourceTree = "<group>"; };
+		A30F3E1A2AF0780354BFA3C6 /* RootCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinatorView.swift; sourceTree = "<group>"; };
 		A7A037368547843AFCD0DE49 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		A89A1F7B5A34790C6690682B /* ContextualAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualAssistantView.swift; sourceTree = "<group>"; };
 		B28BD3DB3B95E2843718541A /* DraftEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftEditorViewModel.swift; sourceTree = "<group>"; };
@@ -107,18 +118,18 @@
 		B517142B259D4380961C3187 /* PhotoCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureView.swift; sourceTree = "<group>"; };
 		BA8ED11744A68B7C9E63BB0D /* LabResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabResultsView.swift; sourceTree = "<group>"; };
 		BB017B6521E05B5DA3E21CA8 /* MealModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealModelTests.swift; sourceTree = "<group>"; };
-		BB11BB11BB11BB11BB11BB11 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		BB22BB22BB22BB22BB22BB22 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		BB33BB33BB33BB33BB33BB33 /* RootCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinatorView.swift; sourceTree = "<group>"; };
 		BCC80E41F7611CADE593AE9C /* MacrosBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacrosBadgeView.swift; sourceTree = "<group>"; };
 		C18DF59E31E548887D5A44E5 /* PatientModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModelTests.swift; sourceTree = "<group>"; };
 		C3637EA2BBE27AD5D6E51E49 /* DraftEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftEditorView.swift; sourceTree = "<group>"; };
 		C9A1937A35E33A684ACBC009 /* ConsultationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultationRecord.swift; sourceTree = "<group>"; };
 		CAA4BB47E437856074EB9C30 /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		CDE9CF0B40A4774FE7067CEB /* ProcessingStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingStateView.swift; sourceTree = "<group>"; };
+		CF678536C2AF8097898A0442 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		D1231C5478F1C5A536B68B7E /* AddEditPatientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditPatientView.swift; sourceTree = "<group>"; };
 		D35ADCCDCEA052BC480919C8 /* PatientHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientHistoryView.swift; sourceTree = "<group>"; };
 		D8BC5F57DA41D8FD2C878361 /* ProgressPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPhotoView.swift; sourceTree = "<group>"; };
+		DC122ED686F2242F042169D1 /* NutriOptimize.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = NutriOptimize.xcodeproj; sourceTree = "<group>"; };
+		E256A223C1B6E45973940613 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		E49E678EA85E2C5F7BB598A0 /* PlanOptimizationDraftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanOptimizationDraftTests.swift; sourceTree = "<group>"; };
 		E671E544EEE04FE9905BD6D7 /* DemoDataSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoDataSeeder.swift; sourceTree = "<group>"; };
 		EAD05BBD34816D3804AE5744 /* Professional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Professional.swift; sourceTree = "<group>"; };
@@ -126,6 +137,7 @@
 		F451710617661483F01FCB1D /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		F985C8464519385895968E3A /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		F9D01D78B1011809E1254AED /* EngineDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineDebugView.swift; sourceTree = "<group>"; };
+		FC7405AFEA696BB86F84F675 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -133,7 +145,10 @@
 			isa = PBXGroup;
 			children = (
 				022B118448A5F21AFC5077C0 /* Assets.xcassets */,
+				DC122ED686F2242F042169D1 /* NutriOptimize.xcodeproj */,
 				9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */,
+				E14D0BCFE7B92B799BD5CE95 /* InfoPlist.strings */,
+				13EE58CE1C8F9345D2152587 /* Localizable.strings */,
 				EC2C1408379E428186FBDAFA /* Models */,
 				C974A439EEF0B89CA79F8443 /* Services */,
 				FD0B9660BF2F1177133529CF /* Theme */,
@@ -141,6 +156,14 @@
 				5CBB842EE730D63694199A2A /* Views */,
 			);
 			path = NutriOptimize;
+			sourceTree = "<group>";
+		};
+		3849DC7E44FBFB1FCB06DDD8 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				5261D4AD5B0D2DC2F095C980 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		3C532F3FB8568F91430CD763 /* Components */ = {
@@ -175,15 +198,15 @@
 		5CBB842EE730D63694199A2A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BB33BB33BB33BB33BB33BB33 /* RootCoordinatorView.swift */,
+				A30F3E1A2AF0780354BFA3C6 /* RootCoordinatorView.swift */,
 				3C532F3FB8568F91430CD763 /* Components */,
 				BA1A5E64EE02EE83129B019B /* Dashboard */,
 				B66DBFE9014E986775AC4273 /* Draft */,
 				5C837A44B760722D6385EA47 /* Help */,
-				CC22CC22CC22CC22CC22CC22 /* Onboarding */,
+				3849DC7E44FBFB1FCB06DDD8 /* Onboarding */,
 				E387845BE1839156C427FAB0 /* Patient */,
 				84F39FAA74197594866415B3 /* Settings */,
-				CC11CC11CC11CC11CC11CC11 /* Splash */,
+				C18F2894BC0A048F25C60957 /* Splash */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -241,6 +264,14 @@
 			path = Dashboard;
 			sourceTree = "<group>";
 		};
+		C18F2894BC0A048F25C60957 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				CF678536C2AF8097898A0442 /* SplashView.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
 		C974A439EEF0B89CA79F8443 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,22 +284,6 @@
 				73980FDB39C23EA59BEAB5FE /* Protocols */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		CC11CC11CC11CC11CC11CC11 /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				BB11BB11BB11BB11BB11BB11 /* SplashView.swift */,
-			);
-			path = Splash;
-			sourceTree = "<group>";
-		};
-		CC22CC22CC22CC22CC22CC22 /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				BB22BB22BB22BB22BB22BB22 /* OnboardingView.swift */,
-			);
-			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		D88D98D12E6DD25B9BF3DC42 /* Products */ = {
@@ -313,6 +328,7 @@
 		F628F2E821B1E923253B40C1 /* NutriOptimizeTests */ = {
 			isa = PBXGroup;
 			children = (
+				E256A223C1B6E45973940613 /* LocalizationTests.swift */,
 				BB017B6521E05B5DA3E21CA8 /* MealModelTests.swift */,
 				843243006D1EF831099409A7 /* MockOptimizationServiceTests.swift */,
 				06EBD263E3DE8826A37EA9C3 /* OpenRouterServiceTests.swift */,
@@ -326,9 +342,10 @@
 		FD0B9660BF2F1177133529CF /* Theme */ = {
 			isa = PBXGroup;
 			children = (
+				7ED9BDCA6F172E029C8FB00C /* AppearancePreference.swift */,
 				20AF078C9F46592C44F3E995 /* AppTheme.swift */,
-				A0B1C2D3E4F500000000001B /* AppearancePreference.swift */,
 				F451710617661483F01FCB1D /* HapticManager.swift */,
+				82359B71B4782EAB896EC595 /* L10n.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -380,6 +397,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = 54D952A391FCA35E40A60ADF /* Build configuration list for PBXProject "NutriOptimize" */;
 			developmentRegion = en;
@@ -387,6 +406,7 @@
 			knownRegions = (
 				Base,
 				en,
+				es,
 			);
 			mainGroup = A222BDAAA24CA6FA8BE5A41C;
 			minimizedProjectReferenceProxies = 1;
@@ -407,6 +427,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C961B97CB0CD5F9610A89FF /* Assets.xcassets in Resources */,
+				0253312914D03372D137CD75 /* InfoPlist.strings in Resources */,
+				4F975813C7500650027CE36E /* Localizable.strings in Resources */,
+				A391DB48D416DD6A01E8DB0B /* NutriOptimize.xcodeproj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +442,7 @@
 			files = (
 				689E143AF02EFA42E02247E3 /* AddEditPatientView.swift in Sources */,
 				1CE9322BEADF504D3B74C74D /* AppTheme.swift in Sources */,
-				A0B1C2D3E4F500000000001A /* AppearancePreference.swift in Sources */,
+				E527C0D86720378DBC01D72D /* AppearancePreference.swift in Sources */,
 				2205C41722DD87A2DDD6F961 /* ConsultationRecord.swift in Sources */,
 				51CA68743A48EDC975CD44C0 /* ContextualAssistantView.swift in Sources */,
 				BB9DE6568D603F19CE54B786 /* DemoDataSeeder.swift in Sources */,
@@ -429,6 +452,7 @@
 				30C8E792384EC191F9F74CB4 /* EngineDebugView.swift in Sources */,
 				481A34FA465DC9485CD77210 /* HapticManager.swift in Sources */,
 				ED95B46530C90165BAF1B78A /* HelpView.swift in Sources */,
+				CEE1A07735DE2363D2820E12 /* L10n.swift in Sources */,
 				2E5F4677F68B19F7E36940EA /* LabDocumentImporter.swift in Sources */,
 				9E79099F4B88E636151FAEEA /* LabImportView.swift in Sources */,
 				2D65A6400B4732F54734BC80 /* LabResult.swift in Sources */,
@@ -439,6 +463,7 @@
 				1D5DD551CB857EADF844E4B7 /* MockOptimizationService.swift in Sources */,
 				85BBA955F459B0DD7F2E7B27 /* MockPatientService.swift in Sources */,
 				4E20C2070C82038322B4B2E1 /* NutriOptimizeApp.swift in Sources */,
+				1CE56D3D6FE7B11E46B2F071 /* OnboardingView.swift in Sources */,
 				8FBF37AE3693B7D9BA454339 /* OpenRouterService.swift in Sources */,
 				99617DCB15E810A556AC5D42 /* OptimizationDashboardView.swift in Sources */,
 				3C33865974D22BB1D0054909 /* OptimizationDashboardViewModel.swift in Sources */,
@@ -457,11 +482,10 @@
 				2E0F03BD62F7A6F15DFBDBEB /* Professional.swift in Sources */,
 				D99623D84CB15E084E8A2EBB /* ProgressPhotoView.swift in Sources */,
 				531A6CBA935317464518A9ED /* RecommendationFeedback.swift in Sources */,
+				30ED25AAE1EA07C0E10474DB /* RootCoordinatorView.swift in Sources */,
 				9C25989DFB3A03333B113A94 /* ServiceError.swift in Sources */,
 				A4E40217FC852A0573DA92F6 /* SettingsView.swift in Sources */,
-				AA11AA11AA11AA11AA11AA11 /* SplashView.swift in Sources */,
-				AA22AA22AA22AA22AA22AA22 /* OnboardingView.swift in Sources */,
-				AA33AA33AA33AA33AA33AA33 /* RootCoordinatorView.swift in Sources */,
+				2E15C16901F1F699A90CBDF9 /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +493,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				292231F3F12FAC8D9A10C10B /* LocalizationTests.swift in Sources */,
 				B5687A768B1564BE4CE863F3 /* MealModelTests.swift in Sources */,
 				E133DD87E1D8301F87DDBBE5 /* MockOptimizationServiceTests.swift in Sources */,
 				FF6EF92759C3352F3ED3CFF5 /* OpenRouterServiceTests.swift in Sources */,
@@ -488,6 +513,27 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		13EE58CE1C8F9345D2152587 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7830E62D27C38095A1204BC2 /* en */,
+				8C71E8F29B7F4CD1E3192B1B /* es */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		E14D0BCFE7B92B799BD5CE95 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0F4C55EFB03DECD9E8D72151 /* en */,
+				FC7405AFEA696BB86F84F675 /* es */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		298522B3429ED27938ED92FC /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -495,7 +541,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5YXL83H5V6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "NutriOptimize necesita acceso a la cámara para tomar fotos de progreso del paciente.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "NutriOptimize necesita acceso a la galería para seleccionar fotos de progreso del paciente.";
@@ -508,7 +553,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nutrioptimize.NutriOptimize.pao;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nutrioptimize.NutriOptimize;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -537,7 +582,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5YXL83H5V6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "NutriOptimize necesita acceso a la cámara para tomar fotos de progreso del paciente.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "NutriOptimize necesita acceso a la galería para seleccionar fotos de progreso del paciente.";
@@ -550,7 +594,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nutrioptimize.NutriOptimize.pao;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nutrioptimize.NutriOptimize;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

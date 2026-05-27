@@ -35,7 +35,7 @@ struct SplashView: View {
                         .font(.system(.largeTitle, design: .rounded, weight: .bold))
                         .foregroundStyle(.white)
 
-                    Text("Nutrición inteligente")
+                    Text(L10n.splashTagline)
                         .font(.system(.subheadline, design: .rounded, weight: .medium))
                         .foregroundStyle(.white.opacity(0.85))
                 }

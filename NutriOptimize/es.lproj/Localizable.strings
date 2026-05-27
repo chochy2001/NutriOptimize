@@ -1,0 +1,67 @@
+/* Appearance */
+"appearance.system" = "Sistema";
+"appearance.light" = "Claro";
+"appearance.dark" = "Oscuro";
+"appearance.section.title" = "Apariencia";
+"appearance.color_mode" = "Modo de color";
+"appearance.footer" = "Elige cómo se verá la app. «Sistema» sigue la preferencia de iOS.";
+
+/* Common actions */
+"action.close" = "Cerrar";
+"action.save" = "Guardar";
+"action.skip" = "Omitir";
+"action.next" = "Siguiente";
+"action.back" = "Atrás";
+"action.start" = "Comenzar";
+"action.edit" = "Editar";
+"action.delete" = "Eliminar";
+"action.saved" = "Guardado";
+
+/* Splash */
+"splash.tagline" = "Nutrición inteligente";
+
+/* Onboarding */
+"onboarding.skip.hint" = "Cierra la introducción y entra a la aplicación";
+"onboarding.skip.accessibility" = "Omitir tutorial";
+"onboarding.page.accessibility" = "Página %d de %d";
+"onboarding.start.accessibility" = "Comenzar a usar NutriOptimize";
+"onboarding.next.accessibility" = "Siguiente página";
+"onboarding.back.accessibility" = "Página anterior";
+"onboarding.welcome.title" = "Bienvenido a NutriOptimize";
+"onboarding.welcome.body" = "Tu asistente para optimizar planes nutricionales. Diseñada para que dediques más tiempo a tus pacientes y menos a la administración.";
+"onboarding.patients.title" = "Gestiona tus pacientes";
+"onboarding.patients.body" = "Registra pacientes, consulta su historial, resultados de laboratorio y fotos de progreso desde un solo lugar.";
+"onboarding.optimize.title" = "Optimiza planes con IA";
+"onboarding.optimize.body" = "NutriOptimize genera borradores de planes nutricionales que tú revisas, ajustas y apruebas. Mantén el control, ahorra tiempo.";
+"onboarding.track.title" = "Da seguimiento a resultados";
+"onboarding.track.body" = "Revisa la evolución de cada paciente con consultas, análisis de laboratorio y fotos de progreso. Toma mejores decisiones basadas en datos.";
+
+/* Dashboard */
+"dashboard.search_prompt" = "Buscar paciente";
+"dashboard.loading" = "Cargando panel...";
+"dashboard.load_error" = "Error al cargar";
+"dashboard.pending_review" = "Pendientes de revisión";
+"dashboard.patients" = "Pacientes";
+"dashboard.meals_count" = "%d comidas";
+
+/* Settings */
+"settings.title" = "Configuración";
+"settings.engine.section" = "Motor de Optimización";
+"settings.engine.api_key" = "API Key de OpenRouter";
+"settings.engine.test_connection" = "Verificar conexión";
+"settings.engine.connected" = "Conectado";
+"settings.engine.footer" = "Obtén tu clave en openrouter.ai/keys. Se almacena localmente en el dispositivo.";
+"settings.prompt.section" = "Prompt de Optimización Personalizado";
+"settings.prompt.placeholder" = "Describe tus patrones de prescripción habituales...";
+"settings.prompt.footer" = "El motor usará estas indicaciones junto con el perfil del paciente. Ejemplo: \"Priorizo dietas mediterráneas, evito suplementos artificiales, prefiero 5 comidas al día.\"";
+"settings.debug.toggle" = "Mostrar procesamiento del motor";
+"settings.debug.footer" = "Permite ver el prompt enviado y la respuesta cruda del motor de optimización para verificación profesional.";
+"settings.info.section" = "Información del Motor";
+"settings.info.model" = "Modelo";
+"settings.info.provider" = "Proveedor";
+"settings.info.status" = "Estado";
+"settings.info.configured" = "Configurado";
+"settings.info.not_configured" = "Sin configurar";
+"settings.error.invalid_url" = "URL inválida";
+"settings.error.http" = "Error %d";
+"settings.error.no_connection" = "Sin conexión";

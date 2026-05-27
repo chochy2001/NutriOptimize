@@ -5,28 +5,30 @@ struct OnboardingView: View {
 
     @State private var currentPage: Int = 0
 
-    private let pages: [OnboardingPageContent] = [
-        OnboardingPageContent(
-            icon: "leaf.circle.fill",
-            title: "Bienvenido a NutriOptimize",
-            body: "Tu asistente para optimizar planes nutricionales. Diseñada para que dediques más tiempo a tus pacientes y menos a la administración."
-        ),
-        OnboardingPageContent(
-            icon: "person.2.fill",
-            title: "Gestiona tus pacientes",
-            body: "Registra pacientes, consulta su historial, resultados de laboratorio y fotos de progreso desde un solo lugar."
-        ),
-        OnboardingPageContent(
-            icon: "wand.and.stars",
-            title: "Optimiza planes con IA",
-            body: "NutriOptimize genera borradores de planes nutricionales que tú revisas, ajustas y apruebas. Mantén el control, ahorra tiempo."
-        ),
-        OnboardingPageContent(
-            icon: "chart.line.uptrend.xyaxis",
-            title: "Da seguimiento a resultados",
-            body: "Revisa la evolución de cada paciente con consultas, análisis de laboratorio y fotos de progreso. Toma mejores decisiones basadas en datos."
-        )
-    ]
+    private var pages: [OnboardingPageContent] {
+        [
+            OnboardingPageContent(
+                icon: "leaf.circle.fill",
+                title: L10n.onboardingWelcomeTitle,
+                body: L10n.onboardingWelcomeBody
+            ),
+            OnboardingPageContent(
+                icon: "person.2.fill",
+                title: L10n.onboardingPatientsTitle,
+                body: L10n.onboardingPatientsBody
+            ),
+            OnboardingPageContent(
+                icon: "wand.and.stars",
+                title: L10n.onboardingOptimizeTitle,
+                body: L10n.onboardingOptimizeBody
+            ),
+            OnboardingPageContent(
+                icon: "chart.line.uptrend.xyaxis",
+                title: L10n.onboardingTrackTitle,
+                body: L10n.onboardingTrackBody
+            )
+        ]
+    }
 
     init(onFinished: @escaping () -> Void) {
         self.onFinished = onFinished
@@ -64,7 +66,7 @@ struct OnboardingView: View {
 
     private var backgroundGradient: some View {
         LinearGradient(
-            colors: [AppTheme.lightOrange.opacity(0.3), .white],
+            colors: [AppTheme.lightOrange.opacity(0.3), AppTheme.surface],
             startPoint: .top,
             endPoint: .bottom
         )
@@ -77,14 +79,14 @@ struct OnboardingView: View {
             HapticManager.selection()
             onFinished()
         } label: {
-            Text("Omitir")
+            Text(L10n.actionSkip)
                 .font(AppTheme.subheadFont)
                 .foregroundStyle(.secondary)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 8)
         }
-        .accessibilityLabel("Omitir tutorial")
-        .accessibilityHint("Cierra la introducción y entra a la aplicación")
+        .accessibilityLabel(L10n.onboardingSkipAccessibility)
+        .accessibilityHint(L10n.onboardingSkipHint)
     }
 
     // MARK: - Bottom Controls
@@ -112,7 +114,7 @@ struct OnboardingView: View {
         }
         .padding(.vertical, 8)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Página \(currentPage + 1) de \(pages.count)")
+        .accessibilityLabel(L10n.onboardingPageAccessibility(current: currentPage + 1, total: pages.count))
     }
 
     private var primaryButton: some View {
@@ -126,7 +128,7 @@ struct OnboardingView: View {
                 onFinished()
             }
         } label: {
-            Text(isLastPage ? "Comenzar" : "Siguiente")
+            Text(isLastPage ? L10n.actionStart : L10n.actionNext)
                 .font(.system(.headline, design: .rounded, weight: .bold))
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
@@ -135,7 +137,7 @@ struct OnboardingView: View {
                     Capsule().fill(AppTheme.primaryOrange)
                 )
         }
-        .accessibilityLabel(isLastPage ? "Comenzar a usar NutriOptimize" : "Siguiente página")
+        .accessibilityLabel(isLastPage ? L10n.onboardingStartAccessibility : L10n.onboardingNextAccessibility)
     }
 
     private var backButton: some View {
@@ -145,12 +147,12 @@ struct OnboardingView: View {
                 currentPage = max(0, currentPage - 1)
             }
         } label: {
-            Text("Atrás")
+            Text(L10n.actionBack)
                 .font(AppTheme.subheadFont)
                 .foregroundStyle(.secondary)
                 .padding(.vertical, 4)
         }
-        .accessibilityLabel("Página anterior")
+        .accessibilityLabel(L10n.onboardingBackAccessibility)
     }
 
     private var isLastPage: Bool {

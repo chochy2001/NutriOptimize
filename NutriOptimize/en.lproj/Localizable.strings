@@ -1,0 +1,67 @@
+/* Appearance */
+"appearance.system" = "System";
+"appearance.light" = "Light";
+"appearance.dark" = "Dark";
+"appearance.section.title" = "Appearance";
+"appearance.color_mode" = "Color mode";
+"appearance.footer" = "Choose how the app looks. \"System\" follows your iOS preference.";
+
+/* Common actions */
+"action.close" = "Close";
+"action.save" = "Save";
+"action.skip" = "Skip";
+"action.next" = "Next";
+"action.back" = "Back";
+"action.start" = "Get Started";
+"action.edit" = "Edit";
+"action.delete" = "Delete";
+"action.saved" = "Saved";
+
+/* Splash */
+"splash.tagline" = "Smart nutrition";
+
+/* Onboarding */
+"onboarding.skip.hint" = "Closes the introduction and opens the app";
+"onboarding.skip.accessibility" = "Skip tutorial";
+"onboarding.page.accessibility" = "Page %d of %d";
+"onboarding.start.accessibility" = "Start using NutriOptimize";
+"onboarding.next.accessibility" = "Next page";
+"onboarding.back.accessibility" = "Previous page";
+"onboarding.welcome.title" = "Welcome to NutriOptimize";
+"onboarding.welcome.body" = "Your assistant for optimizing nutrition plans. Spend more time with patients and less on paperwork.";
+"onboarding.patients.title" = "Manage your patients";
+"onboarding.patients.body" = "Register patients and review history, lab results, and progress photos in one place.";
+"onboarding.optimize.title" = "Optimize plans with AI";
+"onboarding.optimize.body" = "NutriOptimize generates nutrition plan drafts that you review, adjust, and approve. Stay in control, save time.";
+"onboarding.track.title" = "Track outcomes";
+"onboarding.track.body" = "Review each patient's progress with consultations, lab analysis, and progress photos. Make better data-driven decisions.";
+
+/* Dashboard */
+"dashboard.search_prompt" = "Search patient";
+"dashboard.loading" = "Loading dashboard...";
+"dashboard.load_error" = "Failed to load";
+"dashboard.pending_review" = "Pending review";
+"dashboard.patients" = "Patients";
+"dashboard.meals_count" = "%d meals";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.engine.section" = "Optimization Engine";
+"settings.engine.api_key" = "OpenRouter API Key";
+"settings.engine.test_connection" = "Test connection";
+"settings.engine.connected" = "Connected";
+"settings.engine.footer" = "Get your key at openrouter.ai/keys. It is stored locally on this device.";
+"settings.prompt.section" = "Custom Optimization Prompt";
+"settings.prompt.placeholder" = "Describe your usual prescribing patterns...";
+"settings.prompt.footer" = "The engine uses these instructions along with the patient profile. Example: \"I prioritize Mediterranean diets, avoid artificial supplements, prefer 5 meals a day.\"";
+"settings.debug.toggle" = "Show engine processing";
+"settings.debug.footer" = "View the prompt sent and the raw engine response for professional verification.";
+"settings.info.section" = "Engine Information";
+"settings.info.model" = "Model";
+"settings.info.provider" = "Provider";
+"settings.info.status" = "Status";
+"settings.info.configured" = "Configured";
+"settings.info.not_configured" = "Not configured";
+"settings.error.invalid_url" = "Invalid URL";
+"settings.error.http" = "Error %d";
+"settings.error.no_connection" = "No connection";
