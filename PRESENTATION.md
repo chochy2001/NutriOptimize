@@ -1,201 +1,150 @@
-# NutriOptimize - Guía de Presentación para Hackathon
+# NutriOptimize - Pitch Final Shark Tank
 
-> Formato optimizado para copiar/pegar en Gamma. Cada sección separada por `---` corresponde a una diapositiva.
+> Presentación rápida para copiar en Gamma, Canva o PowerPoint. Cada bloque separado por `---` es una slide. Duración objetivo: 5 minutos máximo.
 
 ---
 
-## Diapositiva 1: Título
+## Slide 1: NutriOptimize
 
-**NutriOptimize**
+**Planes nutricionales personalizados en minutos, con el nutriólogo siempre al mando.**
 
-Optimización nutricional inteligente centrada en el profesional
+NutriOptimize es una app iOS para nutriólogos que convierte datos clínicos del paciente en un borrador de plan alimenticio editable, verificable y listo para entregar.
 
-**Equipo:**
+**Equipo**
 - Jorge Salgado Miranda
 - Michelle Paola González Martínez
 - Arroyo Ramírez Carlos Alberto
 
-Color de marca: `#F27822`
+**Guion, 30 segundos**
+
+Hoy no venimos a vender una IA que reemplaza nutriólogos. Venimos a presentar una herramienta que les devuelve tiempo, orden y control. NutriOptimize toma el perfil clínico del paciente, propone un plan alimenticio como borrador y deja la decisión final en manos del profesional.
 
 ---
 
-## Diapositiva 2: El Problema
+## Slide 2: El Problema
 
-**Los nutriólogos pierden tiempo en tareas que no son clínicas**
+**La necesidad nutricional es enorme, pero el flujo clínico sigue siendo lento.**
 
-- Los nutriólogos pasan **60%+ de su tiempo** en tareas administrativas en lugar de atender pacientes
-- Crear un plan alimenticio personalizado toma **30-45 minutos** por paciente
-- Las herramientas actuales no están diseñadas para el **flujo clínico mexicano**: alimentos locales, presupuestos en pesos, nomenclatura en español
-- No existe integración entre el historial del paciente, los cálculos antropométricos y la generación del plan
-- El resultado: menos pacientes atendidos, planes genéricos y profesionales agotados
+- En México, **76.2% de los adultos** vive con sobrepeso u obesidad, según ENSANUT Continua 2023.
+- La OCDE estima que el sobrepeso representa **8.9% del gasto en salud** y reduce el PIB de México en **5.3%**.
+- Cada paciente requiere cálculos, restricciones, alergias, presupuesto, preferencias, historial y una entrega clara.
+- El nutriólogo termina invirtiendo tiempo fuera de consulta en tareas repetitivas que sí se pueden acelerar.
 
----
+**Guion, 45 segundos**
 
-## Diapositiva 3: Human-Centered AI - Nuestra Filosofía
+El problema no es solo hacer una dieta. Es transformar información clínica en un plan personalizado, seguro y comprensible. En la práctica, el nutriólogo debe calcular IMC, TMB, TDEE, revisar alergias, adaptar comidas al presupuesto y redactar algo que el paciente sí pueda seguir. Esa carga limita cuántos pacientes puede atender y qué tan rápido puede responder.
 
-**El sistema PROPONE, el profesional DECIDE**
-
-Principios HCAI que guían NutriOptimize:
-
-1. **Human-in-the-loop** - El motor genera borradores, nunca planes finales. Todo pasa por la aprobación del nutriólogo.
-2. **Transparencia** - El motor explica el "por qué" de cada sugerencia: razonamiento clínico, distribución de macros, selección de alimentos.
-3. **Control total** - El profesional puede editar, agregar, eliminar o sobreescribir cualquier comida o ingrediente.
-4. **Sin decisiones automatizadas** - Ningún plan llega al paciente sin revisión humana explícita.
-5. **Verificabilidad** - Vista de depuración que muestra exactamente qué datos se enviaron y qué respondió el motor.
-6. **Asistente contextual HCAI** - El asistente observa, pregunta y sugiere - pero NUNCA decide. Genera observaciones clínicas y formula preguntas al nutriólogo para guiar su razonamiento, sin emitir diagnósticos ni instrucciones.
-
-**Flujo HCAI:**
-
-```
-Datos del Paciente → Motor de Optimización → Borrador
-       ↓                                        ↓
-  Perfil clínico                         Revisión del Nutriólogo
-  Alergias                                      ↓
-  Condiciones                          Edición granular
-  Presupuesto                                   ↓
-  Preferencias                          Plan Aprobado
-                                                ↓
-                                        PDF al Paciente
-                                       (vía WhatsApp)
-```
+**Fuentes**
+- [ENSANUT Continua 2023, INSP](https://ensanut.insp.mx/encuestas/ensanutcontinua2023/doctos/informes/ensanut_23_112024.pdf): sobrepeso + obesidad en adultos.
+- [OECD, The Heavy Burden of Obesity: México](https://www.oecd.org/content/dam/oecd/en/publications/reports/2025/07/the-heavy-burden-of-obesity-country-notes_da068cb5/mexico_358a8aef/b2906d73-en.pdf).
 
 ---
 
-## Diapositiva 4: Demo / Screenshots
+## Slide 3: La Solución
 
-**Flujo completo de uso**
+**Un flujo Human-Centered AI: el sistema propone, el profesional decide.**
 
-| Paso | Pantalla | Descripción |
-|------|----------|-------------|
-| 1 | Dashboard | Panel con pacientes y planes pendientes de revisión |
-| 2 | Perfil del Paciente | Datos clínicos, cálculos de IMC/TMB/TDEE, botón de generar plan |
-| 3 | Procesamiento | Animación de progreso mientras el motor analiza el perfil |
-| 4 | Editor de Plan | Revisión y edición granular de cada comida, macros y porciones |
+1. Se registra el paciente con datos clínicos, objetivo, alergias, preferencias, actividad, presupuesto y tiempo de cocina.
+2. El motor genera una propuesta con comidas, porciones, macros y razonamiento clínico.
+3. El nutriólogo revisa el borrador, edita cualquier comida y ajusta macros o ingredientes.
+4. Al aprobarlo, la app guarda la consulta y genera un PDF profesional compartible desde la hoja del sistema.
 
-*Insertar capturas de pantalla:*
+**Diferencial central**
+
+NutriOptimize no automatiza decisiones clínicas. Acelera el primer borrador y conserva revisión humana, trazabilidad y control granular.
+
+**Guion, 45 segundos**
+
+La clave es que no entregamos un plan directo al paciente. Entregamos un borrador al profesional. El motor considera alergias, condiciones, presupuesto en pesos mexicanos, preferencias y feedback previo. Después, el nutriólogo puede cambiar una comida, borrar ingredientes, ajustar porciones o descartar todo. Esto cumple el principio más importante de nuestra app: la IA asiste, pero el criterio profesional manda.
+
+---
+
+## Slide 4: Demo del Prototipo
+
+**Mostrar solo el flujo que convence.**
+
+**1. Dashboard**
+- Pacientes registrados.
+- Borradores pendientes.
+- Búsqueda rápida.
+
+**2. Perfil del paciente**
+- IMC, TMB y TDEE calculados automáticamente.
+- Historial, fotos, laboratorios y feedback.
+- Botón para generar propuesta optimizada.
+
+**3. Editor del plan**
+- Comidas ordenadas por tipo: desayuno, snack, comida y cena.
+- Totales de calorías, proteína, carbohidratos y grasa.
+- Edición granular, aprobación, descarte, guardado en pendientes y PDF.
+
+**Capturas sugeridas**
 - `docs/screenshots/dashboard.png`
 - `docs/screenshots/patient_detail.png`
 - `docs/screenshots/processing.png`
 - `docs/screenshots/draft_editor.png`
 
----
+**Guion, 1 minuto 20 segundos**
 
-## Diapositiva 5: Arquitectura Técnica
-
-**Stack nativo iOS con arquitectura MVVM**
-
-| Capa | Tecnología | Propósito |
-|------|-----------|-----------|
-| **UI** | SwiftUI | Interfaz declarativa con animaciones y hápticos |
-| **Estado** | MVVM + @Published | ViewModels reactivos con estado observable |
-| **Persistencia** | SwiftData | Almacenamiento local de pacientes en el dispositivo |
-| **Motor** | OpenRouter API | Backend del motor de optimización inteligente |
-| **PDF** | UIGraphicsPDFRenderer | Generación nativa de documentos profesionales |
-| **Testabilidad** | Protocolos + Mocks | Inyección de dependencias para pruebas |
-
-**Cálculos clínicos integrados:**
-- IMC (Índice de Masa Corporal) con clasificación
-- TMB con ecuación de Mifflin-St Jeor
-- TDEE con factores PAL por nivel de actividad
-- Distribución y porcentajes de macronutrientes
+Aquí se ve el prototipo funcionando. Primero, el dashboard concentra pacientes y planes pendientes. Después entramos al perfil: la app ya calcula métricas clínicas y abre herramientas de seguimiento como laboratorios, fotos y retroalimentación. Al generar el plan, si hay API key usa OpenRouter; si no, funciona con datos demo y motor mock para que la exposición no dependa de internet. Finalmente, en el editor se revisa el razonamiento, se ajustan comidas y se exporta un PDF profesional.
 
 ---
 
-## Diapositiva 6: Funcionalidades Clave
+## Slide 5: Tecnología y Viabilidad
 
-**Todo lo que un nutriólogo necesita en su flujo diario**
+**Es una app nativa, no una maqueta.**
 
-**Gestión de Pacientes**
-- CRUD completo con datos clínicos: alergias, condiciones, preferencias, presupuesto
-- Búsqueda y filtrado instantáneo
-- Cálculos antropométricos automáticos
+| Capa | Implementación | Por qué importa |
+|---|---|---|
+| App | SwiftUI + iOS 17 | Experiencia móvil fluida para consulta real |
+| Datos | SwiftData local | Privacidad y disponibilidad sin backend obligatorio |
+| Arquitectura | MVVM + protocolos | Código separable, testeable y mantenible |
+| Motor | OpenRouter + Gemini 2.5 Flash | Generación estructurada en JSON |
+| Seguridad | Keychain para API key | No se guarda la clave como texto plano |
+| Entrega | PDF nativo + share sheet | Documento profesional listo para paciente |
+| Respaldo | Motor mock + datos demo | Demo estable aún sin API externa |
 
-**Motor de Optimización**
-- Considera perfil completo: edad, peso, alergias, condiciones, actividad, presupuesto, tiempo de cocina
-- Prompt personalizable por el nutriólogo según su estilo de prescripción
-- Alimentos y porciones en español mexicano
+**Validación técnica**
+- Build en simulador: exitoso.
+- 86 pruebas unitarias cubren modelos, prompts, PDF, mocks, drafts y localización.
 
-**Asistente Clínico Contextual**
-- Asistente integrado que analiza datos del paciente y formula preguntas al nutriólogo
-- Disponible en perfil, historial, laboratorios y retroalimentación
-- Importación de estudios de laboratorio desde PDF para análisis inmediato
+**Guion, 50 segundos**
 
-**Editor de Planes**
-- Edición granular: nombre, ingredientes, macros, porciones, tipo de comida
-- Agregar/eliminar comidas libremente
-- Plantillas rápidas para comidas frecuentes
-- Totales recalculados en tiempo real
-- Aprobar o descartar el borrador
-
-**Productividad**
-- PDF profesional con branding, datos del paciente, resumen nutricional y análisis del motor
-- Listo para compartir por WhatsApp
-- Centro de ayuda integrado con guías paso a paso y preguntas frecuentes
+La tecnología fue elegida por pertinencia. SwiftData mantiene datos locales; MVVM permite separar vista, estado y servicios; OpenRouter genera el borrador; UIGraphicsPDFRenderer produce una entrega profesional. Además, la app tiene modo demo, lo cual es crítico para hackathon y para ventas: podemos mostrar el flujo completo aunque falle la red o no haya API key configurada.
 
 ---
 
-## Diapositiva 7: Diferenciadores
+## Slide 6: Impacto, Escala y Cierre
 
-**Por qué NutriOptimize es diferente**
+**NutriOptimize convierte tiempo administrativo en tiempo clínico.**
 
-| Diferenciador | Descripción |
-|---|---|
-| **100% HCAI** | Nunca reemplaza al profesional. El motor asiste, el nutriólogo decide. |
-| **Mercado mexicano** | Alimentos locales, presupuesto en MXN, español mexicano, flujo clínico local. |
-| **Prompt personalizable** | El nutriólogo define su estilo de prescripción. El motor se adapta a cada profesional. |
-| **Transparencia total** | Vista de depuración que muestra exactamente qué procesa el motor: datos enviados y respuesta cruda. |
-| **PDF profesional** | Documento listo para el paciente con branding, datos clínicos y análisis del motor. |
-| **Sin dependencia** | Funciona con datos de demostración sin API key. El motor es un acelerador, no un requisito. |
+**Impacto para el nutriólogo**
+- Menos trabajo repetitivo al crear el primer borrador.
+- Mayor consistencia en cálculos y distribución de macronutrientes.
+- Entrega más profesional para el paciente.
+- Mejor seguimiento con historial, laboratorios, fotos y feedback.
 
----
+**Escalabilidad**
+- MVP funcional en iOS.
+- Siguiente etapa: agenda, sincronización, multi-nutriólogo y pilotos con consultorios.
+- Modelo viable: suscripción para nutriólogos independientes y clínicas pequeñas.
 
-## Diapositiva 8: Roadmap
+**Cierre**
 
-**Evolución planificada de NutriOptimize**
+NutriOptimize no reemplaza al nutriólogo: amplifica su criterio con una herramienta rápida, verificable, editable y centrada en el flujo clínico mexicano.
 
-| Fase | Funcionalidades | Estado |
-|------|----------------|--------|
-| **Fase 1 - MVP** | CRUD de pacientes, motor de optimización, editor de borradores, exportación PDF, dashboard, cálculos clínicos | ✅ Completado |
-| **Fase 2 - Seguimiento** | Historial de consultas, gráficas de progreso, fotos del paciente, estudios de laboratorio, importación PDF/JSON | ✅ Completado |
-| **Fase 3 - Productividad** | Asistente clínico contextual, plantillas rápidas, centro de ayuda | ✅ Parcial |
-| **Fase 3b - Pendiente** | Agenda y citas, personalización del motor por paciente | 📋 Siguiente |
-| **Fase 4 - Escala** | Backend remoto, soporte multi-nutriólogo, cumplimiento NOM-051 y COFEPRIS | 📋 Futuro |
+**Guion, 40 segundos**
+
+Si esto escala, el impacto es claro: nutriólogos con más tiempo para consulta, pacientes con planes más personalizados y una herramienta profesional accesible para clínicas pequeñas. Nuestro siguiente paso es pilotear con nutriólogos reales, medir tiempo ahorrado, adherencia del paciente y calidad percibida del plan. NutriOptimize es factible, ya funciona y está diseñado para crecer.
 
 ---
 
-## Diapositiva 9: Impacto
+## Notas de Rúbrica
 
-**Resultados tangibles para el profesional de nutrición**
-
-- **Tiempo:** Reduce la creación de planes alimenticios de **45 minutos a 5 minutos** por paciente
-- **Consistencia:** Cálculos antropométricos automatizados (IMC, TMB, TDEE) eliminan errores manuales
-- **Accesibilidad:** Democratiza herramientas profesionales para nutriólogos independientes que no pueden pagar software empresarial
-- **Autonomía:** Respeta completamente la autonomía profesional del nutriólogo - siempre tiene la última palabra
-- **Pacientes:** Más pacientes atendidos por día con planes de mayor calidad y personalización
-- **Confianza:** El paciente recibe un PDF profesional con el análisis clínico que respalda su plan
-
----
-
-## Diapositiva 10: Cierre
-
-**"NutriOptimize: Donde la inteligencia artificial amplifica la experticia humana"**
-
-No reemplazamos al nutriólogo. Le damos superpoderes.
-
-**Equipo:**
-- Jorge Salgado Miranda
-- Michelle Paola González Martínez
-- Arroyo Ramírez Carlos Alberto
-
-**Repositorio:** github.com/chochy2001/NutriOptimize
-
-*Insertar QR al repositorio*
-
----
-
-## Notas para el Presentador
-
-- **Duración estimada:** 8-10 minutos de presentación + 5 minutos de Q&A
-- **Demo en vivo:** Si es posible, mostrar el flujo completo en el simulador: seleccionar paciente, generar plan, editar comida, exportar PDF
-- **Punto clave a enfatizar:** El enfoque HCAI no es un accesorio, es la filosofía central del diseño. Cada decisión arquitectónica refuerza que el profesional tiene el control.
-- **Pregunta anticipada:** "¿Qué pasa si el motor falla o no hay internet?" - La app funciona con datos de demostración y el nutriólogo siempre puede crear planes manualmente editando un borrador vacío.
+- **Relevancia:** problema respaldado con datos nacionales y carga real del flujo clínico.
+- **Datos:** ENSANUT 2023 y OCDE justifican necesidad e impacto económico.
+- **Originalidad:** Human-Centered AI, presupuesto en MXN, español mexicano y revisión humana.
+- **Pitch:** historia simple: paciente complejo, borrador rápido, revisión profesional, PDF.
+- **UX/UI:** dashboard, perfil clínico, editor granular, seguimiento y ayuda in-app.
+- **Implementación:** SwiftUI, SwiftData, MVVM, OpenRouter, PDF nativo, mocks y 86 tests.
+- **Factibilidad:** MVP funcional, build validado, demo estable sin dependencia externa.
