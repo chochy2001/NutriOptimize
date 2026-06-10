@@ -7,6 +7,14 @@ enum DraftStatus: String, Codable {
     case discarded = "discarded"
 }
 
+/// Identifies what produced a draft. Demo drafts are generated locally when no
+/// optimization engine is configured and must be presented to the professional
+/// as a non-clinical sample, never as an engine-validated proposal.
+enum EngineSource: String, Codable {
+    case engine
+    case demo
+}
+
 /// Represents a system-generated meal plan proposal that awaits professional review.
 /// The `calculatedRationale` field contains the engine's reasoning: why these macros
 /// and food selections were proposed based on the patient's clinical profile.
@@ -17,6 +25,13 @@ struct PlanOptimizationDraft: Identifiable, Codable {
     var calculatedRationale: String
     var meals: [Meal]
     let createdAt: Date
+    /// What produced this draft. Defaults to `.engine` so drafts decoded from
+    /// older payloads (which predate this field) are not mislabeled as demos.
+    var engineSource: EngineSource = .engine
+
+    /// Whether this draft is a local demonstration sample rather than a real
+    /// engine-generated proposal.
+    var isDemo: Bool { engineSource == .demo }
 
     // MARK: - Aggregate Macros
 
@@ -59,6 +74,9 @@ final class PlanDraftRecord {
     var calculatedRationale: String
     var mealsData: Data
     var createdAt: Date
+    /// Optional so existing SwiftData rows (created before this field existed)
+    /// decode as `nil` and default to `.engine` when converted back to a draft.
+    var engineSourceRaw: String?
 
     init(from draft: PlanOptimizationDraft) {
         self.draftId = draft.id
@@ -66,6 +84,7 @@ final class PlanDraftRecord {
         self.statusRaw = draft.status.rawValue
         self.calculatedRationale = draft.calculatedRationale
         self.createdAt = draft.createdAt
+        self.engineSourceRaw = draft.engineSource.rawValue
         self.mealsData = (try? JSONEncoder().encode(draft.meals)) ?? Data()
     }
 
@@ -73,19 +92,22 @@ final class PlanDraftRecord {
         self.patientId = draft.patientId
         self.statusRaw = draft.status.rawValue
         self.calculatedRationale = draft.calculatedRationale
+        self.engineSourceRaw = draft.engineSource.rawValue
         self.mealsData = (try? JSONEncoder().encode(draft.meals)) ?? self.mealsData
     }
 
     func toDraft() -> PlanOptimizationDraft {
         let meals = (try? JSONDecoder().decode([Meal].self, from: mealsData)) ?? []
         let status = DraftStatus(rawValue: statusRaw) ?? .pendingReview
+        let source = engineSourceRaw.flatMap(EngineSource.init(rawValue:)) ?? .engine
         return PlanOptimizationDraft(
             id: draftId,
             patientId: patientId,
             status: status,
             calculatedRationale: calculatedRationale,
             meals: meals,
-            createdAt: createdAt
+            createdAt: createdAt,
+            engineSource: source
         )
     }
 }
