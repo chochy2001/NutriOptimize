@@ -163,7 +163,14 @@ final class PatientStore: ObservableObject {
         try modelContext.save()
     }
 
-    /// Removes the patient record with the specified ID from the store.
+    /// Removes the patient record with the specified ID from the store, together
+    /// with ALL of the patient's clinical data: consultations, lab results,
+    /// feedback, plan drafts, and progress-photo files on disk.
+    ///
+    /// These records are linked by raw `patientId` (no SwiftData relationships),
+    /// so deleting the `PatientRecord` alone would orphan the rest. Cascading the
+    /// cleanup here keeps deletion compliant with data-retention expectations for
+    /// clinical data.
     func delete(patientId: UUID) throws {
         var descriptor = FetchDescriptor<PatientRecord>(
             predicate: #Predicate<PatientRecord> { $0.patientId == patientId }
@@ -172,8 +179,34 @@ final class PatientStore: ObservableObject {
         guard let record = try modelContext.fetch(descriptor).first else {
             throw ServiceError.notFound
         }
+
+        // Cascade: remove every linked clinical record for this patient.
+        try modelContext.delete(model: ConsultationRecord.self, where: #Predicate { $0.patientId == patientId })
+        try modelContext.delete(model: LabResultRecord.self, where: #Predicate { $0.patientId == patientId })
+        try modelContext.delete(model: PatientFeedbackRecord.self, where: #Predicate { $0.patientId == patientId })
+        try modelContext.delete(model: PlanDraftRecord.self, where: #Predicate { $0.patientId == patientId })
+
         modelContext.delete(record)
         try modelContext.save()
+
+        // Cascade: remove the patient's progress-photo files from disk.
+        Self.deleteProgressPhotos(for: patientId)
+    }
+
+    /// Deletes all progress-photo JPEGs stored under Documents/ProgressPhotos
+    /// whose filename begins with the patient's full UUID string followed by an
+    /// underscore (the `<uuid>_<timestamp>.jpg` convention used by
+    /// `ProgressPhotoView`). The full UUID + underscore prefix is collision-safe.
+    static func deleteProgressPhotos(for patientId: UUID) {
+        let documentsDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        guard let documentsDir else { return }
+        let photosDir = documentsDir.appendingPathComponent("ProgressPhotos", isDirectory: true)
+        guard let files = try? FileManager.default.contentsOfDirectory(atPath: photosDir.path) else { return }
+
+        let prefix = patientId.uuidString + "_"
+        for file in files where file.hasPrefix(prefix) {
+            try? FileManager.default.removeItem(at: photosDir.appendingPathComponent(file))
+        }
     }
 
     /// Checks whether any patient records exist in the store.

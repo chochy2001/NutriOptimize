@@ -79,6 +79,79 @@ final class MockOptimizationServiceTests: XCTestCase {
         }
     }
 
+    // MARK: - Demo Tagging & Allergen Safety
+
+    func testGenerateDraftIsTaggedAsDemo() async throws {
+        let draft = try await service.generateDraft(for: samplePatient)
+        XCTAssertEqual(draft.engineSource, .demo)
+        XCTAssertTrue(draft.isDemo)
+    }
+
+    func testFetchPendingDraftsAreTaggedAsDemo() async throws {
+        let drafts = try await service.fetchPendingDrafts()
+        XCTAssertTrue(drafts.allSatisfy { $0.isDemo })
+    }
+
+    /// The previous code printed a false "Exclusiones por alergias" sentence
+    /// claiming exclusions the mock never performed. It must be gone.
+    func testRationaleDoesNotClaimFalseAllergyExclusions() async throws {
+        let draft = try await service.generateDraft(for: samplePatient)
+        XCTAssertFalse(draft.calculatedRationale.contains("Exclusiones por alergias"))
+    }
+
+    func testRationaleMarkedAsDemonstration() async throws {
+        let draft = try await service.generateDraft(for: samplePatient)
+        XCTAssertTrue(draft.calculatedRationale.contains("Demostración"))
+    }
+
+    /// A patient allergic to dairy ("Lactosa") and tree nuts ("Nueces") must
+    /// never be offered the yogurt-and-almonds snack in the demo plan.
+    func testDemoMealsFilterDairyAndNutAllergens() async throws {
+        let patient = Patient(
+            id: UUID(),
+            fullName: "Carlos Rodríguez Vega",
+            age: 52, sex: .male, weight: 92, height: 178,
+            bodyFatPercentage: 28,
+            allergies: ["Lactosa", "Nueces"],
+            medicalConditions: ["Diabetes tipo 2"],
+            dietaryPreferences: [],
+            clinicalGoals: "Control de glucosa",
+            availableCookingTime: 45,
+            activityLevel: .sedentary
+        )
+        let draft = try await service.generateDraft(for: patient)
+
+        for meal in draft.meals {
+            let ingredients = meal.ingredients
+                .map { $0.folding(options: .diacriticInsensitive, locale: nil).lowercased() }
+                .joined(separator: " ")
+            XCTAssertFalse(ingredients.contains("yogur"), "Dairy served to lactose-allergic patient in: \(meal.name)")
+            XCTAssertFalse(ingredients.contains("almendra"), "Tree nut served to nut-allergic patient in: \(meal.name)")
+            XCTAssertFalse(ingredients.contains("leche"), "Dairy served to lactose-allergic patient in: \(meal.name)")
+        }
+    }
+
+    func testDemoMealsFilterSoyAllergen() async throws {
+        let patient = Patient(
+            id: UUID(),
+            fullName: "Roberto Hernández Díaz",
+            age: 45, sex: .male, weight: 105, height: 175,
+            bodyFatPercentage: 35,
+            allergies: ["Soya"],
+            medicalConditions: [],
+            dietaryPreferences: [],
+            clinicalGoals: "Pérdida de peso",
+            availableCookingTime: 20,
+            activityLevel: .lightlyActive
+        )
+        let draft = try await service.generateDraft(for: patient)
+        for meal in draft.meals {
+            let ingredients = meal.ingredients.joined(separator: " ").lowercased()
+            XCTAssertFalse(ingredients.contains("soya"))
+            XCTAssertFalse(ingredients.contains("tofu"))
+        }
+    }
+
     // MARK: - Approve Draft
 
     func testApproveDraftChangesStatus() async throws {

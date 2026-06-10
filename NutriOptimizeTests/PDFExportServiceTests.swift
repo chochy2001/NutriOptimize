@@ -1,4 +1,5 @@
 import XCTest
+import PDFKit
 @testable import NutriOptimize
 
 final class PDFExportServiceTests: XCTestCase {
@@ -123,5 +124,64 @@ final class PDFExportServiceTests: XCTestCase {
         XCTAssertGreaterThan(data.count, 0)
         let headerString = String(bytes: [UInt8](data.prefix(4)), encoding: .ascii)
         XCTAssertEqual(headerString, "%PDF")
+    }
+
+    // MARK: - Pagination (regression)
+
+    /// A long, multi-paragraph engine rationale must NOT be clipped: it should
+    /// flow onto additional pages. With a short rationale the document is one
+    /// page; with a long one it must produce more than one.
+    func testLongRationaleProducesMultiplePages() throws {
+        let longParagraph = String(repeating: "Este es un análisis clínico extenso del motor de optimización que describe en detalle la distribución de macronutrientes, las razones fisiológicas y las consideraciones para el paciente. ", count: 40)
+        let longRationale = (0..<8).map { "Sección \($0): \(longParagraph)" }.joined(separator: "\n\n")
+
+        let draft = PlanOptimizationDraft(
+            id: UUID(),
+            patientId: samplePatient.id,
+            status: .approved,
+            calculatedRationale: longRationale,
+            meals: sampleDraft.meals,
+            createdAt: .now
+        )
+
+        let data = pdfService.generatePDF(for: draft, patient: samplePatient)
+        let document = try XCTUnwrap(PDFDocument(data: data))
+        XCTAssertGreaterThan(document.pageCount, 1, "Long rationale should paginate, not clip")
+
+        // Verify the rationale's tail text actually made it into the document
+        // (i.e. it was not silently dropped off the page).
+        let fullText = (0..<document.pageCount)
+            .compactMap { document.page(at: $0)?.string }
+            .joined(separator: " ")
+        XCTAssertTrue(fullText.contains("Sección 7"), "Tail of rationale must be present, not clipped")
+    }
+
+    func testShortDraftIsSinglePage() throws {
+        let data = pdfService.generatePDF(for: sampleDraft, patient: samplePatient)
+        let document = try XCTUnwrap(PDFDocument(data: data))
+        XCTAssertEqual(document.pageCount, 1)
+    }
+
+    /// Many meals should also paginate rather than overflow a single page.
+    func testManyMealsPaginate() throws {
+        let meals = (0..<24).map { i in
+            Meal(
+                type: MealType.allCases[i % MealType.allCases.count],
+                name: "Comida \(i)",
+                ingredients: ["Ingrediente largo A número \(i)", "Ingrediente largo B número \(i)", "Ingrediente largo C número \(i)", "Ingrediente largo D número \(i)"],
+                macros: Macros(protein: Double(10 + i), carbohydrates: Double(20 + i), fat: Double(5 + i))
+            )
+        }
+        let draft = PlanOptimizationDraft(
+            id: UUID(),
+            patientId: samplePatient.id,
+            status: .approved,
+            calculatedRationale: "Plan con muchas comidas",
+            meals: meals,
+            createdAt: .now
+        )
+        let data = pdfService.generatePDF(for: draft, patient: samplePatient)
+        let document = try XCTUnwrap(PDFDocument(data: data))
+        XCTAssertGreaterThan(document.pageCount, 1)
     }
 }

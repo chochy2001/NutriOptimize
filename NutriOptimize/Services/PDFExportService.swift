@@ -1,4 +1,5 @@
 import UIKit
+import CoreText
 
 /// Generates professional PDF documents from approved meal plan drafts.
 /// Uses UIGraphicsPDFRenderer for native PDF composition with branded layout.
@@ -30,51 +31,92 @@ final class PDFExportService {
     private let captionFont = UIFont.systemFont(ofSize: 9, weight: .regular)
     private let captionBold = UIFont.systemFont(ofSize: 9, weight: .bold)
 
+    /// Bottom of the usable content area (above the footer band).
+    private var contentBottom: CGFloat { pageHeight - margin - 40 }
+
+    // MARK: - Page Cursor
+
+    /// Tracks the active PDF page, the running page number, and the current
+    /// drawing y-offset, and owns page breaks so the footer of the page being
+    /// left is always stamped with the correct page number before a new page
+    /// starts.
+    private final class PageCursor {
+        let context: UIGraphicsPDFRendererContext
+        var yOffset: CGFloat
+        private(set) var pageNumber = 1
+        private let topMargin: CGFloat
+        private let drawFooter: (Int) -> Void
+
+        init(context: UIGraphicsPDFRendererContext, topMargin: CGFloat, drawFooter: @escaping (Int) -> Void) {
+            self.context = context
+            self.yOffset = topMargin
+            self.topMargin = topMargin
+            self.drawFooter = drawFooter
+        }
+
+        /// Stamps the footer on the current page and begins a fresh one.
+        func newPage() {
+            drawFooter(pageNumber)
+            context.beginPage()
+            pageNumber += 1
+            yOffset = topMargin
+        }
+
+        /// Finalizes the document by stamping the footer on the last page.
+        func finish() {
+            drawFooter(pageNumber)
+        }
+    }
+
     // MARK: - Public API
 
     /// Renders the meal plan draft into a formatted PDF document.
+    ///
+    /// Long content (many meals or a verbose engine rationale) is paginated:
+    /// each block is measured before drawing and pushed to a new page when it
+    /// will not fit, the rationale is split across pages, and every page footer
+    /// shows its real page number. Nothing is silently clipped off the page.
     func generatePDF(for draft: PlanOptimizationDraft, patient: Patient) -> Data {
         let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight))
 
         return renderer.pdfData { context in
             context.beginPage()
-            var yOffset = margin
+            let cursor = PageCursor(context: context, topMargin: margin) { [self] page in
+                drawFooter(in: context.cgContext, page: page)
+            }
+            let cg = context.cgContext
 
             // Header
-            yOffset = drawHeader(in: context.cgContext, at: yOffset)
-            yOffset = drawDivider(in: context.cgContext, at: yOffset + 10)
+            cursor.yOffset = drawHeader(in: cg, at: cursor.yOffset)
+            cursor.yOffset = drawDivider(in: cg, at: cursor.yOffset + 10)
 
             // Patient info
-            yOffset = drawPatientInfo(patient: patient, in: context.cgContext, at: yOffset + 14)
-            yOffset = drawDivider(in: context.cgContext, at: yOffset + 10)
+            cursor.yOffset = drawPatientInfo(patient: patient, in: cg, at: cursor.yOffset + 14)
+            cursor.yOffset = drawDivider(in: cg, at: cursor.yOffset + 10)
 
             // Daily summary
-            yOffset = drawDailySummary(draft: draft, patient: patient, in: context.cgContext, at: yOffset + 14)
-            yOffset += 16
+            cursor.yOffset = drawDailySummary(draft: draft, patient: patient, in: cg, at: cursor.yOffset + 14)
+            cursor.yOffset += 16
 
-            // Meals
+            // Meals — measure each block and page-break when it won't fit.
             let sortedMeals = draft.meals.sorted { $0.type.sortOrder < $1.type.sortOrder }
             for meal in sortedMeals {
-                // Check if we need a new page (reserve space for a meal block)
-                if yOffset + 120 > pageHeight - margin - 40 {
-                    drawFooter(in: context.cgContext, page: 1)
-                    context.beginPage()
-                    yOffset = margin
+                let blockHeight = mealHeight(meal)
+                // Only break if the block doesn't fit AND we are not already at
+                // the top of a fresh page (a block taller than a full page is
+                // drawn anyway, starting from the top, to avoid an infinite loop).
+                if cursor.yOffset + blockHeight > contentBottom && cursor.yOffset > margin {
+                    cursor.newPage()
                 }
-                yOffset = drawMeal(meal, in: context.cgContext, at: yOffset)
-                yOffset += 10
+                cursor.yOffset = drawMeal(meal, in: cg, at: cursor.yOffset)
+                cursor.yOffset += 10
             }
 
-            // Rationale section
-            if yOffset + 100 > pageHeight - margin - 40 {
-                drawFooter(in: context.cgContext, page: 1)
-                context.beginPage()
-                yOffset = margin
-            }
-            yOffset = drawRationale(draft.calculatedRationale, in: context.cgContext, at: yOffset + 6)
+            // Rationale — split across pages so nothing overflows.
+            cursor.yOffset += 6
+            drawRationale(draft.calculatedRationale, cursor: cursor)
 
-            // Footer
-            drawFooter(in: context.cgContext, page: 1)
+            cursor.finish()
         }
     }
 
@@ -200,6 +242,30 @@ final class PDFExportService {
         return summaryY + 40
     }
 
+    /// Computes the rendered height of a meal block so the caller can decide
+    /// whether it fits on the current page before drawing it. Mirrors the layout
+    /// performed by `drawMeal`.
+    private func mealHeight(_ meal: Meal) -> CGFloat {
+        let detailAttrs: [NSAttributedString.Key: Any] = [.font: captionFont]
+
+        var height: CGFloat = 0
+        height += captionBold.lineHeight + 2          // meal type label
+        height += bodySemibold.lineHeight + 2         // name + macros row
+
+        // Ingredients (wrapped)
+        let ingredientsStr = "Ingredientes: \(meal.ingredients.joined(separator: ", "))"
+        height += measuredHeight(ingredientsStr, maxWidth: contentWidth, attributes: detailAttrs) + 2
+
+        // Portion (single line, if present)
+        if !meal.portionDescription.isEmpty {
+            height += captionFont.lineHeight + 2
+        }
+
+        // Divider (drawDivider adds +4, called at currentY + 4)
+        height += 8
+        return height
+    }
+
     private func drawMeal(_ meal: Meal, in context: CGContext, at y: CGFloat) -> CGFloat {
         let typeAttrs: [NSAttributedString.Key: Any] = [
             .font: captionBold,
@@ -251,7 +317,11 @@ final class PDFExportService {
         return currentY
     }
 
-    private func drawRationale(_ rationale: String, in context: CGContext, at y: CGFloat) -> CGFloat {
+    /// Draws the engine rationale, paginating it so long content is never
+    /// clipped. The text is split into paragraphs (and, where a single
+    /// paragraph is taller than a page, into lines) and flowed across pages via
+    /// the `cursor`.
+    private func drawRationale(_ rationale: String, cursor: PageCursor) {
         let titleAttrs: [NSAttributedString.Key: Any] = [
             .font: headingFont,
             .foregroundColor: brandOrange
@@ -260,16 +330,90 @@ final class PDFExportService {
             .font: bodyFont,
             .foregroundColor: secondaryText
         ]
+        let cg = cursor.context.cgContext
 
-        var currentY = y
+        // Title — keep it with at least one body line on the same page.
+        let titleBlock = headingFont.lineHeight + 6 + bodyFont.lineHeight
+        if cursor.yOffset + titleBlock > contentBottom && cursor.yOffset > margin {
+            cursor.newPage()
+        }
+        "AN\u{00C1}LISIS DEL MOTOR DE OPTIMIZACI\u{00D3}N".draw(at: CGPoint(x: margin, y: cursor.yOffset), withAttributes: titleAttrs)
+        cursor.yOffset += headingFont.lineHeight + 6
 
-        "AN\u{00C1}LISIS DEL MOTOR DE OPTIMIZACI\u{00D3}N".draw(at: CGPoint(x: margin, y: currentY), withAttributes: titleAttrs)
-        currentY += headingFont.lineHeight + 6
+        // Flow the rationale paragraph by paragraph.
+        let paragraphs = rationale
+            .components(separatedBy: "\n")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
 
-        let bounds = drawWrappedText(rationale, at: CGPoint(x: margin, y: currentY), maxWidth: contentWidth, attributes: bodyAttrs)
-        currentY += bounds.height
+        for (index, paragraph) in paragraphs.enumerated() {
+            if paragraph.isEmpty {
+                cursor.yOffset += bodyFont.lineHeight / 2
+                continue
+            }
+            drawFlowingText(paragraph, attributes: bodyAttrs, in: cg, cursor: cursor)
+            if index < paragraphs.count - 1 {
+                cursor.yOffset += 4
+            }
+        }
+    }
 
-        return currentY
+    /// Draws wrapped text that may span multiple pages. If the whole block fits
+    /// on the current page it is drawn in one pass; otherwise it is split at
+    /// line boundaries (computed via CoreText) so words and diacritics stay
+    /// intact, breaking to a new page as space runs out.
+    private func drawFlowingText(_ text: String, attributes: [NSAttributedString.Key: Any], in context: CGContext, cursor: PageCursor) {
+        let fullHeight = measuredHeight(text, maxWidth: contentWidth, attributes: attributes)
+
+        // Fast path: the block fits in the remaining space on this page.
+        if cursor.yOffset + fullHeight <= contentBottom {
+            drawWrappedText(text, at: CGPoint(x: margin, y: cursor.yOffset), maxWidth: contentWidth, attributes: attributes)
+            cursor.yOffset += fullHeight
+            return
+        }
+
+        // Slow path: split into lines and flow them, page-breaking as needed.
+        let lines = wrappedLines(text, maxWidth: contentWidth, attributes: attributes)
+        let lineHeight = (attributes[.font] as? UIFont ?? bodyFont).lineHeight
+        for line in lines {
+            if cursor.yOffset + lineHeight > contentBottom && cursor.yOffset > margin {
+                cursor.newPage()
+            }
+            (line as NSString).draw(
+                at: CGPoint(x: margin, y: cursor.yOffset),
+                withAttributes: attributes
+            )
+            cursor.yOffset += lineHeight
+        }
+    }
+
+    /// Returns the rendered height of wrapped text without drawing it.
+    private func measuredHeight(_ text: String, maxWidth: CGFloat, attributes: [NSAttributedString.Key: Any]) -> CGFloat {
+        let attrString = NSAttributedString(string: text, attributes: attributes)
+        return attrString.boundingRect(
+            with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            context: nil
+        ).height
+    }
+
+    /// Splits a string into visual lines as they would wrap inside `maxWidth`,
+    /// using CoreText line breaking so words and accented characters are not cut.
+    private func wrappedLines(_ text: String, maxWidth: CGFloat, attributes: [NSAttributedString.Key: Any]) -> [String] {
+        let attrString = NSAttributedString(string: text, attributes: attributes)
+        let typesetter = CTTypesetterCreateWithAttributedString(attrString)
+        let nsText = text as NSString
+        let length = nsText.length
+
+        var lines: [String] = []
+        var start = 0
+        while start < length {
+            let count = CTTypesetterSuggestLineBreak(typesetter, start, Double(maxWidth))
+            guard count > 0 else { break }
+            let range = NSRange(location: start, length: count)
+            lines.append(nsText.substring(with: range))
+            start += count
+        }
+        return lines
     }
 
     private func drawFooter(in context: CGContext, page: Int) {
@@ -281,7 +425,7 @@ final class PDFExportService {
 
         _ = drawDivider(in: context, at: footerY - 6)
 
-        let footerText = "Generado por NutriOptimize \u{00B7} \(formattedDate(.now))"
+        let footerText = "Generado por NutriOptimize \u{00B7} \(formattedDate(.now)) \u{00B7} P\u{00E1}gina \(page)"
         footerText.draw(at: CGPoint(x: margin, y: footerY), withAttributes: footerAttrs)
 
         let disclaimer = "Este plan debe ser revisado y aprobado por un profesional de nutrici\u{00F3}n certificado."

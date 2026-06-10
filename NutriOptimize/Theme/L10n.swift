@@ -57,6 +57,10 @@ enum L10n {
     static func dashboardMealsCount(_ count: Int) -> String {
         String(format: tr("dashboard.meals_count"), count)
     }
+    static var deletePatientTitle: String { tr("dashboard.delete_patient.title") }
+    static func deletePatientMessage(_ name: String) -> String {
+        String(format: tr("dashboard.delete_patient.message"), name)
+    }
 
     // MARK: - Settings
 
@@ -82,6 +86,24 @@ enum L10n {
         String(format: tr("settings.error.http"), code)
     }
     static var settingsNoConnection: String { tr("settings.error.no_connection") }
+
+    // MARK: - Privacy / consent
+
+    static var settingsPrivacySection: String { tr("settings.privacy.section") }
+    static var settingsPrivacyConsentGranted: String { tr("settings.privacy.consent_granted") }
+    static var settingsPrivacyConsentPending: String { tr("settings.privacy.consent_pending") }
+    static var settingsPrivacyRevoke: String { tr("settings.privacy.revoke") }
+    static var settingsPrivacyFooter: String { tr("settings.privacy.footer") }
+
+    static var consentTitle: String { tr("consent.title") }
+    static var consentBody: String { tr("consent.body") }
+    static var consentAccept: String { tr("consent.accept") }
+    static var consentCancel: String { tr("consent.cancel") }
+
+    // MARK: - Demo draft
+
+    static var demoBannerTitle: String { tr("demo.banner.title") }
+    static var demoBannerBody: String { tr("demo.banner.body") }
 
     private static func tr(_ key: String) -> String {
         String(localized: String.LocalizationValue(key), bundle: .main, comment: "")

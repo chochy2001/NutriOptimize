@@ -8,71 +8,14 @@ final class OpenRouterServiceTests: XCTestCase {
 
     // MARK: - Test Helpers
 
-    /// Uses a testable prompt builder that mirrors OpenRouterService logic.
-    /// This allows us to verify prompt content without making network calls.
+    /// Calls the REAL production prompt builder (now exposed as a static method)
+    /// so these tests verify the shipped behavior instead of a divergent copy.
     private func buildPrompt(
         for patient: Patient,
         customPrompt: String? = nil,
         feedback: PatientFeedbackSnapshot? = nil
     ) -> String {
-        var sections: [String] = []
-
-        sections.append("""
-        PATIENT PROFILE:
-        - Name: \(patient.fullName)
-        - Age: \(patient.age) years | Sex: \(patient.sex.rawValue)
-        - Weight: \(String(format: "%.1f", patient.weight)) kg | Height: \(String(format: "%.0f", patient.height)) cm
-        - BMI: \(String(format: "%.1f", patient.bmi)) (\(patient.bmiClassification))
-        - Body fat: \(patient.bodyFatPercentage.map { String(format: "%.0f%%", $0) } ?? "Not measured")
-        - Activity level: \(patient.activityLevel.rawValue) (PAL: \(patient.activityLevel.palFactor))
-        - Estimated BMR: \(Int(patient.estimatedBMR)) kcal
-        - Estimated TDEE: \(Int(patient.estimatedTDEE)) kcal/day
-        """)
-
-        if !patient.allergies.isEmpty {
-            sections.append("ALLERGIES (EXCLUDE these ingredients): \(patient.allergies.joined(separator: ", "))")
-        }
-
-        if !patient.medicalConditions.isEmpty {
-            sections.append("MEDICAL CONDITIONS: \(patient.medicalConditions.joined(separator: ", "))")
-        }
-
-        if !patient.dietaryPreferences.isEmpty {
-            sections.append("DIETARY PREFERENCES: \(patient.dietaryPreferences.joined(separator: ", "))")
-        }
-
-        sections.append("CLINICAL GOAL: \(patient.clinicalGoals)")
-        sections.append("AVAILABLE COOKING TIME: \(patient.availableCookingTime) minutes per meal")
-
-        if let budget = patient.monthlyFoodBudget {
-            sections.append("""
-            BUDGET CONSTRAINT: $\(String(format: "%.0f", budget)) MXN/month (~$\(String(format: "%.0f", budget / 4.0)) MXN/week)
-            Prioritize cost-effective ingredients that meet nutritional targets within this budget.
-            """)
-        }
-
-        if let custom = customPrompt, !custom.isEmpty {
-            sections.append("NUTRITIONIST PRESCRIBING NOTES:\n\(custom)")
-        }
-
-        if let feedback {
-            if !feedback.likedFoods.isEmpty {
-                sections.append("Alimentos que el paciente prefiere: \(feedback.likedFoods.joined(separator: ", "))")
-            }
-            if !feedback.dislikedFoods.isEmpty {
-                sections.append("Alimentos que el paciente no tolera: \(feedback.dislikedFoods.joined(separator: ", "))")
-            }
-            if !feedback.bannedFoods.isEmpty {
-                sections.append("EXCLUSIONES OBLIGATORIAS - NUNCA incluir: \(feedback.bannedFoods.joined(separator: ", "))")
-            }
-            if !feedback.generalNotes.isEmpty {
-                sections.append("Notas adicionales del nutriólogo: \(feedback.generalNotes)")
-            }
-        }
-
-        sections.append("Generate a complete daily meal plan (breakfast, lunch, dinner, and at least 1 snack) optimized for this patient.")
-
-        return sections.joined(separator: "\n\n")
+        OpenRouterService.buildUserPrompt(for: patient, customPrompt: customPrompt, feedback: feedback)
     }
 
     private var samplePatient: Patient {
@@ -98,9 +41,31 @@ final class OpenRouterServiceTests: XCTestCase {
 
     func testPromptIncludesPatientData() {
         let prompt = buildPrompt(for: samplePatient)
-        XCTAssertTrue(prompt.contains("Carlos Rodríguez"))
         XCTAssertTrue(prompt.contains("45 years"))
         XCTAssertTrue(prompt.contains("92.0 kg"))
+    }
+
+    /// The patient's full name must NOT be transmitted; only a non-identifying
+    /// initials-based pseudonym is sent.
+    func testPromptDoesNotIncludeFullName() {
+        let prompt = buildPrompt(for: samplePatient)
+        XCTAssertFalse(prompt.contains("Carlos Rodríguez"))
+        XCTAssertFalse(prompt.contains("Name:"))
+        XCTAssertTrue(prompt.contains("Reference:"))
+        XCTAssertTrue(prompt.contains(samplePatient.pseudonym))
+        XCTAssertEqual(samplePatient.pseudonym, "C.R.")
+    }
+
+    func testPseudonymUsesInitials() {
+        let patient = Patient(
+            id: UUID(),
+            fullName: "Roberto Hernández Díaz",
+            age: 45, sex: .male, weight: 100, height: 175,
+            bodyFatPercentage: nil, allergies: [], medicalConditions: [],
+            dietaryPreferences: [], clinicalGoals: "Test",
+            availableCookingTime: 30, activityLevel: .sedentary
+        )
+        XCTAssertEqual(patient.pseudonym, "R.H.D.")
     }
 
     func testPromptIncludesAnthropometricData() {
@@ -144,7 +109,7 @@ final class OpenRouterServiceTests: XCTestCase {
         )
         let prompt = buildPrompt(for: patient)
         XCTAssertFalse(prompt.contains("ALLERGIES"))
-        XCTAssertTrue(prompt.contains("Sin Alergias"))
+        XCTAssertTrue(prompt.contains("PATIENT PROFILE"))
         XCTAssertFalse(prompt.contains("MEDICAL CONDITIONS"))
     }
 
@@ -177,7 +142,7 @@ final class OpenRouterServiceTests: XCTestCase {
         let prompt = buildPrompt(for: patient)
         XCTAssertFalse(prompt.contains("BUDGET CONSTRAINT"))
         XCTAssertFalse(prompt.contains("MXN/month"))
-        XCTAssertTrue(prompt.contains("No Budget"))
+        XCTAssertTrue(prompt.contains("PATIENT PROFILE"))
     }
 
     // MARK: - Prompt Includes Feedback
@@ -242,7 +207,7 @@ final class OpenRouterServiceTests: XCTestCase {
         let prompt = buildPrompt(for: samplePatient, customPrompt: nil)
         XCTAssertFalse(prompt.contains("NUTRITIONIST PRESCRIBING NOTES"))
         XCTAssertTrue(prompt.contains("PATIENT PROFILE"))
-        XCTAssertTrue(prompt.contains("Carlos Rodríguez"))
+        XCTAssertTrue(prompt.contains(samplePatient.pseudonym))
     }
 
     func testPromptExcludesCustomPrompt_WhenEmpty() {
@@ -266,6 +231,48 @@ final class OpenRouterServiceTests: XCTestCase {
         XCTAssertTrue(prompt.contains("Diabetes tipo 2"))
         XCTAssertTrue(prompt.contains("Hipertensión"))
         XCTAssertTrue(prompt.contains("MEDICAL CONDITIONS"))
+    }
+
+    // MARK: - Data-processing consent gate
+
+    func testConsentFlagRoundTrips() {
+        let original = OpenRouterService.hasDataProcessingConsent
+        defer { OpenRouterService.hasDataProcessingConsent = original }
+
+        OpenRouterService.hasDataProcessingConsent = false
+        XCTAssertFalse(OpenRouterService.hasDataProcessingConsent)
+        OpenRouterService.hasDataProcessingConsent = true
+        XCTAssertTrue(OpenRouterService.hasDataProcessingConsent)
+    }
+
+    /// With consent NOT granted, the engine must refuse to run and surface the
+    /// consent error rather than sending any patient data. (The Keychain write
+    /// of the API key may not persist on every test host; when it does, we
+    /// expect `.consentRequired`, otherwise the earlier `.invalidData` key
+    /// guard fires — either way no network request is made.)
+    func testGenerateThrowsConsentRequired_WhenConsentMissing() async {
+        let originalConsent = OpenRouterService.hasDataProcessingConsent
+        let originalKey = OpenRouterService.apiKey
+        defer {
+            OpenRouterService.hasDataProcessingConsent = originalConsent
+            OpenRouterService.apiKey = originalKey
+        }
+
+        OpenRouterService.apiKey = "test-key-not-used-because-consent-blocks-first"
+        OpenRouterService.hasDataProcessingConsent = false
+
+        do {
+            _ = try await OpenRouterService().generateOptimizedPlan(for: samplePatient, customPrompt: nil, feedback: nil)
+            XCTFail("Expected the engine to refuse without consent")
+        } catch let error as ServiceError {
+            if OpenRouterService.apiKey.isEmpty {
+                XCTAssertEqual(error, .invalidData, "Key did not persist; expected the key guard to fire")
+            } else {
+                XCTAssertEqual(error, .consentRequired)
+            }
+        } catch {
+            XCTFail("Expected a ServiceError, got \(error)")
+        }
     }
 
     // MARK: - PatientFeedbackSnapshot

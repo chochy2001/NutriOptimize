@@ -1,52 +1,47 @@
 # CLAUDE.md
 
-<!-- CAPDESIS INFRA START -->
-## CAPDESIS Architecture And Delivery Policy
+NutriOptimize is a personal iOS/SwiftUI project (`chochy2001/NutriOptimize`). It
+is a clinical nutrition assistant: nutritionists manage patients and generate
+meal-plan proposals that they review, edit, approve, and export to PDF.
 
-This repo participates in the shared CAPDESIS workspace architecture. Keep this
-block aligned with the canonical local docs under
-`/Users/jorge/Documents/Apps/docs/`:
+## Stack
 
-- `TAILSKILL_NEW_VPS_HANDOFF.md`: current VPS, Tailscale, CI runner, staging,
-  production, storage, and rollback topology.
-- `STAGING_RELEASE_POLICY.md`: CI -> staging -> production release gates.
-- `PRODUCTION_ALERTING_RUNBOOK.md`: centralized monitoring and alert routing.
-- `APP_RELEASE_READINESS_AUDIT.md`: app deploy workflow state and staging gaps.
-- `SCALING_AND_LOAD_TEST_PLAN.md`: staging-first load testing and scaling
-  decision rules.
-- `INFRASTRUCTURE_COSTS.md`: verified VPS cost baseline and annual estimates.
+- Xcode 16+ project generated from `project.yml` via `xcodegen`. The committed
+  source of truth is `project.yml`; run `xcodegen generate` after adding or
+  removing files, then commit the updated `NutriOptimize.xcodeproj`.
+- SwiftUI + SwiftData (`@Model` records persisted locally on device).
+- iOS 17 deployment target, Swift 5.9.
+- Optimization engine: OpenRouter (`google/gemini-2.5-flash`). The API key is
+  stored in the Keychain and is optional; without it the app generates clearly
+  labeled local demonstration drafts.
 
-Current operating model:
+## Build & test
 
-- Linux CI/CD runs on `ci-runner-node` (`vmi3166182`, public
-  `185.237.252.45`, Tailscale `100.120.6.51`) using explicit GitHub Actions
-  labels such as `[self-hosted, ci-runner-node, test-light]`,
-  `[self-hosted, ci-runner-node, build-heavy]`, and
-  `[self-hosted, ci-runner-node, deploy-only]`.
-- Staging deploys target `staging-node` (`vmi2875906`, public
-  `144.126.159.214`, Tailscale `100.97.107.71`) with staging-only secrets,
-  staging domains/routes, and health/smoke/load validation.
-- Production stays on `web-app-proxy` / `ancare` (`100.77.243.93`) with the
-  shared Traefik edge, production Docker stacks, runtime volumes, and customer
-  traffic.
-- Databases stay private on `db-architecture` (`100.88.85.128`). Backups and
-  storage validation live on `storage-backups` (`100.120.133.78`) and
-  `capdesis-nas` (`100.124.183.32`).
-- Production promotion happens manually on Monday morning in
-  `America/Mexico_City` from the last known-good staging SHA. If Monday is a
-  holiday, staging is red, alerts are open, or no operator is available, skip
-  the promotion rather than promoting an unverified build.
-- `main` may deploy automatically to staging only after CI passes. Production
-  must be blocked by failed CI, failed staging deploy, failed health checks,
-  failed smoke/k6 thresholds, missing backups for data-changing releases,
-  unresolved P0/P1 alerts, or unavailable monitoring.
-- Production and staging alerts should converge in `monitor.capdesis.com` /
-  Alertmanager/Grafana. Open P0/P1 alerts block Monday promotion.
-- Do not move Traefik, production databases, production secrets, or runtime
-  production volumes onto `ci-runner-node` or `staging-node` without a
-  separate migration plan and validation evidence.
+- List schemes: `xcodebuild -list -project NutriOptimize.xcodeproj`
+  (scheme: `NutriOptimize`).
+- Build: `xcodebuild build -project NutriOptimize.xcodeproj -scheme NutriOptimize
+  -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest'`.
+- Test: same command with `test` and the `NutriOptimizeTests` target.
 
-Before changing deploy behavior in this repo, verify the current workflow
-labels, staging target, production target, secrets scope, and rollback path
-against the canonical docs above.
-<!-- CAPDESIS INFRA END -->
+## CI
+
+- CI runs on GitHub-hosted runners (`ubuntu-latest`) only. This is a personal
+  repository with no self-hosted runner access; do not add self-hosted runner
+  labels or external deployment infrastructure.
+- The only workflow today is `gitleaks.yml` (secret scanning).
+
+## Privacy
+
+- Patient data is stored locally via SwiftData. When the optimization engine is
+  configured, the patient's clinical profile (without their full name) is sent
+  to OpenRouter/Gemini only after the professional accepts the in-app
+  data-processing disclosure. Keep this consent gate intact.
+
+## Conventions
+
+- Do not modify signing settings, bundle IDs, provisioning profiles, or
+  entitlements unless explicitly requested.
+- Keep Swift/SwiftUI/UIKit style consistent with nearby files.
+- Do not commit secrets, API keys, or local Xcode user data.
+- User-facing copy is localized in `NutriOptimize/{en,es}.lproj/Localizable.strings`
+  with typed accessors in `NutriOptimize/Theme/L10n.swift`.

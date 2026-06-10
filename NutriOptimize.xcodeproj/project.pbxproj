@@ -28,8 +28,10 @@
 		2F2F44C6C7FC1D2EECBEE1BC /* ProcessingStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE9CF0B40A4774FE7067CEB /* ProcessingStateView.swift */; };
 		30C8E792384EC191F9F74CB4 /* EngineDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D01D78B1011809E1254AED /* EngineDebugView.swift */; };
 		30ED25AAE1EA07C0E10474DB /* RootCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F3E1A2AF0780354BFA3C6 /* RootCoordinatorView.swift */; };
+		38A826993B3053742B4D799B /* DataProcessingConsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7624C00C43244DD797D9322A /* DataProcessingConsentView.swift */; };
 		3C33865974D22BB1D0054909 /* OptimizationDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EBE73E75F60D3660C9B090 /* OptimizationDashboardViewModel.swift */; };
 		3D1C4969F1CA9331E8CD60C4 /* PDFExportServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700FC5CCBDFC2753E3918C72 /* PDFExportServiceTests.swift */; };
+		3EAD63B60AA92F40010DE8C4 /* PatientStoreCascadeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47965EDB6AD80E5EDD4F550C /* PatientStoreCascadeTests.swift */; };
 		481A34FA465DC9485CD77210 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F451710617661483F01FCB1D /* HapticManager.swift */; };
 		4E20C2070C82038322B4B2E1 /* NutriOptimizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */; };
 		4F975813C7500650027CE36E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13EE58CE1C8F9345D2152587 /* Localizable.strings */; };
@@ -93,6 +95,7 @@
 		3BF04591979765FA09569224 /* OpenRouterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenRouterService.swift; sourceTree = "<group>"; };
 		41E8E3306F12044ABE944871 /* PatientDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientDetailView.swift; sourceTree = "<group>"; };
 		44EB19445E0FB65A1711B164 /* PatientFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientFeedbackView.swift; sourceTree = "<group>"; };
+		47965EDB6AD80E5EDD4F550C /* PatientStoreCascadeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientStoreCascadeTests.swift; sourceTree = "<group>"; };
 		4DE69CBE8B3BAAE73476AE51 /* NutriOptimize.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NutriOptimize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5261D4AD5B0D2DC2F095C980 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		58A160F7AC6B1874D10CAB11 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -100,6 +103,7 @@
 		649CFA81259633F037E6C993 /* LabDocumentImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabDocumentImporter.swift; sourceTree = "<group>"; };
 		6D277DB36B7E8F1B944F3451 /* OptimizationServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationServiceProtocol.swift; sourceTree = "<group>"; };
 		700FC5CCBDFC2753E3918C72 /* PDFExportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFExportServiceTests.swift; sourceTree = "<group>"; };
+		7624C00C43244DD797D9322A /* DataProcessingConsentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProcessingConsentView.swift; sourceTree = "<group>"; };
 		7830E62D27C38095A1204BC2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7EA494FA2341C4F18BC576DC /* MockOptimizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOptimizationService.swift; sourceTree = "<group>"; };
 		7ED9BDCA6F172E029C8FB00C /* AppearancePreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePreference.swift; sourceTree = "<group>"; };
@@ -232,6 +236,7 @@
 		84F39FAA74197594866415B3 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				7624C00C43244DD797D9322A /* DataProcessingConsentView.swift */,
 				58A160F7AC6B1874D10CAB11 /* SettingsView.swift */,
 			);
 			path = Settings;
@@ -333,6 +338,7 @@
 				843243006D1EF831099409A7 /* MockOptimizationServiceTests.swift */,
 				06EBD263E3DE8826A37EA9C3 /* OpenRouterServiceTests.swift */,
 				C18DF59E31E548887D5A44E5 /* PatientModelTests.swift */,
+				47965EDB6AD80E5EDD4F550C /* PatientStoreCascadeTests.swift */,
 				700FC5CCBDFC2753E3918C72 /* PDFExportServiceTests.swift */,
 				E49E678EA85E2C5F7BB598A0 /* PlanOptimizationDraftTests.swift */,
 			);
@@ -445,6 +451,7 @@
 				E527C0D86720378DBC01D72D /* AppearancePreference.swift in Sources */,
 				2205C41722DD87A2DDD6F961 /* ConsultationRecord.swift in Sources */,
 				51CA68743A48EDC975CD44C0 /* ContextualAssistantView.swift in Sources */,
+				38A826993B3053742B4D799B /* DataProcessingConsentView.swift in Sources */,
 				BB9DE6568D603F19CE54B786 /* DemoDataSeeder.swift in Sources */,
 				71A1A5C9C5FD0E72CB3954B8 /* DraftEditorView.swift in Sources */,
 				1E9A44AAF3C27D9EE8996A1F /* DraftEditorViewModel.swift in Sources */,
@@ -499,6 +506,7 @@
 				FF6EF92759C3352F3ED3CFF5 /* OpenRouterServiceTests.swift in Sources */,
 				3D1C4969F1CA9331E8CD60C4 /* PDFExportServiceTests.swift in Sources */,
 				539A3B29EC128A889CE1B7C9 /* PatientModelTests.swift in Sources */,
+				3EAD63B60AA92F40010DE8C4 /* PatientStoreCascadeTests.swift in Sources */,
 				66C6B09AAF63E2DAF7A56974 /* PlanOptimizationDraftTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -23,6 +23,9 @@ struct DraftEditorView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: AppTheme.sectionSpacing) {
                 headerSection
+                if viewModel.draft.isDemo {
+                    demoBanner
+                }
                 rationaleSection
                 dailySummarySection
                 mealsSection
@@ -132,6 +135,34 @@ struct DraftEditorView: View {
 
             statusBadge
         }
+    }
+
+    // MARK: - Demo Banner
+
+    private var demoBanner: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.title3)
+                .foregroundStyle(AppTheme.warmOrange)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(L10n.demoBannerTitle)
+                    .font(.system(.subheadline, design: .rounded, weight: .bold))
+                    .foregroundStyle(AppTheme.deepOrange)
+                Text(L10n.demoBannerBody)
+                    .font(AppTheme.captionFont)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(AppTheme.warmOrange.opacity(0.12), in: RoundedRectangle(cornerRadius: AppTheme.cornerRadius))
+        .overlay(
+            RoundedRectangle(cornerRadius: AppTheme.cornerRadius)
+                .strokeBorder(AppTheme.warmOrange.opacity(0.4), lineWidth: 1)
+        )
+        .accessibilityElement(children: .combine)
     }
 
     private var statusBadge: some View {

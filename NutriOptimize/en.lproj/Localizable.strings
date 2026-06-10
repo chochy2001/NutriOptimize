@@ -43,6 +43,8 @@
 "dashboard.pending_review" = "Pending review";
 "dashboard.patients" = "Patients";
 "dashboard.meals_count" = "%d meals";
+"dashboard.delete_patient.title" = "Delete patient";
+"dashboard.delete_patient.message" = "%@ will be deleted along with all their consultations, labs, feedback, drafts, and progress photos. This action cannot be undone.";
 
 /* Settings */
 "settings.title" = "Settings";
@@ -65,3 +67,18 @@
 "settings.error.invalid_url" = "Invalid URL";
 "settings.error.http" = "Error %d";
 "settings.error.no_connection" = "No connection";
+"settings.privacy.section" = "Privacy";
+"settings.privacy.consent_granted" = "Data processing accepted";
+"settings.privacy.consent_pending" = "Data processing not accepted";
+"settings.privacy.revoke" = "Revoke consent";
+"settings.privacy.footer" = "When you generate a proposal with the engine, the patient's clinical profile (without their full name) is sent to OpenRouter/Gemini for processing. You must accept this notice before the first request.";
+
+/* Data processing consent */
+"consent.title" = "Data processing notice";
+"consent.body" = "To generate a proposal, NutriOptimize will send the patient's clinical profile (age, sex, measurements, allergies, medical conditions, and your notes) to the optimization engine via OpenRouter, which processes it with Google Gemini. The patient's full name is not sent; an initials-based reference is used instead.\n\nThis information leaves your device and is processed on third-party servers. Make sure you have the patient's consent under applicable data-protection law before continuing. You can revoke this authorization in Settings.";
+"consent.accept" = "Accept and continue";
+"consent.cancel" = "Cancel";
+
+/* Demo draft (engine not configured) */
+"demo.banner.title" = "Demonstration proposal";
+"demo.banner.body" = "The optimization engine is not configured. This plan is a demonstration sample, not a clinical proposal. Set an API key in Settings to generate real plans.";

@@ -20,7 +20,7 @@ El sistema explica **por qué** sugiere cada alimento y distribución de macronu
 El nutriólogo puede **editar, agregar, eliminar y sobreescribir** cualquier comida, ingrediente o valor de macronutrientes sugerido por el motor. El borrador es completamente modificable antes de la aprobación.
 
 ### 4. Ética y privacidad
-Los datos del paciente se almacenan exclusivamente en el dispositivo local (SwiftData). No se toman decisiones automatizadas: el motor es una herramienta de asistencia, no un sustituto del criterio profesional.
+Los datos del paciente se almacenan en el dispositivo local (SwiftData). Cuando el profesional configura el motor de optimización, el perfil clínico del paciente (sin su nombre completo, usando una referencia con iniciales) se envía a OpenRouter/Gemini para generar la propuesta; esto requiere aceptar previamente un aviso de tratamiento de datos dentro de la app y puede revocarse en Configuración. Sin un motor configurado, no sale ningún dato del dispositivo. No se toman decisiones automatizadas: el motor es una herramienta de asistencia, no un sustituto del criterio profesional.
 
 ### 5. Diseño para flujos clínicos reales
 La interfaz fue diseñada para el flujo de trabajo real de un nutriólogo: registrar paciente, generar borrador, revisar y editar, aprobar, exportar PDF y compartir por WhatsApp.

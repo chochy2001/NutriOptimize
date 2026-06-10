@@ -9,12 +9,20 @@ struct OptimizationDashboardView: View {
     @State private var editingPatient: Patient?
     @State private var showSettings = false
     @State private var showHelp = false
+    @State private var patientToDelete: Patient?
 
     private var filteredPatients: [Patient] {
         if searchText.isEmpty { return viewModel.patients }
         return viewModel.patients.filter {
             $0.fullName.localizedCaseInsensitiveContains(searchText)
         }
+    }
+
+    private var deleteAlertBinding: Binding<Bool> {
+        Binding(
+            get: { patientToDelete != nil },
+            set: { if !$0 { patientToDelete = nil } }
+        )
     }
 
     var body: some View {
@@ -89,6 +97,18 @@ struct OptimizationDashboardView: View {
                             }
                         }
                 }
+            }
+            .alert(L10n.deletePatientTitle, isPresented: deleteAlertBinding, presenting: patientToDelete) { patient in
+                Button(L10n.actionDelete, role: .destructive) {
+                    HapticManager.impact(.medium)
+                    viewModel.deletePatient(patient)
+                    patientToDelete = nil
+                }
+                Button(L10n.consentCancel, role: .cancel) {
+                    patientToDelete = nil
+                }
+            } message: { patient in
+                Text(L10n.deletePatientMessage(patient.fullName))
             }
         }
         .tint(AppTheme.deepOrange)
@@ -243,16 +263,14 @@ struct OptimizationDashboardView: View {
                         Label(L10n.actionEdit, systemImage: "pencil")
                     }
                     Button(role: .destructive) {
-                        HapticManager.impact(.medium)
-                        viewModel.deletePatient(patient)
+                        patientToDelete = patient
                     } label: {
                         Label(L10n.actionDelete, systemImage: "trash")
                     }
                 }
-                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                     Button(role: .destructive) {
-                        HapticManager.impact(.medium)
-                        viewModel.deletePatient(patient)
+                        patientToDelete = patient
                     } label: {
                         Label(L10n.actionDelete, systemImage: "trash")
                     }

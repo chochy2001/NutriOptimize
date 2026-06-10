@@ -77,6 +77,7 @@ final class OpenRouterService: OptimizationEngineProtocol, Sendable {
     private static let model = "google/gemini-2.5-flash"
     private static let apiKeyKey = "openrouter_api_key"
     private static let customPromptKey = "custom_optimization_prompt"
+    private static let dataProcessingConsentKey = "data_processing_consent_accepted"
 
     // MARK: - Settings Accessors
 
@@ -94,14 +95,27 @@ final class OpenRouterService: OptimizationEngineProtocol, Sendable {
         !apiKey.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
+    /// Whether the professional has accepted the data-processing disclosure.
+    /// This consent gate must be `true` before any patient clinical data is
+    /// sent to the external optimization engine (OpenRouter / Gemini). It is
+    /// persisted per device/professional in `UserDefaults`.
+    static var hasDataProcessingConsent: Bool {
+        get { UserDefaults.standard.bool(forKey: dataProcessingConsentKey) }
+        set { UserDefaults.standard.set(newValue, forKey: dataProcessingConsentKey) }
+    }
+
     // MARK: - Plan Generation
 
     func generateOptimizedPlan(for patient: Patient, customPrompt: String?, feedback: PatientFeedbackSnapshot? = nil) async throws -> PlanOptimizationDraft {
         let apiKey = Self.apiKey
         guard !apiKey.isEmpty else { throw ServiceError.invalidData }
 
+        // Gate: never send patient clinical data off-device without an
+        // explicit, recorded data-processing consent from the professional.
+        guard Self.hasDataProcessingConsent else { throw ServiceError.consentRequired }
+
         let systemPrompt = buildSystemPrompt()
-        let userPrompt = buildUserPrompt(for: patient, customPrompt: customPrompt, feedback: feedback)
+        let userPrompt = Self.buildUserPrompt(for: patient, customPrompt: customPrompt, feedback: feedback)
 
         let requestBody = OpenRouterRequest(
             model: Self.model,
@@ -177,12 +191,21 @@ final class OpenRouterService: OptimizationEngineProtocol, Sendable {
         """
     }
 
-    private func buildUserPrompt(for patient: Patient, customPrompt: String?, feedback: PatientFeedbackSnapshot? = nil) -> String {
+    /// Builds the user prompt sent to the language model.
+    ///
+    /// The patient's full name is deliberately NOT transmitted: the model never
+    /// needs it to generate a plan (the response is correlated back to the
+    /// patient locally via `patientId`). We send a non-identifying pseudonym
+    /// (initials) instead, minimizing the PHI that leaves the device.
+    ///
+    /// Exposed as `static` so the unit tests can verify the real production
+    /// builder instead of duplicating its logic.
+    static func buildUserPrompt(for patient: Patient, customPrompt: String?, feedback: PatientFeedbackSnapshot? = nil) -> String {
         var sections: [String] = []
 
         sections.append("""
         PATIENT PROFILE:
-        - Name: \(patient.fullName)
+        - Reference: \(patient.pseudonym)
         - Age: \(patient.age) years | Sex: \(patient.sex.rawValue)
         - Weight: \(String(format: "%.1f", patient.weight)) kg | Height: \(String(format: "%.0f", patient.height)) cm
         - BMI: \(String(format: "%.1f", patient.bmi)) (\(patient.bmiClassification))
