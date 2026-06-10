@@ -1,10 +1,11 @@
 import Foundation
 
-enum ServiceError: LocalizedError {
+enum ServiceError: LocalizedError, Equatable {
     case notFound
     case networkFailure
     case invalidData
     case optimizationFailed
+    case consentRequired
 
     var errorDescription: String? {
         switch self {
@@ -16,6 +17,8 @@ enum ServiceError: LocalizedError {
             return "Los datos recibidos no son válidos."
         case .optimizationFailed:
             return "No fue posible generar la propuesta. Intenta de nuevo."
+        case .consentRequired:
+            return "Debes aceptar el aviso de tratamiento de datos antes de enviar información clínica al motor de optimización."
         }
     }
 }

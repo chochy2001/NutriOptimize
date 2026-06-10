@@ -8,6 +8,10 @@ final class PatientDetailViewModel: ObservableObject {
     @Published var generatedDraft: PlanOptimizationDraft?
     @Published var errorMessage: String?
     @Published var generationProgress: Double = 0
+    /// Set when the configured engine requires data-processing consent that the
+    /// professional has not yet granted. The view observes this to present the
+    /// consent disclosure before any patient data leaves the device.
+    @Published var needsDataProcessingConsent = false
 
     private let mockService: OptimizationServiceProtocol
     private let engineService: OptimizationEngineProtocol
@@ -25,7 +29,28 @@ final class PatientDetailViewModel: ObservableObject {
 
     /// Generates an optimized meal plan using the configured engine.
     /// Falls back to the mock service if no API key is configured.
+    ///
+    /// When the real engine is configured but the professional has not yet
+    /// granted data-processing consent, this surfaces `needsDataProcessingConsent`
+    /// instead of sending any patient data, so the view can present the
+    /// disclosure first.
     func generateOptimizedPlan() async {
+        if OpenRouterService.isConfigured && !OpenRouterService.hasDataProcessingConsent {
+            needsDataProcessingConsent = true
+            return
+        }
+        await runGeneration()
+    }
+
+    /// Called by the view once the professional accepts the data-processing
+    /// disclosure, to proceed with the engine call.
+    func confirmConsentAndGenerate() async {
+        OpenRouterService.hasDataProcessingConsent = true
+        needsDataProcessingConsent = false
+        await runGeneration()
+    }
+
+    private func runGeneration() async {
         isGenerating = true
         generationProgress = 0
         errorMessage = nil
@@ -53,6 +78,9 @@ final class PatientDetailViewModel: ObservableObject {
                     feedback: feedbackSnapshot
                 )
             } else {
+                // No engine configured: produce a demonstration draft locally.
+                // It is explicitly tagged as a demo so the UI can warn the
+                // professional that it is NOT an engine-generated plan.
                 draft = try await mockService.generateDraft(for: patient)
             }
 

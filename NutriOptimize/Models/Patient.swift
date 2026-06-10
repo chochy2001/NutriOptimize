@@ -75,4 +75,18 @@ struct Patient: Identifiable, Codable, Hashable {
     var estimatedTDEE: Double {
         estimatedBMR * activityLevel.palFactor
     }
+
+    // MARK: - Privacy
+
+    /// A non-identifying reference for the patient, used when sending the
+    /// clinical profile to an external optimization engine. We transmit the
+    /// patient's initials (e.g. "C.R.V.") rather than the full name so that
+    /// personally identifiable information stays on the device.
+    var pseudonym: String {
+        let initials = fullName
+            .split(whereSeparator: { $0 == " " })
+            .compactMap { $0.first.map { String($0).uppercased() } }
+            .joined(separator: ".")
+        return initials.isEmpty ? "Paciente" : initials + "."
+    }
 }

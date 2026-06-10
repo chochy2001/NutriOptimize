@@ -11,6 +11,7 @@ struct SettingsView: View {
     @State private var showSaveConfirmation = false
     @State private var connectionStatus: ConnectionTestStatus = .idle
     @State private var isTestingConnection = false
+    @State private var hasConsent: Bool = OpenRouterService.hasDataProcessingConsent
 
     // Bound to the same AppStorage key the app root reads from, so flipping
     // this picker re-renders the entire window with the new color scheme.
@@ -28,6 +29,7 @@ struct SettingsView: View {
             Form {
                 appearanceSection
                 engineSection
+                privacySection
                 promptSection
                 debugSection
                 infoSection
@@ -158,6 +160,35 @@ struct SettingsView: View {
         } catch {
             connectionStatus = .failure(L10n.settingsNoConnection)
             HapticManager.notification(.error)
+        }
+    }
+
+    private var privacySection: some View {
+        Section {
+            HStack {
+                if hasConsent {
+                    Label(L10n.settingsPrivacyConsentGranted, systemImage: "checkmark.shield.fill")
+                        .foregroundStyle(AppTheme.success)
+                        .font(AppTheme.captionFont)
+                } else {
+                    Label(L10n.settingsPrivacyConsentPending, systemImage: "exclamationmark.shield.fill")
+                        .foregroundStyle(AppTheme.danger)
+                        .font(AppTheme.captionFont)
+                }
+            }
+            if hasConsent {
+                Button(role: .destructive) {
+                    OpenRouterService.hasDataProcessingConsent = false
+                    hasConsent = false
+                    HapticManager.notification(.warning)
+                } label: {
+                    Text(L10n.settingsPrivacyRevoke)
+                }
+            }
+        } header: {
+            Text(L10n.settingsPrivacySection)
+        } footer: {
+            Text(L10n.settingsPrivacyFooter)
         }
     }
 

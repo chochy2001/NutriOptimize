@@ -73,6 +73,16 @@ struct PatientDetailView: View {
             ProcessingStateView(progress: viewModel.generationProgress)
                 .interactiveDismissDisabled()
         }
+        .sheet(isPresented: $viewModel.needsDataProcessingConsent) {
+            DataProcessingConsentView(
+                onAccept: {
+                    Task { await viewModel.confirmConsentAndGenerate() }
+                },
+                onCancel: {
+                    viewModel.needsDataProcessingConsent = false
+                }
+            )
+        }
         .onChange(of: viewModel.generatedDraft) {
             if viewModel.generatedDraft != nil {
                 showDraftEditor = true

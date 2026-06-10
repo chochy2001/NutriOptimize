@@ -43,6 +43,8 @@
 "dashboard.pending_review" = "Pendientes de revisión";
 "dashboard.patients" = "Pacientes";
 "dashboard.meals_count" = "%d comidas";
+"dashboard.delete_patient.title" = "Eliminar paciente";
+"dashboard.delete_patient.message" = "Se eliminará a %@ junto con todas sus consultas, laboratorios, feedback, borradores y fotos de progreso. Esta acción no se puede deshacer.";
 
 /* Settings */
 "settings.title" = "Configuración";
@@ -65,3 +67,18 @@
 "settings.error.invalid_url" = "URL inválida";
 "settings.error.http" = "Error %d";
 "settings.error.no_connection" = "Sin conexión";
+"settings.privacy.section" = "Privacidad";
+"settings.privacy.consent_granted" = "Tratamiento de datos aceptado";
+"settings.privacy.consent_pending" = "Tratamiento de datos no aceptado";
+"settings.privacy.revoke" = "Revocar consentimiento";
+"settings.privacy.footer" = "Al generar una propuesta con el motor, se envía el perfil clínico del paciente (sin su nombre completo) a OpenRouter/Gemini para procesarlo. Debes aceptar este aviso antes del primer envío.";
+
+/* Data processing consent */
+"consent.title" = "Aviso de tratamiento de datos";
+"consent.body" = "Para generar una propuesta, NutriOptimize enviará el perfil clínico del paciente (edad, sexo, medidas, alergias, condiciones médicas y tus notas) al motor de optimización a través de OpenRouter, que lo procesa con Google Gemini. No se envía el nombre completo del paciente; se usa una referencia con iniciales.\n\nEsta información sale de tu dispositivo y se procesa en servidores de terceros. Asegúrate de contar con el consentimiento del paciente conforme a la LFPDPPP antes de continuar. Puedes revocar esta autorización en Configuración.";
+"consent.accept" = "Acepto y continuar";
+"consent.cancel" = "Cancelar";
+
+/* Demo draft (engine not configured) */
+"demo.banner.title" = "Propuesta de demostración";
+"demo.banner.body" = "El motor de optimización no está configurado. Este plan es un ejemplo de demostración, no una propuesta clínica. Configura una API Key en Configuración para generar planes reales.";
