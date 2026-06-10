@@ -104,11 +104,15 @@ final class OptimizationDashboardViewModel: ObservableObject {
         }
     }
 
-    /// Removes a patient by ID from persistent storage and the in-memory list.
+    /// Removes a patient by ID from persistent storage and the in-memory list,
+    /// cascading the deletion of all linked clinical data (consultations, labs,
+    /// feedback, drafts, and progress photos) via `PatientStore.delete`. Also
+    /// refreshes pending drafts so any now-deleted draft rows disappear.
     func deletePatient(_ patient: Patient) {
         do {
             try patientStore?.delete(patientId: patient.id)
             patients.removeAll(where: { $0.id == patient.id })
+            refreshPendingDrafts()
         } catch {
             errorMessage = error.localizedDescription
         }

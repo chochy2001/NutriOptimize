@@ -51,6 +51,16 @@ final class DraftEditorViewModel: ObservableObject {
         isProcessing = true
         errorMessage = nil
 
+        // Refuse to approve a draft whose patient no longer exists, which would
+        // otherwise persist an orphaned consultation (e.g. with weight 0) tied
+        // to a deleted patient. With cascade-delete this is rare, but the guard
+        // makes the failure explicit instead of silently corrupting history.
+        if let context = modelContext, !patientStillExists(context: context) {
+            errorMessage = "El paciente de este borrador ya no existe. No es posible aprobarlo."
+            isProcessing = false
+            return
+        }
+
         do {
             let approved = try await optimizationService.approveDraft(draft)
             draft = approved
@@ -132,6 +142,17 @@ final class DraftEditorViewModel: ObservableObject {
 
         wasSavedToPending = true
         isProcessing = false
+    }
+
+    /// Returns whether a `PatientRecord` with this draft's `patientId` still
+    /// exists in the store.
+    private func patientStillExists(context: ModelContext) -> Bool {
+        let targetId = patientId
+        var descriptor = FetchDescriptor<PatientRecord>(
+            predicate: #Predicate<PatientRecord> { $0.patientId == targetId }
+        )
+        descriptor.fetchLimit = 1
+        return ((try? context.fetch(descriptor).first) ?? nil) != nil
     }
 
     private func deletePendingRecordIfAny(context: ModelContext) {
