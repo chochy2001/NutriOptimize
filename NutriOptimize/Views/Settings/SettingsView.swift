@@ -9,6 +9,7 @@ struct SettingsView: View {
     @State private var customPrompt: String = OpenRouterService.customPrompt
     @State private var showDebugView: Bool = UserDefaults.standard.bool(forKey: "show_engine_debug")
     @State private var showSaveConfirmation = false
+    @State private var isSaving = false
     @State private var connectionStatus: ConnectionTestStatus = .idle
     @State private var isTestingConnection = false
     @State private var hasConsent: Bool = OpenRouterService.hasDataProcessingConsent
@@ -39,10 +40,12 @@ struct SettingsView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(L10n.actionClose) { dismiss() }
+                        .disabled(isSaving || showSaveConfirmation)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button(L10n.actionSave) { saveSettings() }
                         .fontWeight(.semibold)
+                        .disabled(isSaving || showSaveConfirmation)
                 }
             }
             .overlay {
@@ -81,6 +84,8 @@ struct SettingsView: View {
                 .textInputAutocapitalization(.never)
 
             Button {
+                guard !isTestingConnection && connectionStatus != .testing else { return }
+                isTestingConnection = true
                 Task { await testConnection() }
             } label: {
                 HStack(spacing: 8) {
@@ -106,7 +111,7 @@ struct SettingsView: View {
                     }
                 }
             }
-            .disabled(apiKey.trimmingCharacters(in: .whitespaces).isEmpty || connectionStatus == .testing)
+            .disabled(apiKey.trimmingCharacters(in: .whitespaces).isEmpty || isTestingConnection || connectionStatus == .testing)
         } header: {
             Text(L10n.settingsEngineSection)
         } footer: {
@@ -133,6 +138,7 @@ struct SettingsView: View {
     }
 
     private func testConnection() async {
+        defer { isTestingConnection = false }
         connectionStatus = .testing
 
         guard let url = URL(string: "https://openrouter.ai/api/v1/models") else {
@@ -246,6 +252,9 @@ struct SettingsView: View {
     // MARK: - Save
 
     private func saveSettings() {
+        guard !isSaving else { return }
+        isSaving = true
+
         OpenRouterService.apiKey = apiKey
         OpenRouterService.customPrompt = customPrompt
         UserDefaults.standard.set(showDebugView, forKey: "show_engine_debug")

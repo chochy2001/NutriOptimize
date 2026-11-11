@@ -35,6 +35,7 @@ final class PatientDetailViewModel: ObservableObject {
     /// instead of sending any patient data, so the view can present the
     /// disclosure first.
     func generateOptimizedPlan() async {
+        guard !isGenerating else { return }
         if OpenRouterService.isConfigured && !OpenRouterService.hasDataProcessingConsent {
             needsDataProcessingConsent = true
             return
@@ -45,12 +46,14 @@ final class PatientDetailViewModel: ObservableObject {
     /// Called by the view once the professional accepts the data-processing
     /// disclosure, to proceed with the engine call.
     func confirmConsentAndGenerate() async {
+        guard !isGenerating else { return }
         OpenRouterService.hasDataProcessingConsent = true
         needsDataProcessingConsent = false
         await runGeneration()
     }
 
     private func runGeneration() async {
+        guard !isGenerating else { return }
         isGenerating = true
         generationProgress = 0
         errorMessage = nil

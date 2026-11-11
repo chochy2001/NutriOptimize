@@ -9,6 +9,8 @@ struct DataProcessingConsentView: View {
     let onAccept: () -> Void
     let onCancel: () -> Void
 
+    @State private var didSubmit = false
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -34,6 +36,8 @@ struct DataProcessingConsentView: View {
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 10) {
                     Button {
+                        guard !didSubmit else { return }
+                        didSubmit = true
                         HapticManager.notification(.success)
                         onAccept()
                     } label: {
@@ -44,8 +48,11 @@ struct DataProcessingConsentView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(AppTheme.deepOrange)
+                    .disabled(didSubmit)
 
                     Button(role: .cancel) {
+                        guard !didSubmit else { return }
+                        didSubmit = true
                         onCancel()
                     } label: {
                         Text(L10n.consentCancel)
@@ -53,6 +60,7 @@ struct DataProcessingConsentView: View {
                             .padding(.vertical, 8)
                     }
                     .buttonStyle(.bordered)
+                    .disabled(didSubmit)
                 }
                 .padding()
                 .background(.ultraThinMaterial)

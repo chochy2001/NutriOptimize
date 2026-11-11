@@ -4,8 +4,8 @@ import SwiftData
 
 /// Covers the clinical-history lifecycle of `DraftEditorViewModel`: meal editing,
 /// approval that persists a `ConsultationRecord`, the guard against approving a
-/// draft whose patient was deleted, and the pending-review upsert. Uses an
-/// in-memory SwiftData container and the real `MockOptimizationService`.
+/// draft whose patient was deleted, the pending-review upsert, and single-flight
+/// re-entrancy guards across `DraftEditorViewModel` and `PatientDetailViewModel`.
 @MainActor
 final class DraftEditorViewModelTests: XCTestCase {
 
@@ -38,14 +38,18 @@ final class DraftEditorViewModelTests: XCTestCase {
         )
     }
 
-    private func seedPatient(_ context: ModelContext, id: UUID) throws {
-        let store = PatientStore(modelContext: context)
-        try store.create(Patient(
+    private func makeSamplePatient(id: UUID = UUID()) -> Patient {
+        Patient(
             id: id, fullName: "Paciente Prueba", age: 40, sex: .male,
             weight: 80, height: 175, bodyFatPercentage: nil, allergies: [],
             medicalConditions: [], dietaryPreferences: [], clinicalGoals: "Test",
             availableCookingTime: 30, activityLevel: .sedentary
-        ))
+        )
+    }
+
+    private func seedPatient(_ context: ModelContext, id: UUID) throws {
+        let store = PatientStore(modelContext: context)
+        try store.create(makeSamplePatient(id: id))
     }
 
     // MARK: - Meal editing
@@ -203,5 +207,151 @@ final class DraftEditorViewModelTests: XCTestCase {
 
         XCTAssertTrue(vm.wasDiscarded)
         XCTAssertEqual(try context.fetchCount(FetchDescriptor<PlanDraftRecord>()), 0)
+    }
+
+    // MARK: - Single-flight re-entrancy guards
+
+    func testApproveDraftIgnoresConcurrentAndPostApprovalCalls() async throws {
+        let context = try makeContext()
+        let patientId = UUID()
+        try seedPatient(context, id: patientId)
+
+        let service = CountingOptimizationService()
+        let vm = DraftEditorViewModel(
+            draft: makeDraft(patientId: patientId),
+            patientName: "Paciente Prueba",
+            optimizationService: service
+        )
+        vm.modelContext = context
+
+        async let first: Void = vm.approveDraft(patientWeight: 80)
+        async let second: Void = vm.approveDraft(patientWeight: 80)
+        _ = await (first, second)
+
+        // A third call after approval must also be ignored.
+        await vm.approveDraft(patientWeight: 80)
+
+        let calls = await service.approveCount
+        XCTAssertEqual(calls, 1, "Concurrent and post-approval approveDraft calls must execute only once")
+        XCTAssertEqual(try context.fetchCount(FetchDescriptor<ConsultationRecord>()), 1)
+    }
+
+    func testDiscardDraftIgnoresConcurrentCalls() async throws {
+        let service = CountingOptimizationService()
+        let vm = DraftEditorViewModel(
+            draft: makeDraft(),
+            patientName: "X",
+            optimizationService: service
+        )
+
+        async let first: Void = vm.discardDraft()
+        async let second: Void = vm.discardDraft()
+        _ = await (first, second)
+
+        let calls = await service.discardCount
+        XCTAssertEqual(calls, 1, "Concurrent discardDraft calls must execute only once")
+        XCTAssertTrue(vm.wasDiscarded)
+    }
+
+    func testPatientDetailViewModelIgnoresDuplicateGenerationAndDoubleConsent() async throws {
+        let patient = makeSamplePatient()
+        let mockService = CountingOptimizationService()
+        let engineService = CountingEngineService()
+
+        let previousKey = OpenRouterService.apiKey
+        let previousConsent = OpenRouterService.hasDataProcessingConsent
+        defer {
+            OpenRouterService.apiKey = previousKey
+            OpenRouterService.hasDataProcessingConsent = previousConsent
+        }
+
+        // Case 1: unconfigured engine -> mockService single-flight
+        OpenRouterService.apiKey = ""
+        OpenRouterService.hasDataProcessingConsent = false
+
+        let vm = PatientDetailViewModel(
+            patient: patient,
+            optimizationService: mockService,
+            engineService: engineService
+        )
+
+        async let genA: Void = vm.generateOptimizedPlan()
+        async let genB: Void = vm.generateOptimizedPlan()
+        _ = await (genA, genB)
+
+        let mockCalls = await mockService.generateCount
+        XCTAssertEqual(mockCalls, 1, "Concurrent generateOptimizedPlan calls must execute only once")
+        XCTAssertNotNil(vm.generatedDraft)
+
+        // Case 2: configured engine -> double confirmConsentAndGenerate during sheet dismiss
+        OpenRouterService.apiKey = "sk-or-test-key"
+        OpenRouterService.hasDataProcessingConsent = false
+        vm.resetGeneration()
+
+        async let consentA: Void = vm.confirmConsentAndGenerate()
+        async let consentB: Void = vm.confirmConsentAndGenerate()
+        _ = await (consentA, consentB)
+
+        let engineCalls = await engineService.generateCount
+        XCTAssertEqual(engineCalls, 1, "Double-tapping consent accept must invoke OpenRouter engine only once")
+    }
+}
+
+private actor CountingOptimizationService: OptimizationServiceProtocol {
+    private(set) var generateCount = 0
+    private(set) var approveCount = 0
+    private(set) var discardCount = 0
+
+    func generateDraft(for patient: Patient) async throws -> PlanOptimizationDraft {
+        generateCount += 1
+        try await Task.sleep(for: .milliseconds(50))
+        return PlanOptimizationDraft(
+            id: UUID(),
+            patientId: patient.id,
+            status: .pendingReview,
+            calculatedRationale: "Demo",
+            meals: [],
+            createdAt: .now,
+            isDemo: true
+        )
+    }
+
+    func fetchPendingDrafts() async throws -> [PlanOptimizationDraft] {
+        []
+    }
+
+    func approveDraft(_ draft: PlanOptimizationDraft) async throws -> PlanOptimizationDraft {
+        approveCount += 1
+        try await Task.sleep(for: .milliseconds(50))
+        var copy = draft
+        copy.status = .approved
+        return copy
+    }
+
+    func discardDraft(_ draft: PlanOptimizationDraft) async throws {
+        discardCount += 1
+        try await Task.sleep(for: .milliseconds(50))
+    }
+}
+
+private actor CountingEngineService: OptimizationEngineProtocol {
+    private(set) var generateCount = 0
+
+    func generateOptimizedPlan(
+        for patient: Patient,
+        customPrompt: String?,
+        feedback: PatientFeedbackSnapshot?
+    ) async throws -> PlanOptimizationDraft {
+        generateCount += 1
+        try await Task.sleep(for: .milliseconds(50))
+        return PlanOptimizationDraft(
+            id: UUID(),
+            patientId: patient.id,
+            status: .pendingReview,
+            calculatedRationale: "Engine",
+            meals: [],
+            createdAt: .now,
+            isDemo: false
+        )
     }
 }

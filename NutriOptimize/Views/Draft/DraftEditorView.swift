@@ -15,6 +15,7 @@ struct DraftEditorView: View {
     @State private var pdfFileURL: URL?
     @State private var showDebugView = false
     @State private var feedbackToast: String?
+    @State private var isSavingToPending = false
 
     /// The patient object needed for PDF export. Injected from the parent.
     var patient: Patient?
@@ -289,6 +290,8 @@ struct DraftEditorView: View {
             }
 
             Button {
+                guard !isSavingToPending && !viewModel.isProcessing else { return }
+                isSavingToPending = true
                 Task {
                     viewModel.modelContext = modelContext
                     await viewModel.saveToPendingReview()
@@ -297,6 +300,8 @@ struct DraftEditorView: View {
                         feedbackToast = "Guardado en pendientes"
                         try? await Task.sleep(for: .milliseconds(800))
                         dismiss()
+                    } else {
+                        isSavingToPending = false
                     }
                 }
             } label: {
@@ -311,7 +316,7 @@ struct DraftEditorView: View {
             }
             .buttonStyle(.bordered)
             .tint(AppTheme.deepOrange)
-            .disabled(viewModel.draft.meals.isEmpty || viewModel.isProcessing || viewModel.draft.status == .approved)
+            .disabled(viewModel.draft.meals.isEmpty || viewModel.isProcessing || isSavingToPending || viewModel.wasApproved || viewModel.wasDiscarded || viewModel.draft.status == .approved)
 
             Button {
                 showApproveAlert = true
@@ -327,7 +332,7 @@ struct DraftEditorView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(AppTheme.success)
-            .disabled(viewModel.draft.meals.isEmpty || viewModel.isProcessing)
+            .disabled(viewModel.draft.meals.isEmpty || viewModel.isProcessing || isSavingToPending || viewModel.wasApproved || viewModel.wasDiscarded)
 
             if patient != nil {
                 Button {
@@ -344,7 +349,7 @@ struct DraftEditorView: View {
                 }
                 .buttonStyle(.bordered)
                 .tint(AppTheme.info)
-                .disabled(viewModel.draft.meals.isEmpty)
+                .disabled(viewModel.draft.meals.isEmpty || isSavingToPending)
             }
 
             HStack(spacing: 12) {
@@ -361,6 +366,7 @@ struct DraftEditorView: View {
                 }
                 .buttonStyle(.bordered)
                 .tint(AppTheme.danger)
+                .disabled(viewModel.isProcessing || isSavingToPending || viewModel.wasApproved || viewModel.wasDiscarded)
 
                 Button {
                     dismiss()
@@ -375,6 +381,7 @@ struct DraftEditorView: View {
                 }
                 .buttonStyle(.bordered)
                 .tint(AppTheme.deepOrange)
+                .disabled(viewModel.isProcessing || isSavingToPending)
             }
         }
         .padding(.top, 8)

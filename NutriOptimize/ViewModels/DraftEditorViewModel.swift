@@ -48,6 +48,7 @@ final class DraftEditorViewModel: ObservableObject {
     // MARK: - Draft Lifecycle
 
     func approveDraft(patientWeight: Double? = nil) async {
+        guard !isProcessing && !wasApproved && !wasDiscarded else { return }
         isProcessing = true
         errorMessage = nil
 
@@ -100,6 +101,7 @@ final class DraftEditorViewModel: ObservableObject {
     }
 
     func discardDraft() async {
+        guard !isProcessing && !wasApproved && !wasDiscarded else { return }
         isProcessing = true
         errorMessage = nil
 
@@ -121,6 +123,7 @@ final class DraftEditorViewModel: ObservableObject {
     /// even after dismissing the editor. If a record for this draft already exists it is
     /// updated in place (keeping meal edits intact across sessions).
     func saveToPendingReview() async {
+        guard !isProcessing && !wasApproved && !wasDiscarded else { return }
         guard let context = modelContext else {
             errorMessage = "No se pudo guardar el borrador"
             return
