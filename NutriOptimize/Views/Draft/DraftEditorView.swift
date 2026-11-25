@@ -456,6 +456,8 @@ struct DraftEditorView: View {
             try data.write(to: fileURL)
         } catch {
             isExporting = false
+            HapticManager.notification(.error)
+            viewModel.errorMessage = "No se pudo preparar el PDF para compartir."
             return
         }
 
