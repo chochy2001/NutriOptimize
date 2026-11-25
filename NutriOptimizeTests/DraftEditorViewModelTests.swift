@@ -312,7 +312,7 @@ private actor CountingOptimizationService: OptimizationServiceProtocol {
             calculatedRationale: "Demo",
             meals: [],
             createdAt: .now,
-            isDemo: true
+            engineSource: .demo
         )
     }
 
@@ -351,7 +351,7 @@ private actor CountingEngineService: OptimizationEngineProtocol {
             calculatedRationale: "Engine",
             meals: [],
             createdAt: .now,
-            isDemo: false
+            engineSource: .engine
         )
     }
 }

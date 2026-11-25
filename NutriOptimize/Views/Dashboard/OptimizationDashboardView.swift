@@ -2,13 +2,37 @@ import SwiftUI
 import SwiftData
 
 struct OptimizationDashboardView: View {
+    private enum DashboardRoute: Hashable {
+        case draft(PlanOptimizationDraft)
+        case patient(Patient)
+    }
+
+    private enum DashboardSheet: Identifiable {
+        case addPatient
+        case editPatient(Patient)
+        case settings
+        case help
+
+        var id: String {
+            switch self {
+            case .addPatient:
+                return "addPatient"
+            case .editPatient(let patient):
+                return "editPatient-\(patient.id.uuidString)"
+            case .settings:
+                return "settings"
+            case .help:
+                return "help"
+            }
+        }
+    }
+
     @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel = OptimizationDashboardViewModel()
+    @StateObject private var navigationGuard = TapActionGuard()
     @State private var searchText = ""
-    @State private var showAddPatient = false
-    @State private var editingPatient: Patient?
-    @State private var showSettings = false
-    @State private var showHelp = false
+    @State private var navigationPath: [DashboardRoute] = []
+    @State private var activeSheet: DashboardSheet?
     @State private var patientToDelete: Patient?
 
     private var filteredPatients: [Patient] {
@@ -26,7 +50,7 @@ struct OptimizationDashboardView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             Group {
                 if viewModel.isLoading {
                     loadingState
@@ -42,21 +66,21 @@ struct OptimizationDashboardView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     HStack(spacing: 12) {
-                        Button {
-                            showSettings = true
+                        GuardedButton {
+                            presentSheet(.settings)
                         } label: {
                             Image(systemName: "gearshape")
                         }
-                        Button {
-                            showHelp = true
+                        GuardedButton {
+                            presentSheet(.help)
                         } label: {
                             Image(systemName: "questionmark.circle")
                         }
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showAddPatient = true
+                    GuardedButton {
+                        presentSheet(.addPatient)
                     } label: {
                         Image(systemName: "plus")
                     }
@@ -75,27 +99,32 @@ struct OptimizationDashboardView: View {
                 viewModel.configure(modelContext: modelContext)
                 viewModel.refreshPendingDrafts()
             }
-            .sheet(isPresented: $showAddPatient) {
-                AddEditPatientView { newPatient in
-                    viewModel.addPatient(newPatient)
+            .onChange(of: navigationPath.count) { oldCount, newCount in
+                if newCount < oldCount {
+                    navigationGuard.reset()
                 }
             }
-            .sheet(item: $editingPatient) { patient in
-                AddEditPatientView(patient: patient) { updated in
-                    viewModel.updatePatient(updated)
-                }
-            }
-            .sheet(isPresented: $showSettings) {
-                SettingsView()
-            }
-            .sheet(isPresented: $showHelp) {
-                NavigationStack {
-                    HelpView()
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button(L10n.actionClose) { showHelp = false }
+            .sheet(item: $activeSheet) { sheet in
+                switch sheet {
+                case .addPatient:
+                    AddEditPatientView { newPatient in
+                        viewModel.addPatient(newPatient)
+                    }
+                case .editPatient(let patient):
+                    AddEditPatientView(patient: patient) { updated in
+                        viewModel.updatePatient(updated)
+                    }
+                case .settings:
+                    SettingsView()
+                case .help:
+                    NavigationStack {
+                        HelpView()
+                            .toolbar {
+                                ToolbarItem(placement: .cancellationAction) {
+                                    Button(L10n.actionClose) { activeSheet = nil }
+                                }
                             }
-                        }
+                    }
                 }
             }
             .alert(L10n.deletePatientTitle, isPresented: deleteAlertBinding, presenting: patientToDelete) { patient in
@@ -150,19 +179,34 @@ struct OptimizationDashboardView: View {
             .padding(.horizontal)
             .padding(.top, 8)
         }
-        .navigationDestination(for: PlanOptimizationDraft.self) { draft in
-            let matchedPatient = viewModel.patients.first(where: { $0.id == draft.patientId })
-            DraftEditorView(
-                viewModel: DraftEditorViewModel(
-                    draft: draft,
-                    patientName: viewModel.patientName(for: draft)
-                ),
-                patient: matchedPatient
-            )
+        .navigationDestination(for: DashboardRoute.self) { route in
+            switch route {
+            case .draft(let draft):
+                let matchedPatient = viewModel.patients.first(where: { $0.id == draft.patientId })
+                DraftEditorView(
+                    viewModel: DraftEditorViewModel(
+                        draft: draft,
+                        patientName: viewModel.patientName(for: draft)
+                    ),
+                    patient: matchedPatient
+                )
+            case .patient(let patient):
+                PatientDetailView(viewModel: PatientDetailViewModel(patient: patient))
+            }
         }
-        .navigationDestination(for: Patient.self) { patient in
-            PatientDetailView(viewModel: PatientDetailViewModel(patient: patient))
-        }
+    }
+
+    private func pushRoute(_ route: DashboardRoute) {
+        guard navigationPath.last != route else { return }
+        guard activeSheet == nil, patientToDelete == nil else { return }
+        guard navigationGuard.shouldAllowTap() else { return }
+        HapticManager.selection()
+        navigationPath.append(route)
+    }
+
+    private func presentSheet(_ sheet: DashboardSheet) {
+        guard activeSheet == nil, patientToDelete == nil else { return }
+        activeSheet = sheet
     }
 
     // MARK: - Pending Drafts Section
@@ -186,12 +230,13 @@ struct OptimizationDashboardView: View {
             }
 
             ForEach(viewModel.pendingDrafts) { draft in
-                NavigationLink(value: draft) {
+                GuardedButton {
+                    pushRoute(.draft(draft))
+                } label: {
                     pendingDraftRow(draft)
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .simultaneousGesture(TapGesture().onEnded { HapticManager.selection() })
             }
         }
     }
@@ -250,19 +295,21 @@ struct OptimizationDashboardView: View {
             }
 
             ForEach(filteredPatients) { patient in
-                NavigationLink(value: patient) {
+                GuardedButton {
+                    pushRoute(.patient(patient))
+                } label: {
                     patientRow(patient)
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .simultaneousGesture(TapGesture().onEnded { HapticManager.selection() })
                 .contextMenu {
                     Button {
-                        editingPatient = patient
+                        presentSheet(.editPatient(patient))
                     } label: {
                         Label(L10n.actionEdit, systemImage: "pencil")
                     }
                     Button(role: .destructive) {
+                        guard activeSheet == nil, patientToDelete == nil else { return }
                         patientToDelete = patient
                     } label: {
                         Label(L10n.actionDelete, systemImage: "trash")
@@ -270,6 +317,7 @@ struct OptimizationDashboardView: View {
                 }
                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                     Button(role: .destructive) {
+                        guard activeSheet == nil, patientToDelete == nil else { return }
                         patientToDelete = patient
                     } label: {
                         Label(L10n.actionDelete, systemImage: "trash")
@@ -277,7 +325,7 @@ struct OptimizationDashboardView: View {
                 }
                 .swipeActions(edge: .leading, allowsFullSwipe: false) {
                     Button {
-                        editingPatient = patient
+                        presentSheet(.editPatient(patient))
                     } label: {
                         Label(L10n.actionEdit, systemImage: "pencil")
                     }

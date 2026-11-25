@@ -4,13 +4,19 @@ import SwiftData
 /// Displays laboratory test results for a patient, grouped by date.
 /// Shows trend indicators by comparing sequential values of the same test.
 struct LabResultsView: View {
+    private enum LabResultsSheet: Identifiable {
+        case add
+        case importFile
+
+        var id: Self { self }
+    }
+
     let patientId: UUID
     let patientName: String
 
     @Environment(\.modelContext) private var modelContext
     @State private var results: [LabResultRecord] = []
-    @State private var showAddSheet = false
-    @State private var showImportSheet = false
+    @State private var activeSheet: LabResultsSheet?
     @State private var hasLoaded = false
 
     /// Groups results by test date for section-based display.
@@ -48,14 +54,14 @@ struct LabResultsView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack(spacing: 12) {
-                    Button {
-                        showImportSheet = true
+                    GuardedButton {
+                        presentSheet(.importFile)
                     } label: {
                         Image(systemName: "doc.badge.plus")
                             .foregroundStyle(AppTheme.deepOrange)
                     }
-                    Button {
-                        showAddSheet = true
+                    GuardedButton {
+                        presentSheet(.add)
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .foregroundStyle(AppTheme.deepOrange)
@@ -63,14 +69,16 @@ struct LabResultsView: View {
                 }
             }
         }
-        .sheet(isPresented: $showAddSheet) {
-            AddLabResultSheet(patientId: patientId) {
-                loadResults()
-            }
-        }
-        .sheet(isPresented: $showImportSheet) {
-            LabImportView(patientId: patientId) {
-                loadResults()
+        .sheet(item: $activeSheet) { sheet in
+            switch sheet {
+            case .add:
+                AddLabResultSheet(patientId: patientId) {
+                    loadResults()
+                }
+            case .importFile:
+                LabImportView(patientId: patientId) {
+                    loadResults()
+                }
             }
         }
         .onAppear {
@@ -102,8 +110,8 @@ struct LabResultsView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
 
-            Button {
-                showAddSheet = true
+            GuardedButton {
+                presentSheet(.add)
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "plus")
@@ -119,6 +127,11 @@ struct LabResultsView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 60)
+    }
+
+    private func presentSheet(_ sheet: LabResultsSheet) {
+        guard activeSheet == nil else { return }
+        activeSheet = sheet
     }
 
     // MARK: - Summary Banner
@@ -287,6 +300,7 @@ struct AddLabResultSheet: View {
     @State private var isOutOfRange = false
     @State private var testDate = Date.now
     @State private var notes: String = ""
+    @State private var isSaving = false
 
     /// Common lab test templates with pre-filled units and reference ranges.
     private let templates: [(name: String, unit: String, range: String)] = [
@@ -378,7 +392,7 @@ struct AddLabResultSheet: View {
 
     private var saveSection: some View {
         Section {
-            Button {
+            GuardedButton {
                 saveResult()
             } label: {
                 HStack {
@@ -388,12 +402,14 @@ struct AddLabResultSheet: View {
                     Spacer()
                 }
             }
-            .disabled(testName.isEmpty || value.isEmpty)
+            .disabled(testName.isEmpty || value.isEmpty || isSaving)
         }
     }
 
     private func saveResult() {
+        guard !isSaving else { return }
         guard let numericValue = Double(value) else { return }
+        isSaving = true
 
         let record = LabResultRecord(
             patientId: patientId,
