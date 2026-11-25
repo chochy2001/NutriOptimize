@@ -25,6 +25,8 @@ struct PatientDetailView: View {
     @State private var showDraftEditor = false
     @State private var activeSheet: PatientDetailSheet?
     @State private var activeToolRoute: PatientToolRoute?
+    @State private var pendingGenerateAfterConsent = false
+    @State private var pendingDraftEditor = false
 
     var body: some View {
         ScrollView {
@@ -101,16 +103,20 @@ struct PatientDetailView: View {
             case .consent:
                 DataProcessingConsentView(
                     onAccept: {
-                        Task { await viewModel.confirmConsentAndGenerate() }
+                        pendingGenerateAfterConsent = true
+                        activeSheet = nil
                     },
                     onCancel: {
+                        pendingGenerateAfterConsent = false
                         viewModel.needsDataProcessingConsent = false
                         activeSheet = nil
                     }
                 )
             }
         }
-        .fullScreenCover(isPresented: $showDraftEditor) {
+        .fullScreenCover(isPresented: $showDraftEditor, onDismiss: {
+            viewModel.resetGeneration()
+        }) {
             if let draft = viewModel.generatedDraft {
                 NavigationStack {
                     DraftEditorView(
@@ -124,7 +130,6 @@ struct PatientDetailView: View {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Cerrar") {
                                 showDraftEditor = false
-                                viewModel.resetGeneration()
                             }
                         }
                     }
@@ -132,28 +137,40 @@ struct PatientDetailView: View {
             }
         }
         .onChange(of: viewModel.needsDataProcessingConsent) { _, needsConsent in
-            if needsConsent {
+            if needsConsent && activeSheet == nil {
                 activeSheet = .consent
-            } else if activeSheet == .consent && !viewModel.isGenerating {
+            } else if !needsConsent && activeSheet == .consent && !viewModel.isGenerating {
                 activeSheet = nil
             }
         }
         .onChange(of: viewModel.isGenerating) { _, generating in
             if generating {
-                activeSheet = .generating
+                if activeSheet == nil {
+                    activeSheet = .generating
+                }
             } else if activeSheet == .generating {
+                pendingDraftEditor = viewModel.generatedDraft != nil
                 activeSheet = nil
             }
         }
         .onChange(of: viewModel.generatedDraft) { _, draft in
-            if draft != nil && !viewModel.isGenerating && activeSheet == nil {
+            guard draft != nil else { return }
+            if activeSheet == .generating {
+                pendingDraftEditor = true
+            } else if !viewModel.isGenerating && activeSheet == nil {
                 showDraftEditor = true
             }
         }
     }
 
     private var isAnyPresentationActive: Bool {
-        activeSheet != nil || showDraftEditor || viewModel.isGenerating || viewModel.needsDataProcessingConsent
+        activeSheet != nil
+            || activeToolRoute != nil
+            || showDraftEditor
+            || viewModel.isGenerating
+            || viewModel.needsDataProcessingConsent
+            || pendingGenerateAfterConsent
+            || pendingDraftEditor
     }
 
     private func presentEditSheet() {
@@ -163,18 +180,31 @@ struct PatientDetailView: View {
     }
 
     private func openToolRoute(_ route: PatientToolRoute) {
-        guard activeToolRoute == nil, !isAnyPresentationActive else { return }
+        guard !isAnyPresentationActive else { return }
         guard toolNavigationGuard.shouldAllowTap() else { return }
         HapticManager.selection()
         activeToolRoute = route
     }
 
     private func handleSheetDismiss() {
+        if pendingGenerateAfterConsent {
+            pendingGenerateAfterConsent = false
+            DispatchQueue.main.async {
+                Task { await viewModel.confirmConsentAndGenerate() }
+            }
+            return
+        }
         if viewModel.needsDataProcessingConsent && !viewModel.isGenerating {
             viewModel.needsDataProcessingConsent = false
         }
-        if viewModel.generatedDraft != nil && !viewModel.isGenerating && activeSheet == nil {
-            showDraftEditor = true
+        if pendingDraftEditor {
+            pendingDraftEditor = false
+            guard viewModel.generatedDraft != nil, !viewModel.isGenerating else { return }
+            DispatchQueue.main.async {
+                if viewModel.generatedDraft != nil && activeSheet == nil && !viewModel.isGenerating {
+                    showDraftEditor = true
+                }
+            }
         }
     }
 
