@@ -15,6 +15,7 @@ struct LabImportView: View {
     @State private var parsedResults: [LabDocumentImporter.ParsedResult] = []
     @State private var importError: String?
     @State private var hasResults = false
+    @State private var isImporting = false
 
     private let importer = LabDocumentImporter()
 
@@ -160,7 +161,7 @@ struct LabImportView: View {
     private var importButton: some View {
         let selectedCount = parsedResults.filter(\.isSelected).count
 
-        return Button {
+        return GuardedButton {
             saveSelectedResults()
         } label: {
             HStack(spacing: 8) {
@@ -174,7 +175,7 @@ struct LabImportView: View {
         }
         .buttonStyle(.borderedProminent)
         .tint(AppTheme.deepOrange)
-        .disabled(selectedCount == 0)
+        .disabled(selectedCount == 0 || isImporting)
         .padding()
         .background(.ultraThinMaterial)
     }
@@ -272,7 +273,10 @@ struct LabImportView: View {
     }
 
     private func saveSelectedResults() {
+        guard !isImporting else { return }
         let selected = parsedResults.filter(\.isSelected)
+        guard !selected.isEmpty else { return }
+        isImporting = true
         for result in selected {
             let record = LabResultRecord(
                 patientId: patientId,

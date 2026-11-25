@@ -2,20 +2,37 @@ import SwiftUI
 import SwiftData
 
 struct DraftEditorView: View {
+    private enum DraftEditorSheet: Identifiable {
+        case editMeal(Meal)
+        case addMeal
+        case debug
+        case share(URL)
+
+        var id: String {
+            switch self {
+            case .editMeal(let meal):
+                return "editMeal-\(meal.id.uuidString)"
+            case .addMeal:
+                return "addMeal"
+            case .debug:
+                return "debug"
+            case .share(let url):
+                return "share-\(url.absoluteString)"
+            }
+        }
+    }
+
     @StateObject var viewModel: DraftEditorViewModel
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
 
     @State private var showDiscardAlert = false
     @State private var showApproveAlert = false
-    @State private var editingMeal: Meal?
-    @State private var showAddMealSheet = false
-    @State private var showShareSheet = false
+    @State private var activeSheet: DraftEditorSheet?
     @State private var pdfData: Data?
-    @State private var pdfFileURL: URL?
-    @State private var showDebugView = false
     @State private var feedbackToast: String?
     @State private var isSavingToPending = false
+    @State private var isExporting = false
 
     /// The patient object needed for PDF export. Injected from the parent.
     var patient: Patient?
@@ -41,37 +58,37 @@ struct DraftEditorView: View {
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 if UserDefaults.standard.bool(forKey: "show_engine_debug") {
-                    Button {
-                        showDebugView = true
+                    GuardedButton {
+                        presentSheet(.debug)
                     } label: {
                         Image(systemName: "terminal")
                     }
+                    .disabled(activeSheet != nil)
                 }
 
                 if patient != nil {
-                    Button {
+                    GuardedButton {
                         exportPDF()
                     } label: {
                         Image(systemName: "square.and.arrow.up")
                     }
+                    .disabled(viewModel.draft.meals.isEmpty || isExporting || activeSheet != nil)
                 }
             }
         }
-        .sheet(item: $editingMeal) { meal in
-            EditMealSheet(existingMeal: meal) { updated in
-                viewModel.updateMeal(updated)
-            }
-        }
-        .sheet(isPresented: $showAddMealSheet) {
-            EditMealSheet { newMeal in
-                viewModel.addMeal(newMeal)
-            }
-        }
-        .sheet(isPresented: $showDebugView) {
-            EngineDebugView()
-        }
-        .sheet(isPresented: $showShareSheet) {
-            if let url = pdfFileURL {
+        .sheet(item: $activeSheet, onDismiss: { isExporting = false }) { sheet in
+            switch sheet {
+            case .editMeal(let meal):
+                EditMealSheet(existingMeal: meal) { updated in
+                    viewModel.updateMeal(updated)
+                }
+            case .addMeal:
+                EditMealSheet { newMeal in
+                    viewModel.addMeal(newMeal)
+                }
+            case .debug:
+                EngineDebugView()
+            case .share(let url):
                 ShareSheet(activityItems: [url])
             }
         }
@@ -248,8 +265,8 @@ struct DraftEditorView: View {
 
                 Spacer()
 
-                Button {
-                    showAddMealSheet = true
+                GuardedButton {
+                    presentSheet(.addMeal)
                 } label: {
                     Label("Agregar", systemImage: "plus.circle.fill")
                         .font(.system(.subheadline, design: .rounded, weight: .semibold))
@@ -260,7 +277,7 @@ struct DraftEditorView: View {
             ForEach(viewModel.draft.meals.sorted { $0.type.sortOrder < $1.type.sortOrder }) { meal in
                 MealRowView(
                     meal: meal,
-                    onEdit: { editingMeal = meal },
+                    onEdit: { presentSheet(.editMeal(meal)) },
                     onDelete: {
                         HapticManager.impact(.light)
                         viewModel.deleteMeal(meal)
@@ -289,7 +306,7 @@ struct DraftEditorView: View {
                     .multilineTextAlignment(.center)
             }
 
-            Button {
+            GuardedButton {
                 guard !isSavingToPending && !viewModel.isProcessing else { return }
                 isSavingToPending = true
                 Task {
@@ -318,7 +335,8 @@ struct DraftEditorView: View {
             .tint(AppTheme.deepOrange)
             .disabled(viewModel.draft.meals.isEmpty || viewModel.isProcessing || isSavingToPending || viewModel.wasApproved || viewModel.wasDiscarded || viewModel.draft.status == .approved)
 
-            Button {
+            GuardedButton {
+                guard activeSheet == nil, !showApproveAlert, !showDiscardAlert else { return }
                 showApproveAlert = true
             } label: {
                 HStack(spacing: 8) {
@@ -335,7 +353,7 @@ struct DraftEditorView: View {
             .disabled(viewModel.draft.meals.isEmpty || viewModel.isProcessing || isSavingToPending || viewModel.wasApproved || viewModel.wasDiscarded)
 
             if patient != nil {
-                Button {
+                GuardedButton {
                     exportPDF()
                 } label: {
                     HStack(spacing: 8) {
@@ -349,11 +367,12 @@ struct DraftEditorView: View {
                 }
                 .buttonStyle(.bordered)
                 .tint(AppTheme.info)
-                .disabled(viewModel.draft.meals.isEmpty || isSavingToPending)
+                .disabled(viewModel.draft.meals.isEmpty || isSavingToPending || isExporting || activeSheet != nil)
             }
 
             HStack(spacing: 12) {
-                Button(role: .destructive) {
+                GuardedButton(role: .destructive) {
+                    guard activeSheet == nil, !showApproveAlert, !showDiscardAlert else { return }
                     showDiscardAlert = true
                 } label: {
                     HStack(spacing: 4) {
@@ -368,7 +387,7 @@ struct DraftEditorView: View {
                 .tint(AppTheme.danger)
                 .disabled(viewModel.isProcessing || isSavingToPending || viewModel.wasApproved || viewModel.wasDiscarded)
 
-                Button {
+                GuardedButton {
                     dismiss()
                 } label: {
                     HStack(spacing: 4) {
@@ -403,7 +422,7 @@ struct DraftEditorView: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
 
-            Button("Volver al inicio") {
+            GuardedButton("Volver al inicio") {
                 dismiss()
             }
             .buttonStyle(.borderedProminent)
@@ -418,20 +437,33 @@ struct DraftEditorView: View {
 
     // MARK: - PDF Export
 
+    private func presentSheet(_ sheet: DraftEditorSheet) {
+        guard activeSheet == nil, !showApproveAlert, !showDiscardAlert else { return }
+        activeSheet = sheet
+    }
+
     private func exportPDF() {
+        guard !isExporting, activeSheet == nil, !showApproveAlert, !showDiscardAlert else { return }
         guard let patient else { return }
+        isExporting = true
         let data = viewModel.exportPDF(patient: patient)
 
         // Write PDF to a temporary file so the share sheet can render a proper preview
         let tempDir = FileManager.default.temporaryDirectory
         let fileName = "NutriOptimize_\(patient.fullName.replacingOccurrences(of: " ", with: "_")).pdf"
         let fileURL = tempDir.appendingPathComponent(fileName)
-        try? data.write(to: fileURL)
+        do {
+            try data.write(to: fileURL)
+        } catch {
+            isExporting = false
+            HapticManager.notification(.error)
+            viewModel.errorMessage = "No se pudo preparar el PDF para compartir."
+            return
+        }
 
         pdfData = data
-        pdfFileURL = fileURL
         HapticManager.notification(.success)
-        showShareSheet = true
+        activeSheet = .share(fileURL)
     }
 
     // MARK: - Meal Feedback

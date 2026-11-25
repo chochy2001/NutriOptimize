@@ -4,17 +4,31 @@ import SwiftData
 /// Displays a grid of progress photos for a patient and allows capturing new ones.
 /// Photos are stored in the app's Documents directory and linked via ConsultationRecord.
 struct ProgressPhotoView: View {
+    private enum ProgressPhotoCover: Identifiable {
+        case camera
+        case viewer(PhotoEntry)
+
+        var id: String {
+            switch self {
+            case .camera:
+                return "camera"
+            case .viewer(let entry):
+                return "viewer-\(entry.id)"
+            }
+        }
+    }
+
     let patientId: UUID
     let patientName: String
 
     @Environment(\.modelContext) private var modelContext
     @State private var photos: [PhotoEntry] = []
-    @State private var showCameraSheet = false
+    @State private var activeCover: ProgressPhotoCover?
     @State private var showLibrarySheet = false
     @State private var showSourcePicker = false
-    @State private var selectedPhoto: PhotoEntry?
     @State private var hasLoaded = false
     @State private var showDeleteConfirmation = false
+    @State private var isMutatingPhoto = false
 
     var body: some View {
         ScrollView {
@@ -32,36 +46,41 @@ struct ProgressPhotoView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    showSourcePicker = true
+                GuardedButton {
+                    openSourcePicker()
                 } label: {
                     Image(systemName: "plus.circle.fill")
                         .foregroundStyle(AppTheme.deepOrange)
                 }
+                .disabled(isAnyModalPresented)
             }
         }
         .confirmationDialog("Agregar foto", isPresented: $showSourcePicker) {
             Button("Tomar foto") {
-                showCameraSheet = true
+                guard activeCover == nil, !showLibrarySheet else { return }
+                activeCover = .camera
             }
             Button("Elegir de la galería") {
+                guard activeCover == nil, !showLibrarySheet else { return }
                 showLibrarySheet = true
             }
             Button("Cancelar", role: .cancel) {}
-        }
-        .fullScreenCover(isPresented: $showCameraSheet) {
-            CameraCaptureView { image in
-                savePhoto(image)
-            }
-            .ignoresSafeArea()
         }
         .sheet(isPresented: $showLibrarySheet) {
             PhotoLibraryPickerView { image in
                 savePhoto(image)
             }
         }
-        .fullScreenCover(item: $selectedPhoto) { entry in
-            fullScreenPhotoView(entry)
+        .fullScreenCover(item: $activeCover) { cover in
+            switch cover {
+            case .camera:
+                CameraCaptureView { image in
+                    savePhoto(image)
+                }
+                .ignoresSafeArea()
+            case .viewer(let entry):
+                fullScreenPhotoView(entry)
+            }
         }
         .onAppear {
             guard !hasLoaded else { return }
@@ -92,8 +111,8 @@ struct ProgressPhotoView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
 
-            Button {
-                showSourcePicker = true
+            GuardedButton {
+                openSourcePicker()
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "camera.fill")
@@ -106,9 +125,19 @@ struct ProgressPhotoView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(AppTheme.deepOrange)
+            .disabled(isAnyModalPresented)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 60)
+    }
+
+    private var isAnyModalPresented: Bool {
+        activeCover != nil || showLibrarySheet || showSourcePicker
+    }
+
+    private func openSourcePicker() {
+        guard !isAnyModalPresented else { return }
+        showSourcePicker = true
     }
 
     // MARK: - Photo Grid
@@ -125,9 +154,10 @@ struct ProgressPhotoView: View {
                 GridItem(.flexible(), spacing: 10),
             ], spacing: 10) {
                 ForEach(photos) { entry in
-                    Button {
+                    GuardedButton {
+                        guard !isAnyModalPresented else { return }
                         HapticManager.impact(.light)
-                        selectedPhoto = entry
+                        activeCover = .viewer(entry)
                     } label: {
                         photoThumbnail(entry)
                     }
@@ -183,8 +213,8 @@ struct ProgressPhotoView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button {
-                        selectedPhoto = nil
+                    GuardedButton {
+                        activeCover = nil
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title2)
@@ -197,7 +227,7 @@ struct ProgressPhotoView: View {
                         .foregroundStyle(.white)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
+                    GuardedButton {
                         showDeleteConfirmation = true
                     } label: {
                         Image(systemName: "trash.circle.fill")
@@ -221,6 +251,10 @@ struct ProgressPhotoView: View {
     // MARK: - Photo Management
 
     private func savePhoto(_ image: UIImage) {
+        guard !isMutatingPhoto else { return }
+        isMutatingPhoto = true
+        defer { isMutatingPhoto = false }
+
         let documentsDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let photosDir = documentsDir.appendingPathComponent("ProgressPhotos", isDirectory: true)
 
@@ -242,10 +276,14 @@ struct ProgressPhotoView: View {
     }
 
     private func deletePhoto(_ entry: PhotoEntry) {
+        guard !isMutatingPhoto else { return }
+        isMutatingPhoto = true
+        defer { isMutatingPhoto = false }
+
         do {
             try FileManager.default.removeItem(atPath: entry.path)
             HapticManager.notification(.success)
-            selectedPhoto = nil
+            activeCover = nil
             loadPhotos()
         } catch {
             HapticManager.notification(.error)

@@ -53,6 +53,8 @@
 		9A657349A4DB539B06AF3754 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F985C8464519385895968E3A /* Meal.swift */; };
 		9C25989DFB3A03333B113A94 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D9CEE7389210D658925059 /* ServiceError.swift */; };
 		9E79099F4B88E636151FAEEA /* LabImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB947747B0F286CFA3EFFA63 /* LabImportView.swift */; };
+		A1B2C3D4E5F6000100010003 /* GuardedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100010002 /* GuardedButton.swift */; };
+		A1B2C3D4E5F6000100010005 /* GuardedButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6000100010004 /* GuardedButtonTests.swift */; };
 		A391DB48D416DD6A01E8DB0B /* NutriOptimize.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = DC122ED686F2242F042169D1 /* NutriOptimize.xcodeproj */; };
 		A4E40217FC852A0573DA92F6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A160F7AC6B1874D10CAB11 /* SettingsView.swift */; };
 		AB03933A49067121DC0DA908 /* PhotoCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B517142B259D4380961C3187 /* PhotoCaptureView.swift */; };
@@ -125,6 +127,8 @@
 		961D4BFA8C2991E6DB957DFF /* PlanDraftRecordRoundTripTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDraftRecordRoundTripTests.swift; sourceTree = "<group>"; };
 		9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutriOptimizeApp.swift; sourceTree = "<group>"; };
 		9D8DEF52A792237E34497863 /* LabDocumentImporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabDocumentImporterTests.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000100010002 /* GuardedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedButton.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6000100010004 /* GuardedButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardedButtonTests.swift; sourceTree = "<group>"; };
 		A30F3E1A2AF0780354BFA3C6 /* RootCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinatorView.swift; sourceTree = "<group>"; };
 		A7A037368547843AFCD0DE49 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		A89A1F7B5A34790C6690682B /* ContextualAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualAssistantView.swift; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 				9A5EAFD18A2DD3C5B553FEA1 /* NutriOptimizeApp.swift */,
 				E14D0BCFE7B92B799BD5CE95 /* InfoPlist.strings */,
 				13EE58CE1C8F9345D2152587 /* Localizable.strings */,
+				A1B2C3D4E5F6000100010001 /* Components */,
 				EC2C1408379E428186FBDAFA /* Models */,
 				C974A439EEF0B89CA79F8443 /* Services */,
 				FD0B9660BF2F1177133529CF /* Theme */,
@@ -252,6 +257,14 @@
 				58A160F7AC6B1874D10CAB11 /* SettingsView.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F6000100010001 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D4E5F6000100010002 /* GuardedButton.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		A222BDAAA24CA6FA8BE5A41C = {
@@ -346,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				88E2F46DB390326A27881312 /* DraftEditorViewModelTests.swift */,
+				A1B2C3D4E5F6000100010004 /* GuardedButtonTests.swift */,
 				9D8DEF52A792237E34497863 /* LabDocumentImporterTests.swift */,
 				E256A223C1B6E45973940613 /* LocalizationTests.swift */,
 				BB017B6521E05B5DA3E21CA8 /* MealModelTests.swift */,
@@ -474,6 +488,7 @@
 				71A1A5C9C5FD0E72CB3954B8 /* DraftEditorView.swift in Sources */,
 				1E9A44AAF3C27D9EE8996A1F /* DraftEditorViewModel.swift in Sources */,
 				B5C5CE988D9B9D5906CA1095 /* EditMealSheet.swift in Sources */,
+				A1B2C3D4E5F6000100010003 /* GuardedButton.swift in Sources */,
 				30C8E792384EC191F9F74CB4 /* EngineDebugView.swift in Sources */,
 				481A34FA465DC9485CD77210 /* HapticManager.swift in Sources */,
 				ED95B46530C90165BAF1B78A /* HelpView.swift in Sources */,
@@ -519,6 +534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C74A0A9CBC8D11E92BE73CDA /* DraftEditorViewModelTests.swift in Sources */,
+				A1B2C3D4E5F6000100010005 /* GuardedButtonTests.swift in Sources */,
 				AE1BE4DF4BA6BC084F93742C /* LabDocumentImporterTests.swift in Sources */,
 				292231F3F12FAC8D9A10C10B /* LocalizationTests.swift in Sources */,
 				B5687A768B1564BE4CE863F3 /* MealModelTests.swift in Sources */,

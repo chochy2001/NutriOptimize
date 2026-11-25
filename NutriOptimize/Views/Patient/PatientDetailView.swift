@@ -2,10 +2,31 @@ import SwiftUI
 import SwiftData
 
 struct PatientDetailView: View {
+    private enum PatientToolRoute: Hashable, Identifiable {
+        case history
+        case photos
+        case labs
+        case feedback
+
+        var id: Self { self }
+    }
+
+    private enum PatientDetailSheet: Identifiable {
+        case editPatient
+        case generating
+        case consent
+
+        var id: Self { self }
+    }
+
     @StateObject var viewModel: PatientDetailViewModel
+    @StateObject private var toolNavigationGuard = TapActionGuard()
     @Environment(\.modelContext) private var modelContext
     @State private var showDraftEditor = false
-    @State private var showEditPatient = false
+    @State private var activeSheet: PatientDetailSheet?
+    @State private var activeToolRoute: PatientToolRoute?
+    @State private var pendingGenerateAfterConsent = false
+    @State private var pendingDraftEditor = false
 
     var body: some View {
         ScrollView {
@@ -29,23 +50,73 @@ struct PatientDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    HapticManager.selection()
-                    showEditPatient = true
+                GuardedButton {
+                    presentEditSheet()
                 } label: {
                     Image(systemName: "pencil.circle")
                         .font(.title3)
                         .foregroundStyle(AppTheme.deepOrange)
                 }
+                .disabled(isAnyPresentationActive)
             }
         }
         .onAppear { viewModel.modelContext = modelContext }
-        .sheet(isPresented: $showEditPatient) {
-            AddEditPatientView(patient: viewModel.patient) { updatedPatient in
-                viewModel.patient = updatedPatient
+        .navigationDestination(item: $activeToolRoute) { route in
+            switch route {
+            case .history:
+                PatientHistoryView(
+                    patientId: viewModel.patient.id,
+                    patientName: viewModel.patient.fullName,
+                    patientGoals: viewModel.patient.clinicalGoals
+                )
+            case .photos:
+                ProgressPhotoView(
+                    patientId: viewModel.patient.id,
+                    patientName: viewModel.patient.fullName
+                )
+            case .labs:
+                LabResultsView(
+                    patientId: viewModel.patient.id,
+                    patientName: viewModel.patient.fullName
+                )
+            case .feedback:
+                PatientFeedbackView(
+                    patientId: viewModel.patient.id,
+                    patientName: viewModel.patient.fullName
+                )
             }
         }
-        .fullScreenCover(isPresented: $showDraftEditor) {
+        .onChange(of: activeToolRoute) { _, newValue in
+            if newValue == nil {
+                toolNavigationGuard.reset()
+            }
+        }
+        .sheet(item: $activeSheet, onDismiss: handleSheetDismiss) { sheet in
+            switch sheet {
+            case .editPatient:
+                AddEditPatientView(patient: viewModel.patient) { updatedPatient in
+                    viewModel.patient = updatedPatient
+                }
+            case .generating:
+                ProcessingStateView(progress: viewModel.generationProgress)
+                    .interactiveDismissDisabled()
+            case .consent:
+                DataProcessingConsentView(
+                    onAccept: {
+                        pendingGenerateAfterConsent = true
+                        activeSheet = nil
+                    },
+                    onCancel: {
+                        pendingGenerateAfterConsent = false
+                        viewModel.needsDataProcessingConsent = false
+                        activeSheet = nil
+                    }
+                )
+            }
+        }
+        .fullScreenCover(isPresented: $showDraftEditor, onDismiss: {
+            viewModel.resetGeneration()
+        }) {
             if let draft = viewModel.generatedDraft {
                 NavigationStack {
                     DraftEditorView(
@@ -59,33 +130,80 @@ struct PatientDetailView: View {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Cerrar") {
                                 showDraftEditor = false
-                                viewModel.resetGeneration()
                             }
                         }
                     }
                 }
             }
         }
-        .sheet(isPresented: Binding(
-            get: { viewModel.isGenerating },
-            set: { _ in }
-        )) {
-            ProcessingStateView(progress: viewModel.generationProgress)
-                .interactiveDismissDisabled()
+        .onChange(of: viewModel.needsDataProcessingConsent) { _, needsConsent in
+            if needsConsent && activeSheet == nil {
+                activeSheet = .consent
+            } else if !needsConsent && activeSheet == .consent && !viewModel.isGenerating {
+                activeSheet = nil
+            }
         }
-        .sheet(isPresented: $viewModel.needsDataProcessingConsent) {
-            DataProcessingConsentView(
-                onAccept: {
-                    Task { await viewModel.confirmConsentAndGenerate() }
-                },
-                onCancel: {
-                    viewModel.needsDataProcessingConsent = false
+        .onChange(of: viewModel.isGenerating) { _, generating in
+            if generating {
+                if activeSheet == nil {
+                    activeSheet = .generating
                 }
-            )
+            } else if activeSheet == .generating {
+                pendingDraftEditor = viewModel.generatedDraft != nil
+                activeSheet = nil
+            }
         }
-        .onChange(of: viewModel.generatedDraft) {
-            if viewModel.generatedDraft != nil {
+        .onChange(of: viewModel.generatedDraft) { _, draft in
+            guard draft != nil else { return }
+            if activeSheet == .generating {
+                pendingDraftEditor = true
+            } else if !viewModel.isGenerating && activeSheet == nil && !pendingDraftEditor {
                 showDraftEditor = true
+            }
+        }
+    }
+
+    private var isAnyPresentationActive: Bool {
+        activeSheet != nil
+            || activeToolRoute != nil
+            || showDraftEditor
+            || viewModel.isGenerating
+            || viewModel.needsDataProcessingConsent
+            || pendingGenerateAfterConsent
+            || pendingDraftEditor
+    }
+
+    private func presentEditSheet() {
+        guard !isAnyPresentationActive else { return }
+        HapticManager.selection()
+        activeSheet = .editPatient
+    }
+
+    private func openToolRoute(_ route: PatientToolRoute) {
+        guard !isAnyPresentationActive else { return }
+        guard toolNavigationGuard.shouldAllowTap() else { return }
+        HapticManager.selection()
+        activeToolRoute = route
+    }
+
+    private func handleSheetDismiss() {
+        if pendingGenerateAfterConsent {
+            pendingGenerateAfterConsent = false
+            DispatchQueue.main.async {
+                Task { await viewModel.confirmConsentAndGenerate() }
+            }
+            return
+        }
+        if viewModel.needsDataProcessingConsent && !viewModel.isGenerating {
+            viewModel.needsDataProcessingConsent = false
+        }
+        if pendingDraftEditor {
+            pendingDraftEditor = false
+            guard viewModel.generatedDraft != nil, !viewModel.isGenerating else { return }
+            DispatchQueue.main.async {
+                if viewModel.generatedDraft != nil && activeSheet == nil && !viewModel.isGenerating {
+                    showDraftEditor = true
+                }
             }
         }
     }
@@ -189,14 +307,14 @@ struct PatientDetailView: View {
                 Text("Información clínica")
                     .font(AppTheme.subheadFont)
                 Spacer()
-                Button {
-                    HapticManager.selection()
-                    showEditPatient = true
+                GuardedButton {
+                    presentEditSheet()
                 } label: {
                     Label("Editar", systemImage: "pencil")
                         .font(.system(.caption, design: .rounded, weight: .medium))
                         .foregroundStyle(AppTheme.deepOrange)
                 }
+                .disabled(isAnyPresentationActive)
             }
             .padding(.horizontal)
 
@@ -264,34 +382,34 @@ struct PatientDetailView: View {
                     icon: "chart.line.uptrend.xyaxis",
                     title: "Historial",
                     subtitle: "Consultas y gráficas",
-                    destination: AnyView(PatientHistoryView(patientId: viewModel.patient.id, patientName: viewModel.patient.fullName, patientGoals: viewModel.patient.clinicalGoals))
+                    route: .history
                 )
                 actionCard(
                     icon: "camera.viewfinder",
                     title: "Fotos",
                     subtitle: "Progreso visual",
-                    destination: AnyView(ProgressPhotoView(patientId: viewModel.patient.id, patientName: viewModel.patient.fullName))
+                    route: .photos
                 )
                 actionCard(
                     icon: "cross.vial",
                     title: "Laboratorios",
                     subtitle: "Estudios clínicos",
-                    destination: AnyView(LabResultsView(patientId: viewModel.patient.id, patientName: viewModel.patient.fullName))
+                    route: .labs
                 )
                 actionCard(
                     icon: "slider.horizontal.3",
                     title: "Feedback",
                     subtitle: "Preferencias y exclusiones",
-                    destination: AnyView(PatientFeedbackView(patientId: viewModel.patient.id, patientName: viewModel.patient.fullName))
+                    route: .feedback
                 )
             }
             .padding(.horizontal)
         }
     }
 
-    private func actionCard(icon: String, title: String, subtitle: String, destination: AnyView) -> some View {
-        NavigationLink {
-            destination
+    private func actionCard(icon: String, title: String, subtitle: String, route: PatientToolRoute) -> some View {
+        GuardedButton {
+            openToolRoute(route)
         } label: {
             VStack(spacing: 8) {
                 Image(systemName: icon)
@@ -316,7 +434,8 @@ struct PatientDetailView: View {
 
     private var generateButton: some View {
         VStack(spacing: 8) {
-            Button {
+            GuardedButton {
+                guard !isAnyPresentationActive else { return }
                 HapticManager.impact(.medium)
                 Task { await viewModel.generateOptimizedPlan() }
             } label: {
@@ -332,7 +451,7 @@ struct PatientDetailView: View {
             .buttonStyle(.borderedProminent)
             .tint(AppTheme.deepOrange)
             .controlSize(.large)
-            .disabled(viewModel.isGenerating)
+            .disabled(isAnyPresentationActive)
             .animation(.spring(response: 0.3, dampingFraction: 0.7), value: viewModel.isGenerating)
             .padding(.horizontal)
 

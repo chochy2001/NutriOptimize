@@ -22,6 +22,7 @@ struct AddEditPatientView: View {
     @State private var monthlyFoodBudget: String
 
     @State private var showValidationErrors = false
+    @State private var isSaving = false
 
     private let existingPatient: Patient?
     private let onSave: (Patient) -> Void
@@ -149,8 +150,9 @@ struct AddEditPatientView: View {
                     Button("Cancelar") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Guardar") { savePatient() }
+                    GuardedButton("Guardar") { savePatient() }
                         .fontWeight(.semibold)
+                        .disabled(isSaving)
                 }
             }
         }
@@ -344,8 +346,10 @@ struct AddEditPatientView: View {
     // MARK: - Save
 
     private func savePatient() {
+        guard !isSaving else { return }
         showValidationErrors = true
         guard isValid else { return }
+        isSaving = true
 
         let patient = Patient(
             id: existingPatient?.id ?? UUID(),
