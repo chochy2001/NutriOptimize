@@ -157,7 +157,7 @@ struct PatientDetailView: View {
             guard draft != nil else { return }
             if activeSheet == .generating {
                 pendingDraftEditor = true
-            } else if !viewModel.isGenerating && activeSheet == nil {
+            } else if !viewModel.isGenerating && activeSheet == nil && !pendingDraftEditor {
                 showDraftEditor = true
             }
         }
